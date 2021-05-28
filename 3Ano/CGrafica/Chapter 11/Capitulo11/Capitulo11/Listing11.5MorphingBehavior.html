@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - MorphingBehavior.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+MorphingBehavior.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000000">
+</FONT><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter11;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">media</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> MorphingBehavior </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> <I>Behavior</I> {
+  <I>Morph</I> </FONT><FONT COLOR="#800080">morph</FONT><FONT COLOR="#000000">;
+  <I>Alpha</I> </FONT><FONT COLOR="#800080">alpha</FONT><FONT COLOR="#000000">;
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> MorphingBehavior(<I>Morph</I> m, <I>Alpha</I> a) {
+    </FONT><FONT COLOR="#800080">morph</FONT><FONT COLOR="#000000"> = m;
+    </FONT><FONT COLOR="#800080">alpha</FONT><FONT COLOR="#000000"> = a;
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> initialize() {
+    <I>wakeupOn</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>WakeupOnElapsedFrames</I>(</FONT><FONT COLOR="#0000ff">10</FONT><FONT COLOR="#000000">));
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> processStimulus(java.util.Enumeration </FONT><FONT COLOR="#808080">enumeration</FONT><FONT COLOR="#000000">) {
+    </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000">[] w = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000">[</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">];
+    </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> a = <I>alpha</I>.<I>value</I>();
+    w[</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">] = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+    w[</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">] = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+    w[</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">] = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+    w[</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">] = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> index = (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)(a*</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (index &GT; </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">) index = </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">;
+    w[index+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">] = (a-index/</FONT><FONT COLOR="#0000ff">3.0</FONT><FONT COLOR="#000000">)*</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">;
+    w[index] = </FONT><FONT COLOR="#0000ff">1.0</FONT><FONT COLOR="#000000">-w[index+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">];
+    <I>morph</I>.<I>setWeights</I>(w);
+    <I>wakeupOn</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>WakeupOnElapsedFrames</I>(</FONT><FONT COLOR="#0000ff">10</FONT><FONT COLOR="#000000">));
+  }
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+MorphingBehavior.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

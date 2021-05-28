@@ -1,0 +1,161 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - CubeTexture.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+CubeTexture.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000000">
+</FONT><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter9;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">vecmath</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.event.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.net.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">media</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">universe</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">geometry</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">image</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">chapter6</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">Dodecahedron</FONT><FONT COLOR="#000000">;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.applet.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">applet</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">MainFrame</FONT><FONT COLOR="#000000">;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> CubeTexture </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> Applet </FONT><FONT COLOR="#000080"><B>implements</B></FONT><FONT COLOR="#000000"> ActionListener{
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String[] </FONT><FONT COLOR="#808080">args</FONT><FONT COLOR="#000000">) {
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>MainFrame</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> CubeTexture(), </FONT><FONT COLOR="#0000ff">640</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">480</FONT><FONT COLOR="#000000">);
+  }
+
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>Appearance</I> </FONT><FONT COLOR="#800080">ap</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BorderLayout());
+    Panel panel = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Panel();
+    panel.setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> GridLayout(</FONT><FONT COLOR="#0000ff">5</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">));
+    add(panel, <I>BorderLayout</I>.<I>EAST</I>);
+    Button button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"OBJECT_LINEAR"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    panel.add(button);
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"EYE_LINEAR"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    panel.add(button);
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"SPHERE_MAP"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    panel.add(button);
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"NORMAL_MAP"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    panel.add(button);
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"REFLECTION_MAP"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    panel.add(button);
+    
+    GraphicsConfiguration gc = <I>SimpleUniverse</I>.<I>getPreferredConfiguration</I>();
+    <I>Canvas3D</I> cv = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Canvas3D</I>(gc);
+    add(cv, <I>BorderLayout</I>.<I>CENTER</I>);
+    <I>BranchGroup</I> bg = createSceneGraph();
+    <I>bg</I>.<I>compile</I>();
+    <I>SimpleUniverse</I> su = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>SimpleUniverse</I>(cv);
+    <I>su</I>.<I>getViewingPlatform</I>().<I>setNominalViewingTransform</I>();
+    <I>su</I>.<I>addBranchGraph</I>(bg);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I> createSceneGraph() {
+    <I>BranchGroup</I> root = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I>();
+    <I>TransformGroup</I> spin = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>();
+    <I>spin</I>.<I>setCapability</I>(<I>TransformGroup</I>.<I>ALLOW_TRANSFORM_WRITE</I>);
+    <I>root</I>.<I>addChild</I>(spin);
+    </FONT><FONT COLOR="#008000">//object</FONT><FONT COLOR="#000000">
+    </FONT><FONT COLOR="#800080">ap</FONT><FONT COLOR="#000000"> = createTextureAppearance();
+    <I>Shape3D</I> shape = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Dodecahedron</I>();
+    <I>shape</I>.<I>setAppearance</I>(</FONT><FONT COLOR="#800080">ap</FONT><FONT COLOR="#000000">);
+    <I>Transform3D</I> tr = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>tr</I>.<I>setScale</I>(</FONT><FONT COLOR="#0000ff">0.4</FONT><FONT COLOR="#000000">);
+    <I>TransformGroup</I> tg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(tr);
+    <I>tg</I>.<I>addChild</I>(shape);
+    <I>spin</I>.<I>addChild</I>(tg);
+    </FONT><FONT COLOR="#008000">//rotator</FONT><FONT COLOR="#000000">
+    <I>Alpha</I> alpha = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Alpha</I>(-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">18000</FONT><FONT COLOR="#000000">);
+    <I>RotationInterpolator</I> rotator = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>RotationInterpolator</I>(alpha, spin);
+    <I>BoundingSphere</I> bounds = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BoundingSphere</I>();
+    <I>rotator</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>spin</I>.<I>addChild</I>(rotator);
+    </FONT><FONT COLOR="#008000">//background</FONT><FONT COLOR="#000000">
+    <I>Background</I> background = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Background</I>(</FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">);
+    <I>background</I>.<I>setApplicationBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(background);
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> root;
+  }
+  
+  <I>Appearance</I> createTextureAppearance(){    
+    <I>Appearance</I> ap = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Appearance</I>();
+    URL filename = 
+        getClass().getClassLoader().getResource(</FONT><FONT COLOR="#0000ff">"images/earth.jpg"</FONT><FONT COLOR="#000000">);
+    <I>TextureLoader</I> loader = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TextureLoader</I>(filename, </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    <I>ImageComponent2D</I> image1 = <I>loader</I>.<I>getImage</I>();
+    filename = getClass().getClassLoader().getResource(</FONT><FONT COLOR="#0000ff">"images/stone.jpg"</FONT><FONT COLOR="#000000">);
+    loader = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TextureLoader</I>(filename, </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    <I>ImageComponent2D</I> image2 = <I>loader</I>.<I>getImage</I>();
+    filename = getClass().getClassLoader().getResource(</FONT><FONT COLOR="#0000ff">"images/sky.jpg"</FONT><FONT COLOR="#000000">);
+    loader = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TextureLoader</I>(filename, </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    <I>ImageComponent2D</I> image3 = <I>loader</I>.<I>getImage</I>();
+
+    <I>TextureCubeMap</I> texture = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TextureCubeMap</I>(<I>Texture</I>.<I>BASE_LEVEL</I>, <I>Texture</I>.<I>RGBA</I>,
+    <I>image1</I>.<I>getWidth</I>());
+    <I>texture</I>.<I>setImage</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, <I>TextureCubeMap</I>.<I>NEGATIVE_X</I>, image3);
+    <I>texture</I>.<I>setImage</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, <I>TextureCubeMap</I>.<I>NEGATIVE_Y</I>, image1);
+    <I>texture</I>.<I>setImage</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, <I>TextureCubeMap</I>.<I>NEGATIVE_Z</I>, image2);
+    <I>texture</I>.<I>setImage</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, <I>TextureCubeMap</I>.<I>POSITIVE_X</I>, image3);
+    <I>texture</I>.<I>setImage</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, <I>TextureCubeMap</I>.<I>POSITIVE_Y</I>, image1);
+    <I>texture</I>.<I>setImage</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, <I>TextureCubeMap</I>.<I>POSITIVE_Z</I>, image2);
+   
+    <I>texture</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+    <I>texture</I>.<I>setMagFilter</I>(<I>Texture</I>.<I>BASE_LEVEL_LINEAR</I>);
+    <I>texture</I>.<I>setMinFilter</I>(<I>Texture</I>.<I>BASE_LEVEL_LINEAR</I>);
+    <I>ap</I>.<I>setTexture</I>(texture);
+    
+    <I>TexCoordGeneration</I> tcg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TexCoordGeneration</I>(<I>TexCoordGeneration</I>.<I>OBJECT_LINEAR</I>, 
+    <I>TexCoordGeneration</I>.<I>TEXTURE_COORDINATE_3</I>);
+    <I>tcg</I>.<I>setPlaneR</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector4f</I>(</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    <I>tcg</I>.<I>setPlaneS</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector4f</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    <I>tcg</I>.<I>setPlaneT</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector4f</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    <I>ap</I>.<I>setTexCoordGeneration</I>(tcg);
+    <I>ap</I>.<I>setCapability</I>(<I>Appearance</I>.<I>ALLOW_TEXGEN_WRITE</I>);
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> ap;
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>actionPerformed</I></FONT><FONT COLOR="#000000">(ActionEvent e) {
+    String cmd = e.getActionCommand();
+    <I>TexCoordGeneration</I> tcg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TexCoordGeneration</I>();
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"OBJECT_LINEAR"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      <I>tcg</I>.<I>setGenMode</I>(<I>TexCoordGeneration</I>.<I>OBJECT_LINEAR</I>);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"EYE_LINEAR"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      <I>tcg</I>.<I>setGenMode</I>(<I>TexCoordGeneration</I>.<I>EYE_LINEAR</I>);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"SPHERE_MAP"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      <I>tcg</I>.<I>setGenMode</I>(<I>TexCoordGeneration</I>.<I>SPHERE_MAP</I>);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"NORMAL_MAP"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      <I>tcg</I>.<I>setGenMode</I>(<I>TexCoordGeneration</I>.<I>NORMAL_MAP</I>);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"REFLECTION_MAP"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      <I>tcg</I>.<I>setGenMode</I>(<I>TexCoordGeneration</I>.<I>REFLECTION_MAP</I>);
+    }
+    <I>tcg</I>.<I>setFormat</I>(<I>TexCoordGeneration</I>.<I>TEXTURE_COORDINATE_3</I>);
+    <I>tcg</I>.<I>setPlaneR</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector4f</I>(</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    <I>tcg</I>.<I>setPlaneS</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector4f</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    <I>tcg</I>.<I>setPlaneT</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector4f</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    <I>ap</I>.<I>setTexCoordGeneration</I>(tcg);
+  }  
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+CubeTexture.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

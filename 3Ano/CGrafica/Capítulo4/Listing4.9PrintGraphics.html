@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - PrintGraphics.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+PrintGraphics.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000000">
+</FONT><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter4;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">awt</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">geom</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.event.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.print.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.swing.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> PrintGraphics </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JFrame </FONT><FONT COLOR="#000080"><B>implements</B></FONT><FONT COLOR="#000000"> ActionListener {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String[] </FONT><FONT COLOR="#808080">args</FONT><FONT COLOR="#000000">) {
+    JFrame frame = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> PrintGraphics();
+    frame.setTitle(</FONT><FONT COLOR="#0000ff">"Printing"</FONT><FONT COLOR="#000000">);
+    frame.setDefaultCloseOperation(<I>JFrame</I>.<I>EXIT_ON_CLOSE</I>);
+    frame.pack();
+    frame.setVisible(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+  }
+  
+  PrinterJob </FONT><FONT COLOR="#800080">pj</FONT><FONT COLOR="#000000">;
+  PrintPanel </FONT><FONT COLOR="#800080">painter</FONT><FONT COLOR="#000000">;
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>actionPerformed</I></FONT><FONT COLOR="#000000">(ActionEvent </FONT><FONT COLOR="#808080">e</FONT><FONT COLOR="#000000">) {
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#800080">pj</FONT><FONT COLOR="#000000">.printDialog()) {
+      </FONT><FONT COLOR="#000080"><B>try</B></FONT><FONT COLOR="#000000"> {
+        </FONT><FONT COLOR="#800080">pj</FONT><FONT COLOR="#000000">.print();
+      } </FONT><FONT COLOR="#000080"><B>catch</B></FONT><FONT COLOR="#000000"> (PrinterException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> PrintGraphics() {
+    Container cp = </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">.getContentPane();
+    cp.setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BorderLayout());
+    JButton button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JButton(</FONT><FONT COLOR="#0000ff">"Print"</FONT><FONT COLOR="#000000">);
+    cp.add(button, <I>BorderLayout</I>.<I>SOUTH</I>);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#800080">painter</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> PrintPanel();
+    cp.add(</FONT><FONT COLOR="#800080">painter</FONT><FONT COLOR="#000000">, <I>BorderLayout</I>.<I>CENTER</I>);
+    </FONT><FONT COLOR="#800080">pj</FONT><FONT COLOR="#000000"> = <I>PrinterJob</I>.<I>getPrinterJob</I>();
+    </FONT><FONT COLOR="#800080">pj</FONT><FONT COLOR="#000000">.setPrintable(</FONT><FONT COLOR="#800080">painter</FONT><FONT COLOR="#000000">);
+  }
+}
+
+</FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> PrintPanel </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JPanel </FONT><FONT COLOR="#000080"><B>implements</B></FONT><FONT COLOR="#000000"> Printable {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> PrintPanel() {
+    setPreferredSize(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Dimension(</FONT><FONT COLOR="#0000ff">800</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">400</FONT><FONT COLOR="#000000">));
+    setBackground(<I>Color</I>.<I>white</I>);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>print</I></FONT><FONT COLOR="#000000">(Graphics g, PageFormat pf, </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> pageIndex) {
+    </FONT><FONT COLOR="#000080"><B>switch</B></FONT><FONT COLOR="#000000"> (pageIndex) {
+      </FONT><FONT COLOR="#000080"><B>case</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">:
+        draw(g);
+        </FONT><FONT COLOR="#000080"><B>break</B></FONT><FONT COLOR="#000000">;
+      </FONT><FONT COLOR="#000080"><B>case</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">:
+        g.translate(-(</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)pf.getImageableWidth(), </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+        draw(g);
+        </FONT><FONT COLOR="#000080"><B>break</B></FONT><FONT COLOR="#000000">;
+      </FONT><FONT COLOR="#000080"><B>default</B></FONT><FONT COLOR="#000000">:
+        </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> <I>NO_SUCH_PAGE</I>;
+    }
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> <I>PAGE_EXISTS</I>;
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>paintComponent</I></FONT><FONT COLOR="#000000">(Graphics g) {
+    </FONT><FONT COLOR="#000080"><B>super</B></FONT><FONT COLOR="#000000">.paintComponent(g);
+    draw(g);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> draw(Graphics g) {
+    g.setFont(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Font(</FONT><FONT COLOR="#0000ff">"Serif"</FONT><FONT COLOR="#000000">, <I>Font</I>.<I>BOLD</I>, </FONT><FONT COLOR="#0000ff">144</FONT><FONT COLOR="#000000">));
+    g.drawString(</FONT><FONT COLOR="#0000ff">"Welcome!"</FONT><FONT COLOR="#000000">,  </FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">300</FONT><FONT COLOR="#000000">);
+  }
+}
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+PrintGraphics.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

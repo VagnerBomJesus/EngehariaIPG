@@ -1,0 +1,150 @@
+Complete o seguinte codigo para Implemnetar
+
+
+
+
+
+private BranchGroup createSceneGraph(){
+	BranchGroup root = new BranchGroup();
+	
+	.....
+	
+	Appearence objApp = new Appearence();
+	objApp.setCapability(Appearence.Appearance.ALLOW_TEXGEN_WRITE);
+	objApp.setMaterial(new Material());
+	
+	....
+	
+	Box obj = new Box(0.2f, 0.2f, 0.2f,Box(1.0f, 0.5f + 0.001f, 0.01f, Primitive.GENERATE_TEXTURE_COORDS | Primitive.GENERATE_NORMALS, wallApp));
+	
+	DetectCollision dc = new DetectCollision(_____________,XXXX, );
+	dc._________________ setScheXXX(xx);
+	root.addChild(dc);
+	
+	....
+	
+	return root;
+}
+
+public class DetectCollision _________________{
+	
+	.............
+	
+	private WakeupCondition wakeupCondition = null;
+	
+	public DetectCollision(_____________);
+		this.pp = pp;
+		this.tt = tt;
+	}
+	
+}
+
+public class Orbit extends _____________{
+	public Orbit(Color3f color, int width, int n, float f){
+		LineArray la = new LineArray(_________________, LineArray.COORDINETS);
+		_____________________
+		
+		Appearance app = new Appearance();
+		app.setColoringAttributes(____________);
+		LineAttributes lAtt = __________________;
+		app.setLineAttributes(lAtt);
+		
+		this.________________;
+		this.________________;
+		
+	}
+}
+
+/***********************/
+TransformGroup tg = new TransformGroup();
+tg.setCapability(TransformGroup.ALLOW_TRANFORM_READ);
+____________________________________________
+____________________________________________
+tg.addChild(obj);
+root.addChil(tg);
+
+........
+
+public void mouseClicked(MouseEvent e){
+	pc.setShapeLocation(e);
+	PickResult result = pc.pickClosest();
+	
+	if(result != null){
+		TransformGroup tg = (TransformGroup)(result.getNode(PickResult.TRANFORMXXXX));
+		if(tg != null){
+			
+			____________________________________________
+			____________________________________________
+			
+		}
+	}
+}
+
+/*************************/
+
+/*---------------------*/
+Complete o seguinte codigo de modo a obter o objeto representa 
+/*---------------------*/
+/***************************/
+2D
+
+3 Descreva a diferença entre as duas subareas da computação Grafica: Sintise de Imagem e Processaemnto de Imagem:
+R:-->
+	#Sintise de Imagem
+	A Síntese de Imagem consiste na geração artificial de imagens a partir de um conjunto de definições. 
+	O objectivo é a criação e representação de objectos e cenas a partir das suas descrições matemáticas. 
+	São exemplos de aplicação os sistemas CAD, a simulação, a animação, os jogos, os efeitos especiais no cinema, etc.
+	#Processaemnto de Imagem
+	O Processamento de Imagem consiste na transformação de imagens de modo a alterar as suas características visuais, 
+	com o objectivo de melhorar a percepção das mesmas, ou prepara-las para uma posterior análise. 
+	É o caso do tratamento de imagens enviadas por satélite, do aperfeiçoamento de fotografias, etc.
+
+	
+
+
+1-Desenhe um esbolço que represente o resultado do seguinte codigo.
+	Considere que o painel tem um tamanho de 200x200.
+	Indique no esbolço as coordenadas de todos os pontod de controle.
+	
+	
+
+/*************************************************************/
+	class PanelExInteraction extends Jpanel Implemente MouseListener{
+		Shape shape = new Ellipse2D.Double(200 - 100, 200 - 100, 200, 200);
+		Boolean selected = false;
+		
+		public PanelExInteraction(){
+			setPreferredSize(new Dimension(400,400));
+			addMouseListener(this);
+		}
+		
+		public void painelComponent(Graphics g){
+			super.painelComponent(g);
+			Graphics2D g2 = new (Graphics2D) g;
+			if(){
+				g2.setPaint(Color.RED);
+			}else{
+				g2.setPaint(Color.GRENN);
+			}
+		
+			g2.fill(shape);
+		}
+		
+		public void mousePressed(MouseEvent e){
+			int x = e.getX();
+			int y = e.getY();
+			if(shape.contains(x, y)
+				selected = !selected;
+			repaint();
+			
+		}
+
+	}
+/****************************************************************/
+8 -->
+private BufferedImage filter(BufferedImage imgIn){
+	float[] data = {4f, 0, 0, 0, 0, 0, 0, 0, -4f};
+	Kernel ker = new Kernel{3, 3, data};
+	BufferedImageOp op = new ConvolveOp(ker);
+	return op.filter(imgIn, null);
+}

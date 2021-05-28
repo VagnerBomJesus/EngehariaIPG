@@ -1,0 +1,191 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - TestTransform.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+TestTransform.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter7;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">vecmath</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.event.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">media</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">universe</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">geometry</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.applet.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">applet</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">MainFrame</FONT><FONT COLOR="#000000">;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> TestTransform </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> Applet </FONT><FONT COLOR="#000080"><B>implements</B></FONT><FONT COLOR="#000000"> ActionListener {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String[] </FONT><FONT COLOR="#808080">args</FONT><FONT COLOR="#000000">) {
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>MainFrame</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TestTransform(), </FONT><FONT COLOR="#0000ff">640</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">300</FONT><FONT COLOR="#000000">);
+  }
+  
+  <I>TransformGroup</I> </FONT><FONT COLOR="#800080">trGroup</FONT><FONT COLOR="#000000">;
+  <I>Transform3D</I> </FONT><FONT COLOR="#800080">transform</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+  MatrixPanel </FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> MatrixPanel();
+  TextField </FONT><FONT COLOR="#800080">rx</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TextField();
+  TextField </FONT><FONT COLOR="#800080">ry</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TextField();
+  TextField </FONT><FONT COLOR="#800080">rz</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TextField();
+  TextField </FONT><FONT COLOR="#800080">ra</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TextField();
+  TextField </FONT><FONT COLOR="#800080">tx</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TextField();
+  TextField </FONT><FONT COLOR="#800080">ty</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TextField();
+  TextField </FONT><FONT COLOR="#800080">tz</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TextField();
+  TextField </FONT><FONT COLOR="#800080">sx</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TextField();
+  TextField </FONT><FONT COLOR="#800080">sy</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TextField();
+  TextField </FONT><FONT COLOR="#800080">sz</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TextField();
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {  
+    setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BorderLayout());
+    
+    Panel eastPanel = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Panel();
+    eastPanel.setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BorderLayout());
+    eastPanel.add(</FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000">, <I>BorderLayout</I>.<I>NORTH</I>);
+    add(eastPanel, <I>BorderLayout</I>.<I>EAST</I>);
+    
+    Button button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"Transform"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    Panel p = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Panel();
+    p.add(button);
+    eastPanel.add(p, <I>BorderLayout</I>.<I>EAST</I>);
+    
+    p = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Panel();
+    p.setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> GridLayout(</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">5</FONT><FONT COLOR="#000000">));
+    p.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Label(</FONT><FONT COLOR="#0000ff">"x"</FONT><FONT COLOR="#000000">));
+    p.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Label(</FONT><FONT COLOR="#0000ff">"y"</FONT><FONT COLOR="#000000">));
+    p.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Label(</FONT><FONT COLOR="#0000ff">"z"</FONT><FONT COLOR="#000000">));
+    p.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Label(</FONT><FONT COLOR="#0000ff">"angle"</FONT><FONT COLOR="#000000">));
+    p.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Label(</FONT><FONT COLOR="#0000ff">""</FONT><FONT COLOR="#000000">));
+    
+    p.add(</FONT><FONT COLOR="#800080">rx</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#800080">ry</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#800080">rz</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#800080">ra</FONT><FONT COLOR="#000000">);
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"Rotate"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    p.add(button);
+    
+    p.add(</FONT><FONT COLOR="#800080">tx</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#800080">ty</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#800080">tz</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Panel());
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"Translate"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    p.add(button);
+    
+    p.add(</FONT><FONT COLOR="#800080">sx</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#800080">sy</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#800080">sz</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Panel());
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"Scale"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    p.add(button);
+    
+    eastPanel.add(p, <I>BorderLayout</I>.<I>SOUTH</I>);
+    
+    GraphicsConfiguration gc = <I>SimpleUniverse</I>.<I>getPreferredConfiguration</I>();
+    <I>Canvas3D</I> cv = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Canvas3D</I>(gc);
+    add(cv, <I>BorderLayout</I>.<I>CENTER</I>);
+    <I>BranchGroup</I> bg = createSceneGraph();
+    <I>bg</I>.<I>compile</I>();
+    <I>SimpleUniverse</I> su = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>SimpleUniverse</I>(cv);
+    <I>su</I>.<I>getViewingPlatform</I>().<I>setNominalViewingTransform</I>();
+    <I>su</I>.<I>addBranchGraph</I>(bg);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I> createSceneGraph() {
+    <I>BranchGroup</I> root = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I>();
+    </FONT><FONT COLOR="#800080">trGroup</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>();
+    <I>trGroup</I>.<I>setCapability</I>(<I>TransformGroup</I>.<I>ALLOW_TRANSFORM_WRITE</I>);
+    <I>root</I>.<I>addChild</I>(</FONT><FONT COLOR="#800080">trGroup</FONT><FONT COLOR="#000000">);
+    
+    </FONT><FONT COLOR="#008000">//object</FONT><FONT COLOR="#000000">
+    <I>Appearance</I> ap = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Appearance</I>();
+    <I>ap</I>.<I>setMaterial</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Material</I>());
+    <I>Group</I> shape = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Axes</I>();
+    
+    <I>Transform3D</I> tr = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>tr</I>.<I>setScale</I>(</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">);
+    <I>TransformGroup</I> tg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(tr);
+    <I>trGroup</I>.<I>addChild</I>(tg);
+    <I>tg</I>.<I>addChild</I>(shape);
+        
+    </FONT><FONT COLOR="#008000">//background and light</FONT><FONT COLOR="#000000">
+    <I>BoundingSphere</I> bounds = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BoundingSphere</I>();
+    <I>Background</I> background = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Background</I>(</FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">);
+    <I>background</I>.<I>setApplicationBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(background);
+    <I>AmbientLight</I> light = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>AmbientLight</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>red</I>));
+    <I>light</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(light);
+    <I>PointLight</I> ptlight = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>PointLight</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>green</I>), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">3f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">3f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">3f</FONT><FONT COLOR="#000000">), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">));
+    <I>ptlight</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(ptlight);
+    <I>PointLight</I> ptlight2 = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>PointLight</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>orange</I>), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(-</FONT><FONT COLOR="#0000ff">2f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">2f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">2f</FONT><FONT COLOR="#000000">), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">));
+    <I>ptlight2</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(ptlight2);
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> root;
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>actionPerformed</I></FONT><FONT COLOR="#000000">(ActionEvent e) {
+    <I>Matrix4d</I> m = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Matrix4d</I>();
+    </FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000">.get(m);
+    <I>transform</I>.<I>set</I>(m);
+    String cmd = e.getActionCommand();
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Transform"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      <I>Quat4d</I> quat = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Quat4d</I>();
+      <I>Vector3d</I> translation = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3d</I>();
+      <I>transform</I>.<I>get</I>(quat, translation);
+      <I>Vector3d</I> scale = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3d</I>();
+      <I>transform</I>.<I>getScale</I>(scale);
+      <I>AxisAngle4d</I> rotation = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>AxisAngle4d</I>();
+      <I>rotation</I>.<I>set</I>(quat);
+      </FONT><FONT COLOR="#800080">rx</FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">""</FONT><FONT COLOR="#000000"> + <I>rotation</I>.<I>x</I>);
+      </FONT><FONT COLOR="#800080">ry</FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">""</FONT><FONT COLOR="#000000"> + <I>rotation</I>.<I>y</I>);
+      </FONT><FONT COLOR="#800080">rz</FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">""</FONT><FONT COLOR="#000000"> + <I>rotation</I>.<I>z</I>);
+      </FONT><FONT COLOR="#800080">ra</FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">""</FONT><FONT COLOR="#000000"> + <I>rotation</I>.<I>angle</I>);
+      </FONT><FONT COLOR="#800080">tx</FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">""</FONT><FONT COLOR="#000000"> + <I>translation</I>.<I>x</I>);
+      </FONT><FONT COLOR="#800080">ty</FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">""</FONT><FONT COLOR="#000000"> + <I>translation</I>.<I>y</I>);
+      </FONT><FONT COLOR="#800080">tz</FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">""</FONT><FONT COLOR="#000000"> + <I>translation</I>.<I>z</I>);
+      </FONT><FONT COLOR="#800080">sx</FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">""</FONT><FONT COLOR="#000000"> + <I>scale</I>.<I>x</I>);
+      </FONT><FONT COLOR="#800080">sy</FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">""</FONT><FONT COLOR="#000000"> + <I>scale</I>.<I>y</I>);
+      </FONT><FONT COLOR="#800080">sz</FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">""</FONT><FONT COLOR="#000000"> + <I>scale</I>.<I>z</I>);
+      <I>trGroup</I>.<I>setTransform</I>(</FONT><FONT COLOR="#800080">transform</FONT><FONT COLOR="#000000">);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> {
+      </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Rotate"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> x = <I>Double</I>.<I>parseDouble</I>(</FONT><FONT COLOR="#800080">rx</FONT><FONT COLOR="#000000">.getText());
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> y = <I>Double</I>.<I>parseDouble</I>(</FONT><FONT COLOR="#800080">ry</FONT><FONT COLOR="#000000">.getText());
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> z = <I>Double</I>.<I>parseDouble</I>(</FONT><FONT COLOR="#800080">rz</FONT><FONT COLOR="#000000">.getText());
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> a = <I>Double</I>.<I>parseDouble</I>(</FONT><FONT COLOR="#800080">ra</FONT><FONT COLOR="#000000">.getText());
+        <I>transform</I>.<I>setRotation</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>AxisAngle4d</I>(x, y, z, a));
+      } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Translate"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> x = <I>Double</I>.<I>parseDouble</I>(</FONT><FONT COLOR="#800080">tx</FONT><FONT COLOR="#000000">.getText());
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> y = <I>Double</I>.<I>parseDouble</I>(</FONT><FONT COLOR="#800080">ty</FONT><FONT COLOR="#000000">.getText());
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> z = <I>Double</I>.<I>parseDouble</I>(</FONT><FONT COLOR="#800080">tz</FONT><FONT COLOR="#000000">.getText());
+        <I>transform</I>.<I>setTranslation</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3d</I>(x, y, z));
+      } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Scale"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> x = <I>Double</I>.<I>parseDouble</I>(</FONT><FONT COLOR="#800080">sx</FONT><FONT COLOR="#000000">.getText());
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> y = <I>Double</I>.<I>parseDouble</I>(</FONT><FONT COLOR="#800080">sy</FONT><FONT COLOR="#000000">.getText());
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> z = <I>Double</I>.<I>parseDouble</I>(</FONT><FONT COLOR="#800080">sz</FONT><FONT COLOR="#000000">.getText());
+        <I>transform</I>.<I>setScale</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3d</I>(x, y, z));
+      }
+      <I>transform</I>.<I>get</I>(m);
+      </FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000">.set(m);
+    }
+  }  
+}
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+TestTransform.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

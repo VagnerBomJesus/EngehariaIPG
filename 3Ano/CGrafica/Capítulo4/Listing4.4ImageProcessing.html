@@ -1,0 +1,202 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - ImageProcessing.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+ImageProcessing.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter4;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.event.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.image.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.color.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.geom.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.io.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.swing.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.imageio.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> ImageProcessing </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JFrame </FONT><FONT COLOR="#000080"><B>implements</B></FONT><FONT COLOR="#000000"> ActionListener {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String[] </FONT><FONT COLOR="#808080">args</FONT><FONT COLOR="#000000">) {
+    JFrame frame = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> ImageProcessing();
+    frame.setDefaultCloseOperation(<I>JFrame</I>.<I>EXIT_ON_CLOSE</I>);
+    frame.pack();
+    frame.setVisible(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+  }
+
+  ImagePanel </FONT><FONT COLOR="#800080">imageSrc</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#800080">imageDst</FONT><FONT COLOR="#000000">;
+  JFileChooser </FONT><FONT COLOR="#800080">fc</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JFileChooser();
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> ImageProcessing() {
+    JMenuBar mb = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JMenuBar();
+    setJMenuBar(mb);
+
+    JMenu menu = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JMenu(</FONT><FONT COLOR="#0000ff">"File"</FONT><FONT COLOR="#000000">);
+    JMenuItem mi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JMenuItem(</FONT><FONT COLOR="#0000ff">"Open image"</FONT><FONT COLOR="#000000">);
+    mi.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    menu.add(mi);
+    mi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JMenuItem(</FONT><FONT COLOR="#0000ff">"Open image (awt)"</FONT><FONT COLOR="#000000">);
+    mi.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    menu.add(mi);
+    mi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JMenuItem(</FONT><FONT COLOR="#0000ff">"Save image"</FONT><FONT COLOR="#000000">);
+    mi.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    menu.add(mi);
+    menu.addSeparator();
+    mi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JMenuItem(</FONT><FONT COLOR="#0000ff">"Exit"</FONT><FONT COLOR="#000000">);
+    mi.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    menu.add(mi);
+    mb.add(menu);
+
+    menu = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JMenu(</FONT><FONT COLOR="#0000ff">"Process"</FONT><FONT COLOR="#000000">);
+    mi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JMenuItem(</FONT><FONT COLOR="#0000ff">"Copy"</FONT><FONT COLOR="#000000">);
+    mi.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    menu.add(mi);
+    mi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JMenuItem(</FONT><FONT COLOR="#0000ff">"Smooth"</FONT><FONT COLOR="#000000">);
+    mi.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    menu.add(mi);
+    mi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JMenuItem(</FONT><FONT COLOR="#0000ff">"Sharpen"</FONT><FONT COLOR="#000000">);
+    mi.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    menu.add(mi);
+    mi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JMenuItem(</FONT><FONT COLOR="#0000ff">"Edge"</FONT><FONT COLOR="#000000">);
+    mi.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    menu.add(mi);
+    mi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JMenuItem(</FONT><FONT COLOR="#0000ff">"Rescale"</FONT><FONT COLOR="#000000">);
+    mi.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    menu.add(mi);
+    mi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JMenuItem(</FONT><FONT COLOR="#0000ff">"Rotate"</FONT><FONT COLOR="#000000">);
+    mi.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    menu.add(mi);
+    mi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JMenuItem(</FONT><FONT COLOR="#0000ff">"Gray scale"</FONT><FONT COLOR="#000000">);
+    mi.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    menu.add(mi);
+    mb.add(menu);
+
+    Container cp = </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">.getContentPane();
+    cp.setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> FlowLayout());
+    </FONT><FONT COLOR="#800080">imageSrc</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> ImagePanel();
+    </FONT><FONT COLOR="#800080">imageDst</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> ImagePanel();
+    cp.add(</FONT><FONT COLOR="#800080">imageSrc</FONT><FONT COLOR="#000000">);
+    cp.add(</FONT><FONT COLOR="#800080">imageDst</FONT><FONT COLOR="#000000">);
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>actionPerformed</I></FONT><FONT COLOR="#000000">(ActionEvent ev) {
+    String cmd = ev.getActionCommand();
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Open image"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> retval = </FONT><FONT COLOR="#800080">fc</FONT><FONT COLOR="#000000">.showOpenDialog(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+      </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (retval == <I>JFileChooser</I>.<I>APPROVE_OPTION</I>) {
+        </FONT><FONT COLOR="#000080"><B>try</B></FONT><FONT COLOR="#000000"> {
+          BufferedImage bi = <I>ImageIO</I>.<I>read</I>(</FONT><FONT COLOR="#800080">fc</FONT><FONT COLOR="#000000">.getSelectedFile());
+          </FONT><FONT COLOR="#800080">imageSrc</FONT><FONT COLOR="#000000">.setImage(bi);
+          pack();
+        } </FONT><FONT COLOR="#000080"><B>catch</B></FONT><FONT COLOR="#000000"> (IOException ex) {
+          ex.printStackTrace();
+        }
+      }
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Open image (awt)"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> retval = </FONT><FONT COLOR="#800080">fc</FONT><FONT COLOR="#000000">.showOpenDialog(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+      </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (retval == <I>JFileChooser</I>.<I>APPROVE_OPTION</I>) {
+        Toolkit tk = <I>Toolkit</I>.<I>getDefaultToolkit</I>();
+        Image img = tk.getImage(</FONT><FONT COLOR="#800080">fc</FONT><FONT COLOR="#000000">.getSelectedFile().getPath());
+        MediaTracker tracker = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> MediaTracker(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Component() {});
+        tracker.addImage(img, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+        </FONT><FONT COLOR="#000080"><B>try</B></FONT><FONT COLOR="#000000"> {
+          tracker.waitForID(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+        } </FONT><FONT COLOR="#000080"><B>catch</B></FONT><FONT COLOR="#000000"> (InterruptedException </FONT><FONT COLOR="#808080">ex</FONT><FONT COLOR="#000000">) {}
+        BufferedImage bi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BufferedImage(img.getWidth(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">), img.getHeight(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">), <I>BufferedImage</I>.<I>TYPE_INT_RGB</I>);
+        bi.getGraphics().drawImage(img, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+        </FONT><FONT COLOR="#800080">imageSrc</FONT><FONT COLOR="#000000">.setImage(bi);
+      }
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Save image"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> retval = </FONT><FONT COLOR="#800080">fc</FONT><FONT COLOR="#000000">.showSaveDialog(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+      </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (retval == <I>JFileChooser</I>.<I>APPROVE_OPTION</I>) {
+        </FONT><FONT COLOR="#000080"><B>try</B></FONT><FONT COLOR="#000000">{
+          <I>ImageIO</I>.<I>write</I>(</FONT><FONT COLOR="#800080">imageDst</FONT><FONT COLOR="#000000">.getImage(), </FONT><FONT COLOR="#0000ff">"png"</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#800080">fc</FONT><FONT COLOR="#000000">.getSelectedFile());
+        } </FONT><FONT COLOR="#000080"><B>catch</B></FONT><FONT COLOR="#000000"> (IOException ex) {
+          ex.printStackTrace();
+        }
+      }
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Exit"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      <I>System</I>.<I>exit</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Copy"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      </FONT><FONT COLOR="#800080">imageSrc</FONT><FONT COLOR="#000000">.setImage(</FONT><FONT COLOR="#800080">imageDst</FONT><FONT COLOR="#000000">.getImage());
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> {
+      process(cmd);
+    }
+  }
+
+  </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> process(String opName) {
+    BufferedImageOp op = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (opName.equals(</FONT><FONT COLOR="#0000ff">"Smooth"</FONT><FONT COLOR="#000000">)) {
+      </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">[] data = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">[</FONT><FONT COLOR="#0000ff">9</FONT><FONT COLOR="#000000">];
+      </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#0000ff">9</FONT><FONT COLOR="#000000">; i++) data[i] = </FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">/</FONT><FONT COLOR="#0000ff">9.0f</FONT><FONT COLOR="#000000">;
+      Kernel ker = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Kernel(</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">,data);
+      op = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> ConvolveOp(ker);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (opName.equals(</FONT><FONT COLOR="#0000ff">"Sharpen"</FONT><FONT COLOR="#000000">)) {
+      </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">[] data = {</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">, -</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">, -</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">5f</FONT><FONT COLOR="#000000">, -</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">, -</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">};
+      Kernel ker = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Kernel(</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">,data);
+      op = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> ConvolveOp(ker);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (opName.equals(</FONT><FONT COLOR="#0000ff">"Edge"</FONT><FONT COLOR="#000000">)) {
+      </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">[] data = {</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">, -</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">, -</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">4f</FONT><FONT COLOR="#000000">, -</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">, -</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">};
+      Kernel ker = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Kernel(</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">,data);
+      op = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> ConvolveOp(ker);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (opName.equals(</FONT><FONT COLOR="#0000ff">"Rescale"</FONT><FONT COLOR="#000000">)) {
+      op = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> RescaleOp(</FONT><FONT COLOR="#0000ff">1.5f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (opName.equals(</FONT><FONT COLOR="#0000ff">"Gray scale"</FONT><FONT COLOR="#000000">)) {
+      op = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> ColorConvertOp(<I>ColorSpace</I>.<I>getInstance</I>(<I>ColorSpace</I>.<I>CS_GRAY</I>), </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (opName.equals(</FONT><FONT COLOR="#0000ff">"Rotate"</FONT><FONT COLOR="#000000">)) {
+      AffineTransform xform = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> AffineTransform();
+      xform.setToRotation(<I>Math</I>.<I>PI</I>/</FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">);
+      op = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> AffineTransformOp(xform, <I>AffineTransformOp</I>.<I>TYPE_BILINEAR</I>);
+    }
+    BufferedImage bi = op.filter(</FONT><FONT COLOR="#800080">imageSrc</FONT><FONT COLOR="#000000">.getImage(), </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#800080">imageDst</FONT><FONT COLOR="#000000">.setImage(bi);
+    pack();
+  }
+}
+
+</FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> ImagePanel </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JPanel {
+  BufferedImage </FONT><FONT COLOR="#800080">image</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> ImagePanel() {
+    </FONT><FONT COLOR="#800080">image</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+    setPreferredSize(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Dimension(</FONT><FONT COLOR="#0000ff">256</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">256</FONT><FONT COLOR="#000000">));
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> ImagePanel(BufferedImage bi) {
+    </FONT><FONT COLOR="#800080">image</FONT><FONT COLOR="#000000"> = bi;
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>paintComponent</I></FONT><FONT COLOR="#000000">(Graphics g) {
+    Graphics2D g2 = (Graphics2D)g;
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#800080">image</FONT><FONT COLOR="#000000"> != </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">)
+      g2.drawImage(</FONT><FONT COLOR="#800080">image</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000">
+      g2.drawRect(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, getWidth()-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">, getHeight()-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">);
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> BufferedImage getImage() {
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#800080">image</FONT><FONT COLOR="#000000">;
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> setImage(BufferedImage bi) {
+    </FONT><FONT COLOR="#800080">image</FONT><FONT COLOR="#000000"> = bi;
+    setPreferredSize(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Dimension(bi.getWidth(), bi.getHeight()));
+    invalidate();
+    repaint();
+  }
+}
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+ImageProcessing.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

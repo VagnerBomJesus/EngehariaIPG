@@ -1,0 +1,99 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - TestMatrix.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+TestMatrix.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter7;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.event.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">vecmath</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.applet.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">applet</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">MainFrame</FONT><FONT COLOR="#000000">;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> TestMatrix </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> Applet </FONT><FONT COLOR="#000080"><B>implements</B></FONT><FONT COLOR="#000000"> ActionListener {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String[] </FONT><FONT COLOR="#808080">args</FONT><FONT COLOR="#000000">) {
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>MainFrame</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TestMatrix(), </FONT><FONT COLOR="#0000ff">600</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">);
+  }
+  
+  MatrixPanel </FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000">;
+  <I>Matrix4d</I> </FONT><FONT COLOR="#800080">m</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Matrix4d</I>();
+  TextField </FONT><FONT COLOR="#800080">tf</FONT><FONT COLOR="#000000">;
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">.setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BorderLayout());
+    
+    </FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> MatrixPanel();
+    add(</FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000">, <I>BorderLayout</I>.<I>CENTER</I>);
+    
+    Panel p = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Panel();
+    p.setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> GridLayout(</FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">));
+    Button button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"Identity"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    p.add(button);
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"Zero"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    p.add(button);
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"Negate"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    p.add(button);
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"Transpose"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    p.add(button);
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"Invert"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    p.add(button);
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"Determinant"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    p.add(button);
+    </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">.add(p, <I>BorderLayout</I>.<I>EAST</I>);
+    
+    </FONT><FONT COLOR="#800080">tf</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TextField();
+    add(</FONT><FONT COLOR="#800080">tf</FONT><FONT COLOR="#000000">, <I>BorderLayout</I>.<I>SOUTH</I>);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>actionPerformed</I></FONT><FONT COLOR="#000000">(ActionEvent e) {
+    String cmd = e.getActionCommand();
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Identity"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      </FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000">.get(</FONT><FONT COLOR="#800080">m</FONT><FONT COLOR="#000000">);
+      <I>m</I>.<I>setIdentity</I>();
+      </FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000">.set(</FONT><FONT COLOR="#800080">m</FONT><FONT COLOR="#000000">);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Zero"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      </FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000">.get(</FONT><FONT COLOR="#800080">m</FONT><FONT COLOR="#000000">);
+      <I>m</I>.<I>setZero</I>();
+      </FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000">.set(</FONT><FONT COLOR="#800080">m</FONT><FONT COLOR="#000000">);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Negate"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      </FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000">.get(</FONT><FONT COLOR="#800080">m</FONT><FONT COLOR="#000000">);
+      <I>m</I>.<I>negate</I>();
+      </FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000">.set(</FONT><FONT COLOR="#800080">m</FONT><FONT COLOR="#000000">);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Transpose"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      </FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000">.get(</FONT><FONT COLOR="#800080">m</FONT><FONT COLOR="#000000">);
+      <I>m</I>.<I>transpose</I>();
+      </FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000">.set(</FONT><FONT COLOR="#800080">m</FONT><FONT COLOR="#000000">);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Invert"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      </FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000">.get(</FONT><FONT COLOR="#800080">m</FONT><FONT COLOR="#000000">);
+      <I>m</I>.<I>invert</I>();
+      </FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000">.set(</FONT><FONT COLOR="#800080">m</FONT><FONT COLOR="#000000">);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Determinant"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      </FONT><FONT COLOR="#800080">mp</FONT><FONT COLOR="#000000">.get(</FONT><FONT COLOR="#800080">m</FONT><FONT COLOR="#000000">);
+      </FONT><FONT COLOR="#800080">tf</FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">""</FONT><FONT COLOR="#000000"> + <I>m</I>.<I>determinant</I>());
+    }      
+  }
+}
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+TestMatrix.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

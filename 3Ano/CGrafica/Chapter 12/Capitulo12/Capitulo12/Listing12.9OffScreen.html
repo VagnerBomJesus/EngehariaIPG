@@ -1,0 +1,167 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - OffScreen.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+OffScreen.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000000">
+</FONT><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter12;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">vecmath</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.event.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.image.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.net.URL;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.io.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.imageio.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.swing.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">media</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">universe</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">geometry</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">chapter6</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">Dodecahedron</FONT><FONT COLOR="#000000">;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> OffScreen </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> Frame{
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String[] </FONT><FONT COLOR="#808080">args</FONT><FONT COLOR="#000000">) {
+    Frame frame = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> OffScreen();
+    frame.setTitle(</FONT><FONT COLOR="#0000ff">"Off Screen Rendering"</FONT><FONT COLOR="#000000">);
+    frame.setSize(</FONT><FONT COLOR="#0000ff">640</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">480</FONT><FONT COLOR="#000000">);
+    frame.setVisible(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>Canvas3D</I> </FONT><FONT COLOR="#800080">cv</FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>Canvas3D</I> </FONT><FONT COLOR="#800080">offScreenCanvas</FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>View</I> </FONT><FONT COLOR="#800080">view</FONT><FONT COLOR="#000000">;
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> OffScreen() {
+    WindowListener l = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> WindowAdapter() {
+      </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>windowClosing</I></FONT><FONT COLOR="#000000">(WindowEvent </FONT><FONT COLOR="#808080">ev</FONT><FONT COLOR="#000000">) {
+        <I>System</I>.<I>exit</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+      }
+    };
+    </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">.addWindowListener(l);
+    GraphicsConfiguration gc = <I>SimpleUniverse</I>.<I>getPreferredConfiguration</I>();
+    </FONT><FONT COLOR="#800080">cv</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Canvas3D</I>(gc);
+    setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BorderLayout());
+    add(</FONT><FONT COLOR="#800080">cv</FONT><FONT COLOR="#000000">, <I>BorderLayout</I>.<I>CENTER</I>);
+    <I>BranchGroup</I> bg = createSceneGraph();
+    <I>bg</I>.<I>compile</I>();
+    <I>SimpleUniverse</I> su = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>SimpleUniverse</I>(</FONT><FONT COLOR="#800080">cv</FONT><FONT COLOR="#000000">);
+    <I>su</I>.<I>getViewingPlatform</I>().<I>setNominalViewingTransform</I>();
+    <I>su</I>.<I>addBranchGraph</I>(bg);
+    </FONT><FONT COLOR="#008000">// create off screen canvas</FONT><FONT COLOR="#000000">
+    </FONT><FONT COLOR="#800080">view</FONT><FONT COLOR="#000000"> = <I>su</I>.<I>getViewer</I>().<I>getView</I>();
+    </FONT><FONT COLOR="#800080">offScreenCanvas</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Canvas3D</I>(gc, </FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+    <I>Screen3D</I> sOn = <I>cv</I>.<I>getScreen3D</I>();
+    <I>Screen3D</I> sOff = <I>offScreenCanvas</I>.<I>getScreen3D</I>();
+    Dimension dim = <I>sOn</I>.<I>getSize</I>();
+    <I>sOff</I>.<I>setSize</I>(dim);
+    <I>sOff</I>.<I>setPhysicalScreenWidth</I>(<I>sOn</I>.<I>getPhysicalScreenWidth</I>());
+    <I>sOff</I>.<I>setPhysicalScreenHeight</I>(<I>sOn</I>.<I>getPhysicalScreenHeight</I>());
+    Point loc = <I>cv</I>.<I>getLocationOnScreen</I>();
+    <I>offScreenCanvas</I>.<I>setOffScreenLocation</I>(loc);
+    </FONT><FONT COLOR="#008000">// button</FONT><FONT COLOR="#000000">
+    Button button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"Save image"</FONT><FONT COLOR="#000000">);
+    add(button, <I>BorderLayout</I>.<I>SOUTH</I>);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> ActionListener() {
+      </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>actionPerformed</I></FONT><FONT COLOR="#000000">(ActionEvent </FONT><FONT COLOR="#808080">ev</FONT><FONT COLOR="#000000">) {
+        BufferedImage bi = capture();
+        save(bi);
+      }
+    });
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I> createSceneGraph() {
+    <I>BranchGroup</I> root = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I>();
+    <I>TransformGroup</I> spin = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>();
+    <I>spin</I>.<I>setCapability</I>(<I>TransformGroup</I>.<I>ALLOW_TRANSFORM_WRITE</I>);
+    <I>root</I>.<I>addChild</I>(spin);
+    </FONT><FONT COLOR="#008000">//object</FONT><FONT COLOR="#000000">
+    <I>Appearance</I> ap = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Appearance</I>();
+    <I>ap</I>.<I>setMaterial</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Material</I>());
+    <I>Shape3D</I> shape = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Dodecahedron</I>();
+    <I>shape</I>.<I>setAppearance</I>(ap);
+    <I>Transform3D</I> tr = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>tr</I>.<I>setScale</I>(</FONT><FONT COLOR="#0000ff">0.25</FONT><FONT COLOR="#000000">);
+    <I>TransformGroup</I> tg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(tr);
+    <I>spin</I>.<I>addChild</I>(tg);
+    <I>tg</I>.<I>addChild</I>(shape);
+    <I>Alpha</I> alpha = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Alpha</I>(-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">10000</FONT><FONT COLOR="#000000">);
+    <I>RotationInterpolator</I> rotator = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>RotationInterpolator</I>(alpha, spin);
+    <I>BoundingSphere</I> bounds = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BoundingSphere</I>();
+    <I>rotator</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>spin</I>.<I>addChild</I>(rotator);
+    </FONT><FONT COLOR="#008000">//background and light</FONT><FONT COLOR="#000000">
+    URL url = getClass().getClassLoader().getResource(</FONT><FONT COLOR="#0000ff">"images/bg.jpg"</FONT><FONT COLOR="#000000">);
+    BufferedImage bi = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>try</B></FONT><FONT COLOR="#000000"> {
+      bi = <I>ImageIO</I>.<I>read</I>(url);
+    } </FONT><FONT COLOR="#000080"><B>catch</B></FONT><FONT COLOR="#000000"> (IOException ex) {
+      ex.printStackTrace();
+    }
+    <I>ImageComponent2D</I> image = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>ImageComponent2D</I>(<I>ImageComponent2D</I>.<I>FORMAT_RGB</I>, bi);
+    <I>Background</I> background = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Background</I>(image);
+    <I>background</I>.<I>setApplicationBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(background);
+    <I>AmbientLight</I> light = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>AmbientLight</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>red</I>));
+    <I>light</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(light);
+    <I>PointLight</I> ptlight = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>PointLight</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>green</I>),
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">3f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">3f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">3f</FONT><FONT COLOR="#000000">), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">));
+    <I>ptlight</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(ptlight);
+    <I>PointLight</I> ptlight2 = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>PointLight</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>orange</I>),
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(-</FONT><FONT COLOR="#0000ff">2f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">2f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">2f</FONT><FONT COLOR="#000000">), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">));
+    <I>ptlight2</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(ptlight2);
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> root;
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> BufferedImage capture() {
+    </FONT><FONT COLOR="#008000">// render off screen image</FONT><FONT COLOR="#000000">
+    Dimension dim = <I>cv</I>.<I>getSize</I>();
+    <I>view</I>.<I>stopView</I>();
+    <I>view</I>.<I>addCanvas3D</I>(</FONT><FONT COLOR="#800080">offScreenCanvas</FONT><FONT COLOR="#000000">);
+    BufferedImage bImage =
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BufferedImage(dim.width, dim.height, <I>BufferedImage</I>.<I>TYPE_INT_RGB</I>);
+    <I>ImageComponent2D</I> buffer =
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>ImageComponent2D</I>(<I>ImageComponent</I>.<I>FORMAT_RGB</I>, bImage);
+    <I>offScreenCanvas</I>.<I>setOffScreenBuffer</I>(buffer);
+    <I>view</I>.<I>startView</I>();
+    <I>offScreenCanvas</I>.<I>renderOffScreenBuffer</I>();
+    <I>offScreenCanvas</I>.<I>waitForOffScreenRendering</I>();
+    bImage = <I>offScreenCanvas</I>.<I>getOffScreenBuffer</I>().<I>getImage</I>();
+    <I>view</I>.<I>removeCanvas3D</I>(</FONT><FONT COLOR="#800080">offScreenCanvas</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> bImage;
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> save(BufferedImage bImage) {
+    </FONT><FONT COLOR="#008000">// save image to file</FONT><FONT COLOR="#000000">
+    JFileChooser chooser = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JFileChooser();
+    chooser.setCurrentDirectory(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> File(</FONT><FONT COLOR="#0000ff">"."</FONT><FONT COLOR="#000000">));
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (chooser.showSaveDialog(</FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">) == <I>JFileChooser</I>.<I>APPROVE_OPTION</I>) {
+      File oFile = chooser.getSelectedFile();
+      </FONT><FONT COLOR="#000080"><B>try</B></FONT><FONT COLOR="#000000"> {
+        <I>ImageIO</I>.<I>write</I>(bImage, </FONT><FONT COLOR="#0000ff">"jpeg"</FONT><FONT COLOR="#000000">, oFile);
+      } </FONT><FONT COLOR="#000080"><B>catch</B></FONT><FONT COLOR="#000000"> (IOException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+OffScreen.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

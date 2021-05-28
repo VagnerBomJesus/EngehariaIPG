@@ -1,0 +1,60 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - OpenGLSphere.c</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+OpenGLSphere.c</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#008000">#include &LT;GL/glut.h&GT;</FONT><FONT COLOR="#000000">
+
+GLUquadricObj* sphere;
+
+</FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> display(</FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000">) {
+	glClear(GL_COLOR_BUFFER_BIT);
+	glMatrixMode(GL_MODELVIEW);
+	glRotatef(</FONT><FONT COLOR="#0000ff">0.2</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0</FONT><FONT COLOR="#000000">);
+
+	gluSphere(sphere, </FONT><FONT COLOR="#0000ff">1.8</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">24</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">24</FONT><FONT COLOR="#000000">);
+	glutSwapBuffers();
+}
+
+
+</FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> idle(</FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000">) {
+	glutPostRedisplay();
+}
+
+</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> main(</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> argc, </FONT><FONT COLOR="#000080"><B>char</B></FONT><FONT COLOR="#000000">** argv) {
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+	glutCreateWindow(</FONT><FONT COLOR="#0000ff">"Spinning Sphere"</FONT><FONT COLOR="#000000">);
+	glutDisplayFunc(display);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(-</FONT><FONT COLOR="#0000ff">2.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">2.0</FONT><FONT COLOR="#000000">, -</FONT><FONT COLOR="#0000ff">2.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">2.0</FONT><FONT COLOR="#000000">, -</FONT><FONT COLOR="#0000ff">2.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">2.0</FONT><FONT COLOR="#000000">);
+	glClearColor(</FONT><FONT COLOR="#0000ff">1.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">);
+	glColor3f(</FONT><FONT COLOR="#0000ff">1.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">);
+	sphere = gluNewQuadric();
+	gluQuadricDrawStyle(sphere, GLU_LINE);
+	glutIdleFunc(idle);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(</FONT><FONT COLOR="#0000ff">1.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">);
+	glutMainLoop();
+}
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+OpenGLSphere.c</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

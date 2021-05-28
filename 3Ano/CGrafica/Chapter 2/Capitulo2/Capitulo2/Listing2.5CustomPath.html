@@ -1,0 +1,108 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - CustomPath.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+CustomPath.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter2;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">awt</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">event</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.swing.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.geom.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> CustomPath </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JApplet {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String </FONT><FONT COLOR="#808080">s</FONT><FONT COLOR="#000000">[]) {
+    JFrame frame = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JFrame();
+    frame.setTitle(</FONT><FONT COLOR="#0000ff">"GeneralPath and Winding Rules"</FONT><FONT COLOR="#000000">);
+    frame.setDefaultCloseOperation(<I>JFrame</I>.<I>EXIT_ON_CLOSE</I>);
+    JApplet applet = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> CustomPath();
+    applet.init();
+    frame.getContentPane().add(applet);
+    frame.pack();
+    frame.setVisible(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    JPanel panel = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> PathPanel();
+    getContentPane().add(panel);
+  }
+}
+
+</FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> PathPanel </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JPanel {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> PathPanel() {
+    setPreferredSize(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Dimension(</FONT><FONT COLOR="#0000ff">640</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">480</FONT><FONT COLOR="#000000">));
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>paintComponent</I></FONT><FONT COLOR="#000000">(Graphics g) {
+    </FONT><FONT COLOR="#000080"><B>super</B></FONT><FONT COLOR="#000000">.paintComponent(g);
+    Graphics2D g2 = (Graphics2D)g;
+    GeneralPath path = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> GeneralPath(<I>GeneralPath</I>.<I>WIND_EVEN_ODD</I>);
+    </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> x0 = </FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> y0 = </FONT><FONT COLOR="#0000ff">0.0f</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> x1 = (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)<I>Math</I>.<I>cos</I>(</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>PI</I>/</FONT><FONT COLOR="#0000ff">5.0</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> y1 = (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)<I>Math</I>.<I>sin</I>(</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>PI</I>/</FONT><FONT COLOR="#0000ff">5.0</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> x2 = (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)<I>Math</I>.<I>cos</I>(</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>PI</I>/</FONT><FONT COLOR="#0000ff">5.0</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> y2 = (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)<I>Math</I>.<I>sin</I>(</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>PI</I>/</FONT><FONT COLOR="#0000ff">5.0</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> x3 = (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)<I>Math</I>.<I>cos</I>(</FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>PI</I>/</FONT><FONT COLOR="#0000ff">5.0</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> y3 = (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)<I>Math</I>.<I>sin</I>(</FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>PI</I>/</FONT><FONT COLOR="#0000ff">5.0</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> x4 = (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)<I>Math</I>.<I>cos</I>(</FONT><FONT COLOR="#0000ff">8</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>PI</I>/</FONT><FONT COLOR="#0000ff">5.0</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> y4 = (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)<I>Math</I>.<I>sin</I>(</FONT><FONT COLOR="#0000ff">8</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>PI</I>/</FONT><FONT COLOR="#0000ff">5.0</FONT><FONT COLOR="#000000">);
+    path.moveTo(x2,y2);
+    path.lineTo(x0,y0);
+    path.lineTo(x3,y3);
+    path.lineTo(x1,y1);
+    path.lineTo(x4,y4);
+    path.closePath();
+    AffineTransform tr = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> AffineTransform();
+    tr.setToScale(</FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">);
+    g2.translate(</FONT><FONT COLOR="#0000ff">120</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">120</FONT><FONT COLOR="#000000">);
+    path = (GeneralPath)tr.createTransformedShape(path);
+    g2.draw(path);
+    g2.translate(</FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+    g2.fill(path);
+    path.setWindingRule(<I>GeneralPath</I>.<I>WIND_NON_ZERO</I>);
+    g2.translate(</FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+    g2.fill(path);
+
+    path.reset();
+    path.moveTo(x0, y0);
+    path.lineTo(x1, y1);
+    path.lineTo(x2, y2);
+    path.lineTo(x3, y3);
+    path.lineTo(x4, y4);
+    path.closePath();
+    path.moveTo(x0, y0);
+    path.quadTo(x4, y4, x1, y1);
+    path.quadTo(x2, y2, x3, y3);
+    path.closePath();
+    path.moveTo(x4,y4);
+    path.curveTo(x1,y1,x3,y3,x2,y2);
+    path.curveTo(x1,y1,x3,y3,x4,y4);
+    path = (GeneralPath)tr.createTransformedShape(path);
+    g2.translate(-</FONT><FONT COLOR="#0000ff">400</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">220</FONT><FONT COLOR="#000000">);
+    g2.draw(path);
+    path.setWindingRule(<I>GeneralPath</I>.<I>WIND_EVEN_ODD</I>);
+    g2.translate(</FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+    g2.fill(path);
+    path.setWindingRule(<I>GeneralPath</I>.<I>WIND_NON_ZERO</I>);
+    g2.translate(</FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+    g2.fill(path);
+  }
+}
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+CustomPath.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

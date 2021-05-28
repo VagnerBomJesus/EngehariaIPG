@@ -1,0 +1,127 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - Life.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Life.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000000">
+</FONT><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter4;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.event.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.swing.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">awt</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">geom</FONT><FONT COLOR="#000000">.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> Life </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JApplet {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String </FONT><FONT COLOR="#808080">s</FONT><FONT COLOR="#000000">[]) {
+    JFrame frame = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JFrame();
+    frame.setTitle(</FONT><FONT COLOR="#0000ff">"Game of Life"</FONT><FONT COLOR="#000000">);
+    frame.setDefaultCloseOperation(<I>JFrame</I>.<I>EXIT_ON_CLOSE</I>);
+    JApplet applet = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Life();
+    applet.init();
+    frame.getContentPane().add(applet);
+    frame.pack();
+    frame.setVisible(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    JPanel panel = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> LifePanel();
+    getContentPane().add(panel);
+  }
+}
+
+</FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> LifePanel </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JPanel </FONT><FONT COLOR="#000080"><B>implements</B></FONT><FONT COLOR="#000000"> ActionListener{
+  </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#800080">n</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#0000ff">30</FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>boolean</B></FONT><FONT COLOR="#000000">[][] </FONT><FONT COLOR="#800080">cells1</FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>boolean</B></FONT><FONT COLOR="#000000">[][] </FONT><FONT COLOR="#800080">cells2</FONT><FONT COLOR="#000000">;
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> LifePanel() {
+    setPreferredSize(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Dimension(</FONT><FONT COLOR="#0000ff">400</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">400</FONT><FONT COLOR="#000000">));
+    setBackground(<I>Color</I>.<I>white</I>);
+    </FONT><FONT COLOR="#800080">cells1</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>boolean</B></FONT><FONT COLOR="#000000">[</FONT><FONT COLOR="#800080">n</FONT><FONT COLOR="#000000">][</FONT><FONT COLOR="#800080">n</FONT><FONT COLOR="#000000">];
+    </FONT><FONT COLOR="#800080">cells2</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>boolean</B></FONT><FONT COLOR="#000000">[</FONT><FONT COLOR="#800080">n</FONT><FONT COLOR="#000000">][</FONT><FONT COLOR="#800080">n</FONT><FONT COLOR="#000000">];
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#800080">n</FONT><FONT COLOR="#000000">; i++) {
+      </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> j = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; j &LT; </FONT><FONT COLOR="#800080">n</FONT><FONT COLOR="#000000">; j++) {
+        </FONT><FONT COLOR="#800080">cells1</FONT><FONT COLOR="#000000">[i][j] = <I>Math</I>.<I>random</I>() &LT; </FONT><FONT COLOR="#0000ff">0.1</FONT><FONT COLOR="#000000">;
+        </FONT><FONT COLOR="#800080">cells2</FONT><FONT COLOR="#000000">[i][j] = </FONT><FONT COLOR="#000080"><B>false</B></FONT><FONT COLOR="#000000">;
+      }
+    }
+    Timer timer = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Timer(</FONT><FONT COLOR="#0000ff">1000</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    timer.start();
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>paintComponent</I></FONT><FONT COLOR="#000000">(Graphics g) {
+    </FONT><FONT COLOR="#000080"><B>super</B></FONT><FONT COLOR="#000000">.paintComponent(g);
+    Graphics2D g2 = (Graphics2D)g;
+    
+    g2.setColor(<I>Color</I>.<I>lightGray</I>);
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> p = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> c = </FONT><FONT COLOR="#0000ff">16</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> len = c*</FONT><FONT COLOR="#800080">n</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT;= </FONT><FONT COLOR="#800080">n</FONT><FONT COLOR="#000000">; i++) {
+      g2.drawLine(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, p, len, p);
+      g2.drawLine(p, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, p, len);
+      p += c;
+    }
+    g2.setColor(<I>Color</I>.<I>black</I>);
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#800080">n</FONT><FONT COLOR="#000000">; i++) {
+      </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> j = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; j &LT; </FONT><FONT COLOR="#800080">n</FONT><FONT COLOR="#000000">; j++) {
+        </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#800080">cells1</FONT><FONT COLOR="#000000">[i][j]) {
+          </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> x = i*c;
+          </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> y = j*c;
+          g2.fillOval(x, y, c, c);
+        }
+      }
+    }
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>actionPerformed</I></FONT><FONT COLOR="#000000">(ActionEvent </FONT><FONT COLOR="#808080">e</FONT><FONT COLOR="#000000">) {
+    </FONT><FONT COLOR="#000080"><B>boolean</B></FONT><FONT COLOR="#000000">[][] cells = </FONT><FONT COLOR="#800080">cells1</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#800080">n</FONT><FONT COLOR="#000000">; i++) {
+      </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> j = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; j &LT; </FONT><FONT COLOR="#800080">n</FONT><FONT COLOR="#000000">; j++) {
+        </FONT><FONT COLOR="#800080">cells2</FONT><FONT COLOR="#000000">[i][j] = cells[i][j];
+        </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> nb = neighbors(cells, i, j);
+        </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (nb == </FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">)
+          </FONT><FONT COLOR="#800080">cells2</FONT><FONT COLOR="#000000">[i][j] = </FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">;
+        </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (nb &LT; </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000"> || nb &GT; </FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">)
+          </FONT><FONT COLOR="#800080">cells2</FONT><FONT COLOR="#000000">[i][j] = </FONT><FONT COLOR="#000080"><B>false</B></FONT><FONT COLOR="#000000">;
+      }
+    }
+    
+    </FONT><FONT COLOR="#800080">cells1</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#800080">cells2</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#800080">cells2</FONT><FONT COLOR="#000000"> = cells;
+    repaint();
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> neighbors(</FONT><FONT COLOR="#000080"><B>boolean</B></FONT><FONT COLOR="#000000">[][] cells, </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> x, </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> y) {
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> x1 = (x&GT;</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">)?x-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">:x;
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> x2 = (x&LT;</FONT><FONT COLOR="#800080">n</FONT><FONT COLOR="#000000">-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">)?x+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">:x;
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> y1 = (y&GT;</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">)?y-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">:y;
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> y2 = (y&LT;</FONT><FONT COLOR="#800080">n</FONT><FONT COLOR="#000000">-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">)?y+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">:y;
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> count = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = x1; i &LT;= x2; i++) {
+      </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> j = y1; j &LT;= y2; j++) {
+        count += (cells[i][j])?</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">:</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+      }
+    }
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (cells[x][y]) count--;
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> count;
+  }
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Life.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

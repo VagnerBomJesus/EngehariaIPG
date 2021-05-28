@@ -1,0 +1,33 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - quatToEuler.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+quatToEuler.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000000">    </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> Vector3d quat2Euler(Quat4d q1) {
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> sqw = q1.w*q1.w;
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> sqx = q1.x*q1.x;
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> sqy = q1.y*q1.y;
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> sqz = q1.z*q1.z;
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> heading = Math.atan2(</FONT><FONT COLOR="#0000ff">2.0</FONT><FONT COLOR="#000000"> * (q1.x*q1.y + q1.z*q1.w),(sqx - sqy - sqz + sqw));
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> bank = Math.atan2(</FONT><FONT COLOR="#0000ff">2.0</FONT><FONT COLOR="#000000"> * (q1.y*q1.z + q1.x*q1.w),(-sqx - sqy + sqz + sqw));
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> attitude = Math.asin(-</FONT><FONT COLOR="#0000ff">2.0</FONT><FONT COLOR="#000000"> * (q1.x*q1.z - q1.y*q1.w));
+        </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Vector3d(bank, attitude, heading);
+    }
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+quatToEuler.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

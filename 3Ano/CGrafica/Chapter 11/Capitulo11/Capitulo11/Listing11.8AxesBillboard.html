@@ -1,0 +1,117 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - AxesBillboard.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+AxesBillboard.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter11;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">vecmath</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">awt</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">event</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">media</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">universe</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">geometry</FONT><FONT COLOR="#000000">.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> AxesBillboard </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> <I>Group</I> {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> AxesBillboard() {
+    <I>Appearance</I> ap = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Appearance</I>();
+    <I>ap</I>.<I>setMaterial</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Material</I>());
+    <I>Font3D</I> font = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Font3D</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Font(</FONT><FONT COLOR="#0000ff">"SanSerif"</FONT><FONT COLOR="#000000">, <I>Font</I>.<I>PLAIN</I>, </FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">),
+                             </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>FontExtrusion</I>());
+    <I>Text3D</I> x = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Text3D</I>(font, </FONT><FONT COLOR="#0000ff">"x"</FONT><FONT COLOR="#000000">);
+    <I>Shape3D</I> xShape = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Shape3D</I>(x, ap);
+    <I>Text3D</I> y = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Text3D</I>(font, </FONT><FONT COLOR="#0000ff">"y"</FONT><FONT COLOR="#000000">);
+    <I>Shape3D</I> yShape = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Shape3D</I>(y, ap);
+    <I>Text3D</I> z = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Text3D</I>(font, </FONT><FONT COLOR="#0000ff">"z"</FONT><FONT COLOR="#000000">);
+    <I>Shape3D</I> zShape = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Shape3D</I>(z, ap);
+    </FONT><FONT COLOR="#008000">// transform for texts</FONT><FONT COLOR="#000000">
+    <I>Transform3D</I> tTr = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>tTr</I>.<I>setTranslation</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3d</I>(-</FONT><FONT COLOR="#0000ff">0.12</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.6</FONT><FONT COLOR="#000000">, -</FONT><FONT COLOR="#0000ff">0.04</FONT><FONT COLOR="#000000">));
+    <I>tTr</I>.<I>setScale</I>(</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#008000">// transform for arrows</FONT><FONT COLOR="#000000">
+    <I>Transform3D</I> aTr = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>aTr</I>.<I>setTranslation</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3d</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    </FONT><FONT COLOR="#008000">// bounds</FONT><FONT COLOR="#000000">
+    <I>Bounds</I> bounds = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BoundingSphere</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">), </FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#008000">// x axis</FONT><FONT COLOR="#000000">
+    <I>Cylinder</I> xAxis = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Cylinder</I>(</FONT><FONT COLOR="#0000ff">0.05f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">);
+    <I>Transform3D</I> xTr = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>xTr</I>.<I>setRotation</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>AxisAngle4d</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">, -<I>Math</I>.<I>PI</I>/</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">));
+    <I>xTr</I>.<I>setTranslation</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3d</I>(</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    <I>TransformGroup</I> xTg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(xTr);
+    <I>xTg</I>.<I>addChild</I>(xAxis);
+    </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">.<I>addChild</I>(xTg);
+    <I>TransformGroup</I> xTextTg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(tTr);
+    <I>TransformGroup</I> bbTg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>();
+    <I>bbTg</I>.<I>setCapability</I>(<I>TransformGroup</I>.<I>ALLOW_TRANSFORM_WRITE</I>);
+    <I>xTextTg</I>.<I>addChild</I>(bbTg);
+    <I>bbTg</I>.<I>addChild</I>(xShape);
+    <I>Billboard</I> bb = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Billboard</I>(bbTg, <I>Billboard</I>.<I>ROTATE_ABOUT_POINT</I>, </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    <I>bb</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>xTextTg</I>.<I>addChild</I>(bb);
+    <I>xTg</I>.<I>addChild</I>(xTextTg);
+    <I>Cone</I> xArrow = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Cone</I>(</FONT><FONT COLOR="#0000ff">0.1f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.2f</FONT><FONT COLOR="#000000">);
+    <I>TransformGroup</I> xArrowTg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(aTr);
+    <I>xArrowTg</I>.<I>addChild</I>(xArrow);
+    <I>xTg</I>.<I>addChild</I>(xArrowTg);
+    </FONT><FONT COLOR="#008000">// y axis</FONT><FONT COLOR="#000000">
+    <I>Cylinder</I> yAxis = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Cylinder</I>(</FONT><FONT COLOR="#0000ff">0.05f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">);
+    <I>Transform3D</I> yTr = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>yTr</I>.<I>setTranslation</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3d</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    <I>TransformGroup</I> yTg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(yTr);
+    <I>yTg</I>.<I>addChild</I>(yAxis);
+    </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">.<I>addChild</I>(yTg);
+    <I>TransformGroup</I> yTextTg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(tTr);
+    bbTg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>();
+    <I>bbTg</I>.<I>setCapability</I>(<I>TransformGroup</I>.<I>ALLOW_TRANSFORM_WRITE</I>);
+    <I>yTextTg</I>.<I>addChild</I>(bbTg);
+    <I>bbTg</I>.<I>addChild</I>(yShape);
+    bb = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Billboard</I>(bbTg, <I>Billboard</I>.<I>ROTATE_ABOUT_POINT</I>, </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    <I>bb</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>yTextTg</I>.<I>addChild</I>(bb);
+    <I>yTg</I>.<I>addChild</I>(yTextTg);
+    <I>Cone</I> yArrow = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Cone</I>(</FONT><FONT COLOR="#0000ff">0.1f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.2f</FONT><FONT COLOR="#000000">);
+    <I>TransformGroup</I> yArrowTg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(aTr);
+    <I>yArrowTg</I>.<I>addChild</I>(yArrow);
+    <I>yTg</I>.<I>addChild</I>(yArrowTg);
+    </FONT><FONT COLOR="#008000">// z axis</FONT><FONT COLOR="#000000">
+    <I>Cylinder</I> zAxis = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Cylinder</I>(</FONT><FONT COLOR="#0000ff">0.05f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">);
+    <I>Transform3D</I> zTr = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>zTr</I>.<I>setRotation</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>AxisAngle4d</I>(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, <I>Math</I>.<I>PI</I>/</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">));
+    <I>zTr</I>.<I>setTranslation</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3d</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">));
+    <I>TransformGroup</I> zTg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(zTr);
+    <I>zTg</I>.<I>addChild</I>(zAxis);
+    </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">.<I>addChild</I>(zTg);
+    <I>TransformGroup</I> zTextTg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(tTr);
+    bbTg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>();
+    <I>bbTg</I>.<I>setCapability</I>(<I>TransformGroup</I>.<I>ALLOW_TRANSFORM_WRITE</I>);
+    <I>zTextTg</I>.<I>addChild</I>(bbTg);
+    <I>bbTg</I>.<I>addChild</I>(zShape);
+    bb = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Billboard</I>(bbTg, <I>Billboard</I>.<I>ROTATE_ABOUT_POINT</I>, </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    <I>bb</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>zTextTg</I>.<I>addChild</I>(bb);
+    <I>zTg</I>.<I>addChild</I>(zTextTg);
+    <I>Cone</I> zArrow = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Cone</I>(</FONT><FONT COLOR="#0000ff">0.1f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.2f</FONT><FONT COLOR="#000000">);
+    <I>TransformGroup</I> zArrowTg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(aTr);
+    <I>zArrowTg</I>.<I>addChild</I>(zArrow);
+    <I>zTg</I>.<I>addChild</I>(zArrowTg);
+  }
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+AxesBillboard.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

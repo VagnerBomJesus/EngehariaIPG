@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - ClockBehavior.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+ClockBehavior.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000000">
+</FONT><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter10;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.util.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">media</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> ClockBehavior </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> <I>Behavior</I> {
+  <I>TransformGroup</I> </FONT><FONT COLOR="#800080">tgH</FONT><FONT COLOR="#000000">;
+  <I>TransformGroup</I> </FONT><FONT COLOR="#800080">tgM</FONT><FONT COLOR="#000000">;
+  <I>TransformGroup</I> </FONT><FONT COLOR="#800080">tgS</FONT><FONT COLOR="#000000">;
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> ClockBehavior(<I>TransformGroup</I> transH, <I>TransformGroup</I> transM, <I>TransformGroup</I> transS) {
+    </FONT><FONT COLOR="#800080">tgH</FONT><FONT COLOR="#000000"> = transH;
+    </FONT><FONT COLOR="#800080">tgM</FONT><FONT COLOR="#000000"> = transM;
+    </FONT><FONT COLOR="#800080">tgS</FONT><FONT COLOR="#000000"> = transS;
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> initialize() {
+    <I>wakeupOn</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>WakeupOnElapsedTime</I>(</FONT><FONT COLOR="#0000ff">500</FONT><FONT COLOR="#000000">));
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> processStimulus(java.util.Enumeration </FONT><FONT COLOR="#808080">enumeration</FONT><FONT COLOR="#000000">) {
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> hour = <I>Calendar</I>.<I>getInstance</I>().get(<I>Calendar</I>.<I>HOUR</I>);
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> min = <I>Calendar</I>.<I>getInstance</I>().get(<I>Calendar</I>.<I>MINUTE</I>);
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> sec = <I>Calendar</I>.<I>getInstance</I>().get(<I>Calendar</I>.<I>SECOND</I>);
+    <I>Transform3D</I> tr = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>tr</I>.<I>rotZ</I>(-<I>Math</I>.<I>PI</I> * (hour+min/</FONT><FONT COLOR="#0000ff">60.0</FONT><FONT COLOR="#000000">)/</FONT><FONT COLOR="#0000ff">6.0</FONT><FONT COLOR="#000000">);
+    <I>tgH</I>.<I>setTransform</I>(tr);
+    <I>tr</I>.<I>rotZ</I>(-<I>Math</I>.<I>PI</I> * min /</FONT><FONT COLOR="#0000ff">30.0</FONT><FONT COLOR="#000000">);
+    <I>tgM</I>.<I>setTransform</I>(tr);
+    <I>tr</I>.<I>rotZ</I>(-<I>Math</I>.<I>PI</I> * sec /</FONT><FONT COLOR="#0000ff">30.0</FONT><FONT COLOR="#000000">);
+    <I>tgS</I>.<I>setTransform</I>(tr);
+    <I>wakeupOn</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>WakeupOnElapsedTime</I>(</FONT><FONT COLOR="#0000ff">500</FONT><FONT COLOR="#000000">));
+  }
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+ClockBehavior.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

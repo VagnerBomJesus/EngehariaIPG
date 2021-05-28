@@ -1,0 +1,87 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - BezierSurface.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+BezierSurface.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter12;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">vecmath</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">awt</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">awt</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">event</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">media</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">geometry</FONT><FONT COLOR="#000000">.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> BezierSurface </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> <I>Shape3D</I>{
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> BezierSurface(<I>Point3d</I>[][] ctrlPts) {
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> m = </FONT><FONT COLOR="#0000ff">17</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> n = </FONT><FONT COLOR="#0000ff">17</FONT><FONT COLOR="#000000">;
+    <I>Point3d</I>[] pts = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>[m*n];
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> idx = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+    <I>Point3d</I>[] p = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>[</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">];
+    </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> du = </FONT><FONT COLOR="#0000ff">1.0</FONT><FONT COLOR="#000000">/(m-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> dv = </FONT><FONT COLOR="#0000ff">1.0</FONT><FONT COLOR="#000000">/(n-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> u = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> v = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; m; i++) {
+      </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> k = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; k &LT; </FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">; k++) {
+        p[k] = deCasteljau(u, ctrlPts[k]);
+      }
+      v = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+      </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> j = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; j &LT; n; j++) {
+        pts[idx++] = deCasteljau(v, p);
+        v += dv;
+      }
+      u += du;
+    }
+    
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">[] coords = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">[</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">*n*(m-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">)];
+    idx = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">; i &LT; m; i++) {
+      </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> j = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; j &LT; n; j++) {
+        coords[idx++] = i*n + j;
+        coords[idx++] = (i-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">)*n + j;
+      }
+    }
+    
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">[] stripCounts = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">[m-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">];
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; m-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">; i++) stripCounts[i] = </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">*n;
+    
+    <I>GeometryInfo</I> gi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>GeometryInfo</I>(<I>GeometryInfo</I>.<I>TRIANGLE_STRIP_ARRAY</I>);
+    <I>gi</I>.<I>setCoordinates</I>(pts);
+    <I>gi</I>.<I>setCoordinateIndices</I>(coords);
+    <I>gi</I>.<I>setStripCounts</I>(stripCounts);
+    
+    <I>NormalGenerator</I> ng = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>NormalGenerator</I>();
+    <I>ng</I>.<I>generateNormals</I>(gi);
+    </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">.<I>setGeometry</I>(<I>gi</I>.<I>getGeometryArray</I>());
+  }
+  
+  <I>Point3d</I> deCasteljau(</FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> t, <I>Point3d</I>[] p) {
+    <I>Point3d</I>[] pt = {</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>(p[</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">]),</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>(p[</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">]),</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>(p[</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">]), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>(p[</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">])};
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">; i++) {
+      </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> j = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; j &LT; </FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">-i; j++) {
+        <I>pt</I>[<I>j</I>].<I>interpolate</I>(pt[j+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">], t);
+      }
+    }
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> pt[</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">];
+  } 
+}
+
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+BezierSurface.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

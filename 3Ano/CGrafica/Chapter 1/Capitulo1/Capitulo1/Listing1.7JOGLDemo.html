@@ -1,0 +1,90 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - JOGLDemo.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+JOGLDemo.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000000">
+</FONT><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter1;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.event.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">swing</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">net</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">games</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">jogl</FONT><FONT COLOR="#000000">.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> JOGLDemo {
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String[] </FONT><FONT COLOR="#808080">args</FONT><FONT COLOR="#000000">) {
+    Frame frame = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Frame(</FONT><FONT COLOR="#0000ff">"JOGL Demo"</FONT><FONT COLOR="#000000">);
+    <I>GLCapabilities</I> cap = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>GLCapabilities</I>();
+    <I>GLCanvas</I> canvas = <I>GLDrawableFactory</I>.<I>getFactory</I>().<I>createGLCanvas</I>(cap);
+    <I>canvas</I>.<I>setSize</I>(</FONT><FONT COLOR="#0000ff">300</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">300</FONT><FONT COLOR="#000000">);
+    <I>canvas</I>.<I>addGLEventListener</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Renderer());
+    frame.add(canvas);
+    frame.pack();
+    frame.addWindowListener(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> WindowAdapter() {
+      </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>windowClosing</I></FONT><FONT COLOR="#000000">(WindowEvent </FONT><FONT COLOR="#808080">e</FONT><FONT COLOR="#000000">) {
+        <I>System</I>.<I>exit</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+      }
+    });
+    frame.show();
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> Renderer </FONT><FONT COLOR="#000080"><B>implements</B></FONT><FONT COLOR="#000000"> <I>GLEventListener</I> {
+    </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>GL</I> </FONT><FONT COLOR="#800080">gl</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>GLU</I> </FONT><FONT COLOR="#800080">glu</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>GLDrawable</I> </FONT><FONT COLOR="#808080">gldrawable</FONT><FONT COLOR="#000000">;
+    
+    </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> init(<I>GLDrawable</I> drawable) {
+      </FONT><FONT COLOR="#800080">gl</FONT><FONT COLOR="#000000"> = <I>drawable</I>.<I>getGL</I>();
+      </FONT><FONT COLOR="#800080">glu</FONT><FONT COLOR="#000000"> = <I>drawable</I>.<I>getGLU</I>();
+      </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">gldrawable</FONT><FONT COLOR="#000000"> = drawable;
+      <I>gl</I>.<I>glMatrixMode</I>(<I>GL</I>.<I>GL_PROJECTION</I>);
+      <I>gl</I>.<I>glLoadIdentity</I>();
+      <I>glu</I>.<I>gluOrtho2D</I>(-</FONT><FONT COLOR="#0000ff">1.2</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.2</FONT><FONT COLOR="#000000">, -</FONT><FONT COLOR="#0000ff">1.2</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.2</FONT><FONT COLOR="#000000">);
+      <I>gl</I>.<I>glClearColor</I>(</FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.0f</FONT><FONT COLOR="#000000">);
+    }    
+    
+    </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> display(<I>GLDrawable</I> </FONT><FONT COLOR="#808080">drawable</FONT><FONT COLOR="#000000">) {
+      </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i;
+      </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> n = </FONT><FONT COLOR="#0000ff">80</FONT><FONT COLOR="#000000">;
+      </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> a = (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)(</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">*</FONT><FONT COLOR="#0000ff">3.1415926535</FONT><FONT COLOR="#000000">/n);
+      </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> x;
+      </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> y;
+      
+      <I>gl</I>.<I>glClear</I>(<I>GL</I>.<I>GL_COLOR_BUFFER_BIT</I>);
+      <I>gl</I>.<I>glColor3f</I>(</FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+      <I>gl</I>.<I>glBegin</I>(<I>GL</I>.<I>GL_LINE_LOOP</I>);
+      </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; n; i++) {
+        x = (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)<I>Math</I>.<I>cos</I>(i*a);
+        y = (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)<I>Math</I>.<I>sin</I>(i*a);
+        <I>gl</I>.<I>glVertex2f</I>(x, y);
+      }
+      <I>gl</I>.<I>glEnd</I>();
+      <I>gl</I>.<I>glFlush</I>();
+    }
+    
+    </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> reshape(<I>GLDrawable</I> </FONT><FONT COLOR="#808080">drawable</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">x</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">y</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">width</FONT><FONT COLOR="#000000">,
+      </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">height</FONT><FONT COLOR="#000000">) {}
+    </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> displayChanged(<I>GLDrawable</I> </FONT><FONT COLOR="#808080">drawable</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>boolean</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">modeChanged</FONT><FONT COLOR="#000000">,
+      </FONT><FONT COLOR="#000080"><B>boolean</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">deviceChanged</FONT><FONT COLOR="#000000">) {}
+  }
+}
+
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+JOGLDemo.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

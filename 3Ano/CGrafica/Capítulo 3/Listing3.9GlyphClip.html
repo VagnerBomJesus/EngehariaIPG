@@ -1,0 +1,70 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - GlyphClip.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+GlyphClip.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter3;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">awt</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">event</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.swing.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.font.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.geom.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> GlyphClip </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JApplet {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String </FONT><FONT COLOR="#808080">s</FONT><FONT COLOR="#000000">[]) {
+    JFrame frame = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JFrame();
+    frame.setTitle(</FONT><FONT COLOR="#0000ff">"Glyph and Clip"</FONT><FONT COLOR="#000000">);
+    frame.setDefaultCloseOperation(<I>JFrame</I>.<I>EXIT_ON_CLOSE</I>);
+    JApplet applet = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> GlyphClip();
+    applet.init();
+    frame.getContentPane().add(applet);
+    frame.pack();
+    frame.setVisible(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    JPanel panel = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> GlyphPanel();
+    getContentPane().add(panel);
+  }
+}
+
+</FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> GlyphPanel </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JPanel {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> GlyphPanel() {
+    setPreferredSize(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Dimension(</FONT><FONT COLOR="#0000ff">500</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">400</FONT><FONT COLOR="#000000">));
+    setBackground(<I>Color</I>.<I>white</I>);
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>paintComponent</I></FONT><FONT COLOR="#000000">(Graphics g) {
+    </FONT><FONT COLOR="#000080"><B>super</B></FONT><FONT COLOR="#000000">.paintComponent(g);
+    Graphics2D g2 = (Graphics2D)g;
+    Font font = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Font(</FONT><FONT COLOR="#0000ff">"Serif"</FONT><FONT COLOR="#000000">, <I>Font</I>.<I>BOLD</I>, </FONT><FONT COLOR="#0000ff">144</FONT><FONT COLOR="#000000">);
+    FontRenderContext frc = g2.getFontRenderContext();
+    GlyphVector gv = font.createGlyphVector(frc, </FONT><FONT COLOR="#0000ff">"Java"</FONT><FONT COLOR="#000000">);
+    Shape glyph = gv.getOutline(</FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">);
+    g2.setClip(glyph);
+    g2.setColor(<I>Color</I>.<I>red</I>);
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#0000ff">2000</FONT><FONT COLOR="#000000">; i++) {
+      Shape shape = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Ellipse2D.Double(<I>Math</I>.<I>random</I>()*</FONT><FONT COLOR="#0000ff">500</FONT><FONT COLOR="#000000">, <I>Math</I>.<I>random</I>()*</FONT><FONT COLOR="#0000ff">400</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">30</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">20</FONT><FONT COLOR="#000000">);
+      g2.draw(shape);
+    }
+  }
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+GlyphClip.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

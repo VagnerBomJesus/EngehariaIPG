@@ -1,0 +1,21 @@
+/****Evento*****/
+id_evento(PK)
+Nome 
+descrição
+data_realização 
+local_realização 
+(lotaçao maxima)
+(lotaçao oucupada no mementos)
+/****Lugar Evento*****/
+ID_lugar(pk)
+Id_evento(Fk)
+ocupado(S/N)
+Nºcadeira
+/****Turista*****/
+Id_turista(pk) 
+Nome
+email
+password
+/*****
+
+

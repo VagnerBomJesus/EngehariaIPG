@@ -1,0 +1,78 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - AWTDemo.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+AWTDemo.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000000">
+</FONT><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter1;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.event.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> AWTDemo </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> Frame </FONT><FONT COLOR="#000080"><B>implements</B></FONT><FONT COLOR="#000000"> ActionListener{
+  </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#800080">x</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#800080">y</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">;
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String[] </FONT><FONT COLOR="#808080">args</FONT><FONT COLOR="#000000">) {
+    Frame frame = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> AWTDemo();
+    frame.setSize(</FONT><FONT COLOR="#0000ff">640</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">480</FONT><FONT COLOR="#000000">);
+    frame.setVisible(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> AWTDemo() {
+    setTitle(</FONT><FONT COLOR="#0000ff">"AWT Demo"</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#008000">// create menu</FONT><FONT COLOR="#000000">
+    MenuBar mb = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> MenuBar();
+    setMenuBar(mb);
+    Menu menu = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Menu(</FONT><FONT COLOR="#0000ff">"File"</FONT><FONT COLOR="#000000">);
+    mb.add(menu);
+    MenuItem mi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> MenuItem(</FONT><FONT COLOR="#0000ff">"Exit"</FONT><FONT COLOR="#000000">);
+    mi.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    menu.add(mi);
+    </FONT><FONT COLOR="#008000">// end program when window is closed</FONT><FONT COLOR="#000000">
+    WindowListener l = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> WindowAdapter() {
+      </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>windowClosing</I></FONT><FONT COLOR="#000000">(WindowEvent </FONT><FONT COLOR="#808080">ev</FONT><FONT COLOR="#000000">) {
+        <I>System</I>.<I>exit</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+      }
+    };
+    </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">.addWindowListener(l);
+    </FONT><FONT COLOR="#008000">// mouse event handler</FONT><FONT COLOR="#000000">
+    MouseListener mouseListener = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> MouseAdapter() {
+      </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mouseClicked</I></FONT><FONT COLOR="#000000">(MouseEvent ev) {
+        </FONT><FONT COLOR="#800080"><B>x</B></FONT><FONT COLOR="#000000"> = ev.getX();
+        </FONT><FONT COLOR="#800080"><B>y</B></FONT><FONT COLOR="#000000"> = ev.getY();
+        repaint();
+      }
+    };
+    addMouseListener(mouseListener);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>paint</I></FONT><FONT COLOR="#000000">(Graphics g) {
+    g.drawOval(</FONT><FONT COLOR="#800080">x</FONT><FONT COLOR="#000000">-</FONT><FONT COLOR="#0000ff">50</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#800080">y</FONT><FONT COLOR="#000000">-</FONT><FONT COLOR="#0000ff">50</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>actionPerformed</I></FONT><FONT COLOR="#000000">(ActionEvent ev) {
+    String command = ev.getActionCommand();
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Exit"</FONT><FONT COLOR="#000000">.equals(command)) {
+      <I>System</I>.<I>exit</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+    }
+  }
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+AWTDemo.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

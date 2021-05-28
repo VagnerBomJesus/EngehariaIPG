@@ -1,0 +1,108 @@
+Router>enable
+Router#conf term
+Router(config)#hostname R2
+R2(config)#int g0/0
+R2(config-if)#ip address 192.168.2.1 255.255.255.0
+R2(config-if)#no shutdown
+R2(config-if)#line console 0
+R2(config-line)#logging synchronous
+R2(config-line)#exit
+R2(config)#int s0/0/0
+R2(config-if)#ip address 192.168.12.2 255.255.255.252
+R2(config-if)#no shutdown
+R2(config-if)#int s0/0/1
+R2(config-if)#clock rate 128000
+R2(config-if)#ip address 192.168.23.1 255.255.255.252
+R2(config-if)#no shutdown
+
+/****************/
+R2>enable
+R2#ping 192.168.12.1
+R2#ping 192.168.23.2
+R2#ping 192.168.2.3
+/****************/
+R1(config)#router ospf 1
+R1(config-router)#do show ip route connected
+R1(config-router)# network 192.168.1.0 0.0.0.255 area 0
+R1(config-router)# network 192.168.12.0 0.0.0.3 area 0
+R1(config-router)# network 192.168.13.0 0.0.0.3 area 0
+/*************/
+R1#show ip ospf neighbor
+R1# show ip route
+Que comando você usaria para ver apenas as rotas OSPF na tabela de roteamento?
+R: R1#show ip route ospf
+
+R1#show ip protocols
+R1# show ip ospf
+R1# show ip ospf interface brief
+R1# show ip ospf interface
+/***********/
+R1(config)# interface lo0 /***Loopback***/
+R1(config-if)# ip address 1.1.1.1 255.255.255.255
+R1(config-if)# end
+/**********/
+R1#copy running startup
+R3#reload
+R1#show ip protocols
+R1#show ip ospf neighbor
+/*************/
+R1(config)# router ospf 1
+R1(config-router)# router-id 11.11.11.11
+R1#clear ip ospf process
+
+R1#show ip protocols
+
+R1(config)# router ospf 1
+R1(config-router)# passive-interface g0/0
+R1(config-router)# end
+/************/
+Qual interface R3 está usando para rotear para a rede 192.168.2.0/24?
+R:s0/0/0
+Qual é a métrica de custo acumulado para a rede 192.168.2.0/24 em R3?
+R:129
+R3 s0/0/0 192.168.2.0/24
+64+64+1 = 129
+R2 aparece como um vizinho OSPF em R1?
+R: Sim
+O R2 aparece como um vizinho OSPF no R3?
+R: Não
+O que esta informação lhe diz?
+R:O tráfego para a rede 192.169.2.0/24 de R3 será roteado através de R1, a interface S0 / 0/1 em R2 ainda está configurada como uma interface passiva, portanto, as informações de roteamento OSPF não estão sendo anunciadas através desta interface, o custo acumulado de 129 resulta do fato de que o tráfego da rede R3 para a rede 192.169.2.0/24 deve passar por dois links siriais T1 (1.544Mbs), a um custo de 64 cada, mais o link R2 Gigabi 0/0 LaN, a um custo de 1
+
+Altere a interface S0 / 0/1 em R2 para permitir que ele anuncie rotas OSPF. Registre os comandos usados abaixo?
+R: R2(config) # router ospf 1
+	R2(config-router) no passive-interface s0/0/1
+Emita novamente o comando show ip route em R3.
+
+Qual interface R3 está usando para rotear para a rede 192.168.2.0/24?	
+R:R3 s0/0/1 192.168.2.0/24
+64+1 = 65
+
+What is the accumulated cost metric for the 192.168.2.0/24 network on R3 now and how is this
+calculated?
+R: 65
+R2 está listado como vizinho OSPF de R3?
+R:sim
+//*************//
+R1(config-router)#auto-cost reference-bandwidth 10000
+
+
+R1(config)# router ospf 1
+R1(config-router)# auto-cost reference-bandwidth 100
+Por que você deseja alterar a largura de banda de referência padrão do OSPF?
+R:e e preciso uma configuração padrão de banda mais alta para obter calculo do custi mais preciso
+
+Explique como os custos para as redes 192.168.3.0/24 e 192.168.23.0/30 de R1 foram calculados.
+R: 
+
+Explique como os custos para as redes 192.168.3.0/24 e 192.168.23.0/30 de R1 foram calculados.
+R: 
+Explique por que a rota para a rede 192.168.3.0/24 em R1 agora está passando por R2?
+R:
+Por que é importante controlar a atribuição de ID do roteador ao usar o protocolo OSPF?
+R:As atribuições de id do roteador controlam o Roteador Designado, Dr, e o Roteador Designado de Backup, BDR, processo de eleição na rede multiacesso, se a Id do roteador estiver associada a uma interface ativa, ela pode mudar se a interface cair, por este motivo deve ser definido usando o endereço IP de uma interface de loopback que não pode ser desativado ou definido usando o comando router-id
+Por que o processo de eleição de DR / BDR não é uma preocupação neste laboratório?
+R:O processo de eleição de DR / BDR é apenas um problema em uma rede multiacesso, como ethernet ou framerelay, o link serial usado neste laboratório são links ponto a ponto, portanto, nenhuma exclusão de Dr / BDR é realizada
+Por que você deseja definir uma interface OSPF como passiva?
+R:configurar uma interface lan como passivo elimina informações de roteamento OSPF desnecessárias nessa interface, liberando largura de banda, o roteador ainda irá anunciar a rede para seus vizinhos, além disso é uma boa prática para segurança
+

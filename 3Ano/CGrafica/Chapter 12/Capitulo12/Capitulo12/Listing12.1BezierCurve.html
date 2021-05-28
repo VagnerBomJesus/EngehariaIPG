@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - BezierCurve.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+BezierCurve.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter12;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">vecmath</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">awt</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">awt</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">event</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">media</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">universe</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">geometry</FONT><FONT COLOR="#000000">.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> BezierCurve </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> <I>LineStripArray</I> {
+  </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> <I>level</I> = </FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">[] <I>vCnts</I> = {(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">&LT;&LT;<I>level</I>)+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">};
+  </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#800080">index</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> BezierCurve(<I>Point3d</I> p0,<I>Point3d</I> p1,<I>Point3d</I> p2,<I>Point3d</I> p3) {
+    </FONT><FONT COLOR="#000080"><B>super</B></FONT><FONT COLOR="#000000">(<I>vCnts</I>[</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">], <I>GeometryArray</I>.<I>COORDINATES</I>, <I>vCnts</I>);
+    <I>setCoordinate</I>(</FONT><FONT COLOR="#800080">index</FONT><FONT COLOR="#000000">, p0);
+    </FONT><FONT COLOR="#800080">index</FONT><FONT COLOR="#000000">++;
+    subdivide(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,p0,p1,p2,p3);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> subdivide(</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> lev, <I>Point3d</I> p0, <I>Point3d</I> p1, <I>Point3d</I> p2, <I>Point3d</I> p3) {
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (lev &GT;= <I>level</I>){
+      <I>setCoordinate</I>(</FONT><FONT COLOR="#800080">index</FONT><FONT COLOR="#000000">, p3);
+      </FONT><FONT COLOR="#800080">index</FONT><FONT COLOR="#000000">++;
+    }
+    </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> {
+      <I>Point3d</I> p10 = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>();
+      <I>p10</I>.<I>add</I>(p0,p1);
+      <I>p10</I>.<I>scale</I>(</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">);
+      <I>Point3d</I> p11 = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>();
+      <I>p11</I>.<I>add</I>(p1,p2);
+      <I>p11</I>.<I>scale</I>(</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">);
+      <I>Point3d</I> p12 = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>();
+      <I>p12</I>.<I>add</I>(p2,p3);
+      <I>p12</I>.<I>scale</I>(</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">);
+      <I>Point3d</I> p20 = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>();
+      <I>p20</I>.<I>add</I>(p10,p11);
+      <I>p20</I>.<I>scale</I>(</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">);
+      <I>Point3d</I> p21 = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>();
+      <I>p21</I>.<I>add</I>(p11,p12);
+      <I>p21</I>.<I>scale</I>(</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">);
+      <I>Point3d</I> p30 = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>();
+      <I>p30</I>.<I>add</I>(p20,p21);
+      <I>p30</I>.<I>scale</I>(</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">);
+      subdivide(lev+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">,p0,p10,p20,p30);
+      subdivide(lev+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">,p30,p21,p12,p3);
+    }
+  }
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+BezierCurve.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

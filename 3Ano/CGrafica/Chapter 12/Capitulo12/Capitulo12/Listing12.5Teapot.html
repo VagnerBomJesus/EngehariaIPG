@@ -1,0 +1,137 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - Teapot.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Teapot.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter12;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">vecmath</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">awt</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">event</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">media</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">universe</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">geometry</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.applet.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">applet</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">MainFrame</FONT><FONT COLOR="#000000">;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.net.URL;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.io.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.util.StringTokenizer;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> Teapot </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> Applet {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String[] </FONT><FONT COLOR="#808080">args</FONT><FONT COLOR="#000000">) {
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>MainFrame</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Teapot(), </FONT><FONT COLOR="#0000ff">640</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">480</FONT><FONT COLOR="#000000">);
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    </FONT><FONT COLOR="#008000">// create canvas</FONT><FONT COLOR="#000000">
+    GraphicsConfiguration gc = <I>SimpleUniverse</I>.<I>getPreferredConfiguration</I>();
+    <I>Canvas3D</I> cv = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Canvas3D</I>(gc);
+    setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BorderLayout());
+    add(cv, <I>BorderLayout</I>.<I>CENTER</I>);
+    <I>BranchGroup</I> bg = createSceneGraph();
+    <I>bg</I>.<I>compile</I>();
+    <I>SimpleUniverse</I> su = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>SimpleUniverse</I>(cv);
+    <I>su</I>.<I>getViewingPlatform</I>().<I>setNominalViewingTransform</I>();
+    <I>su</I>.<I>addBranchGraph</I>(bg);
+  }
+
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I> createSceneGraph() {
+    <I>BranchGroup</I> root = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I>();
+    <I>TransformGroup</I> spin = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>();
+    <I>spin</I>.<I>setCapability</I>(<I>TransformGroup</I>.<I>ALLOW_TRANSFORM_WRITE</I>);
+    <I>root</I>.<I>addChild</I>(spin);
+    </FONT><FONT COLOR="#008000">// teapot data</FONT><FONT COLOR="#000000">
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> n = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">[][] idx = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> np = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+    <I>Point3d</I>[] pts = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+    URL url = getClass().getClassLoader().getResource(</FONT><FONT COLOR="#0000ff">"images/teapot"</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>try</B></FONT><FONT COLOR="#000000"> {
+      BufferedReader br = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BufferedReader(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> InputStreamReader(url.openStream()));
+      String line = br.readLine();
+      n = <I>Integer</I>.<I>parseInt</I>(line);
+      idx = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">[n][</FONT><FONT COLOR="#0000ff">16</FONT><FONT COLOR="#000000">];
+      </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; n; i++) {
+          line = br.readLine();
+          StringTokenizer st = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> StringTokenizer(line, </FONT><FONT COLOR="#0000ff">", \n"</FONT><FONT COLOR="#000000">);
+          </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> j = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; j &LT; </FONT><FONT COLOR="#0000ff">16</FONT><FONT COLOR="#000000">; j++) {
+              idx[i][j] = <I>Integer</I>.<I>parseInt</I>(st.nextToken());
+          }
+      }
+      line = br.readLine();
+      np = <I>Integer</I>.<I>parseInt</I>(line);
+      pts = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>[np];
+      </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; np; i++) {
+          line = br.readLine();
+          StringTokenizer st = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> StringTokenizer(line, </FONT><FONT COLOR="#0000ff">", \n"</FONT><FONT COLOR="#000000">);
+          </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> x = <I>Double</I>.<I>parseDouble</I>(st.nextToken());
+          </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> y = <I>Double</I>.<I>parseDouble</I>(st.nextToken());
+          </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> z = <I>Double</I>.<I>parseDouble</I>(st.nextToken());
+          pts[i] = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>(x, y, z);
+      }
+      br.close();
+    } </FONT><FONT COLOR="#000080"><B>catch</B></FONT><FONT COLOR="#000000"> (IOException ex) {
+      ex.printStackTrace();
+    }
+    
+    </FONT><FONT COLOR="#008000">// surface</FONT><FONT COLOR="#000000">
+    <I>Appearance</I> ap = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Appearance</I>();
+    <I>ap</I>.<I>setMaterial</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Material</I>());
+    <I>Transform3D</I> tr = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>tr</I>.<I>rotX</I>(-<I>Math</I>.<I>PI</I>*</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">);
+    <I>tr</I>.<I>setScale</I>(</FONT><FONT COLOR="#0000ff">0.25</FONT><FONT COLOR="#000000">);
+    <I>tr</I>.<I>setTranslation</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3d</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,-</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    <I>TransformGroup</I> tg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(tr);
+    <I>spin</I>.<I>addChild</I>(tg);
+    <I>Point3d</I>[][] ctrlPts = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>[</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">][</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">];
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> k = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; k &LT; n; k++) {
+      </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">; i++) {
+        </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> j = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; j &LT; </FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">; j++) {
+          ctrlPts[i][j] = pts[idx[k][i+</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">*j]-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">];
+        }
+      }
+      <I>Shape3D</I> shape = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BezierSurface(ctrlPts);
+      <I>shape</I>.<I>setAppearance</I>(ap);
+      <I>tg</I>.<I>addChild</I>(shape);
+    }
+    </FONT><FONT COLOR="#008000">// rotation interpolator</FONT><FONT COLOR="#000000">
+    <I>Alpha</I> alpha = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Alpha</I>(-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">10000</FONT><FONT COLOR="#000000">);
+    <I>RotationInterpolator</I> rotator = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>RotationInterpolator</I>(alpha, spin);
+    <I>BoundingSphere</I> bounds = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BoundingSphere</I>();
+    <I>bounds</I>.<I>setRadius</I>(</FONT><FONT COLOR="#0000ff">10</FONT><FONT COLOR="#000000">);
+    <I>rotator</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>spin</I>.<I>addChild</I>(rotator);
+    </FONT><FONT COLOR="#008000">// background and lights</FONT><FONT COLOR="#000000">
+    <I>Background</I> background = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Background</I>(</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">);
+    <I>background</I>.<I>setApplicationBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(background);
+    <I>AmbientLight</I> light = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>AmbientLight</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>white</I>));
+    <I>light</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(light);
+    <I>PointLight</I> ptlight = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>PointLight</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>white</I>),
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">0.7f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">1.8f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">1.8f</FONT><FONT COLOR="#000000">), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0.2f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">));
+    <I>ptlight</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(ptlight);
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> root;
+  }
+}
+
+
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Teapot.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

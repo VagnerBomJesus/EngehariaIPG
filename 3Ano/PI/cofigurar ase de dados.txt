@@ -1,0 +1,10 @@
+paquege manege conosle
+
+//Muicipios/Create
+
+
+///fazer a migração
+Add-Migration Initial -Contex SportsStoreDbContext
+
+//Fazer upadtae da Migração do outro pc para seu
+Update-Database -Context SportsStoreDbContext IPGFuncionariosDbContext

@@ -1,0 +1,180 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - BSpline.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+BSpline.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter4;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.geom.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.event.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.util.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.swing.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> BSpline </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JApplet {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String </FONT><FONT COLOR="#808080">s</FONT><FONT COLOR="#000000">[]) {
+    JFrame frame = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JFrame();
+    frame.setTitle(</FONT><FONT COLOR="#0000ff">"B-Spline"</FONT><FONT COLOR="#000000">);
+    frame.setDefaultCloseOperation(<I>JFrame</I>.<I>EXIT_ON_CLOSE</I>);
+    JApplet applet = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BSpline();
+    applet.init();
+    frame.getContentPane().add(applet);
+    frame.pack();
+    frame.setVisible(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    JPanel panel = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BSplinePanel();
+    getContentPane().add(panel);
+  }
+}
+
+</FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> BSplinePanel </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JPanel </FONT><FONT COLOR="#000080"><B>implements</B></FONT><FONT COLOR="#000000"> MouseListener, MouseMotionListener {
+  Vector </FONT><FONT COLOR="#800080">points</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>boolean</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#800080">completed</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">;
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> BSplinePanel() {
+    setPreferredSize(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Dimension(</FONT><FONT COLOR="#0000ff">640</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">480</FONT><FONT COLOR="#000000">));
+    setBackground(<I>Color</I>.<I>white</I>);
+    addMouseListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    addMouseMotionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#800080">points</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Vector();
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>paintComponent</I></FONT><FONT COLOR="#000000">(Graphics g) {
+    </FONT><FONT COLOR="#000080"><B>super</B></FONT><FONT COLOR="#000000">.paintComponent(g);
+    Graphics2D g2 = (Graphics2D)g;
+    Point </FONT><FONT COLOR="#808080">p0</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+    Point p1 = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+    Point p2 = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+    Point p3 = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> x1,y1,x2,y2,x3,y3, x4, y4;
+    Iterator it = </FONT><FONT COLOR="#800080">points</FONT><FONT COLOR="#000000">.iterator();
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (it.hasNext()) {
+      p1 = (Point)(it.next());
+    }
+    </FONT><FONT COLOR="#000080"><B>while</B></FONT><FONT COLOR="#000000"> (it.hasNext()) {
+      p2 = (Point)(it.next());
+      g2.drawLine(p1.x, p1.y, p2.x, p2.y);
+      p1 = p2;
+    }
+
+    GeneralPath spline = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> GeneralPath();
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> n = </FONT><FONT COLOR="#800080">points</FONT><FONT COLOR="#000000">.size();
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (n == </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">) </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000">;
+    p1 = (Point)</FONT><FONT COLOR="#800080">points</FONT><FONT COLOR="#000000">.get(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+    spline.moveTo(p1.x, p1.y);
+    g2.drawRect(p1.x-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, p1.y-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">);
+    p1 = (Point)</FONT><FONT COLOR="#800080">points</FONT><FONT COLOR="#000000">.get(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">);
+    p2 = (Point)</FONT><FONT COLOR="#800080">points</FONT><FONT COLOR="#000000">.get(</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">);
+    p3 = (Point)</FONT><FONT COLOR="#800080">points</FONT><FONT COLOR="#000000">.get(</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">);
+    x1 = p1.x;
+    y1 = p1.y;
+    x2 = (p1.x + p2.x)/</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">;
+    y2 = (p1.y + p2.y)/</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">;
+    x4 = (</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">*p2.x+p3.x)/</FONT><FONT COLOR="#0000ff">3.0f</FONT><FONT COLOR="#000000">;
+    y4 = (</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">*p2.y+p3.y)/</FONT><FONT COLOR="#0000ff">3.0f</FONT><FONT COLOR="#000000">;
+    x3 = (x2+x4)/</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">;
+    y3 = (y2+y4)/</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">;
+    spline.curveTo(x1, y1, x2, y2, x3, y3);
+    g2.drawRect((</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)x1-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)y1-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">);
+    g2.drawRect((</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)x2-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)y2-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">);
+    g2.drawRect((</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)x3-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)y3-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">; i &LT; n - </FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">; i++) {
+      p1 = p2;
+      p2 = p3;
+      p3 = (Point)</FONT><FONT COLOR="#800080">points</FONT><FONT COLOR="#000000">.get(i+</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">);
+      x1 = x4;
+      y1 = y4;
+      x2 = (p1.x+</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">*p2.x)/</FONT><FONT COLOR="#0000ff">3.0f</FONT><FONT COLOR="#000000">;
+      y2 = (p1.y+</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">*p2.y)/</FONT><FONT COLOR="#0000ff">3.0f</FONT><FONT COLOR="#000000">;
+      x4 = (</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">*p2.x+p3.x)/</FONT><FONT COLOR="#0000ff">3.0f</FONT><FONT COLOR="#000000">;
+      y4 = (</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">*p2.y+p3.y)/</FONT><FONT COLOR="#0000ff">3.0f</FONT><FONT COLOR="#000000">;
+      x3 = (x2+x4)/</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">;
+      y3 = (y2+y4)/</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">;
+      spline.curveTo(x1,y1,x2,y2,x3,y3);
+      g2.drawRect((</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)x1-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)y1-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">);
+      g2.drawRect((</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)x2-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)y2-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">);
+      g2.drawRect((</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)x3-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)y3-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">);
+    }
+    p1 = p2;
+    p2 = p3;
+    p3 = (Point)</FONT><FONT COLOR="#800080">points</FONT><FONT COLOR="#000000">.get(n-</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">);
+    x1 = x4;
+    y1 = y4;
+    x2 = (p1.x+</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">*p2.x)/</FONT><FONT COLOR="#0000ff">3.0f</FONT><FONT COLOR="#000000">;
+    y2 = (p1.y+</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">*p2.y)/</FONT><FONT COLOR="#0000ff">3.0f</FONT><FONT COLOR="#000000">;
+    x4 = (p2.x+p3.x)/</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">;
+    y4 = (p2.y+p3.y)/</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">;
+    x3 = (x2+x4)/</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">;
+    y3 = (y2+y4)/</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">;
+    spline.curveTo(x1,y1,x2,y2,x3,y3);
+    g2.drawRect((</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)x1-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)y1-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">);
+    g2.drawRect((</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)x2-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)y2-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">);
+    g2.drawRect((</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)x3-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)y3-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">);
+    p2 = p3;
+    p3 = (Point)</FONT><FONT COLOR="#800080">points</FONT><FONT COLOR="#000000">.get(n-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">);
+    x1 = x4;
+    y1 = y4;
+    x2 = p2.x;
+    y2 = p2.y;
+    x3 = p3.x;
+    y3 = p3.y;
+    spline.curveTo(x1,y1,x2,y2,x3,y3);
+    g2.drawRect((</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)x1-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)y1-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">);
+    g2.drawRect((</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)x2-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)y2-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">);
+    g2.drawRect((</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)x3-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)y3-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">);
+    g2.draw(spline);
+  }
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mouseClicked</I></FONT><FONT COLOR="#000000">(MouseEvent </FONT><FONT COLOR="#808080">ev</FONT><FONT COLOR="#000000">) {
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mouseEntered</I></FONT><FONT COLOR="#000000">(MouseEvent </FONT><FONT COLOR="#808080">ev</FONT><FONT COLOR="#000000">) {
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mouseExited</I></FONT><FONT COLOR="#000000">(MouseEvent </FONT><FONT COLOR="#808080">ev</FONT><FONT COLOR="#000000">) {
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mousePressed</I></FONT><FONT COLOR="#000000">(MouseEvent ev) {
+    Graphics g = getGraphics();
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#800080">completed</FONT><FONT COLOR="#000000">) {
+      </FONT><FONT COLOR="#800080">points</FONT><FONT COLOR="#000000">.clear();
+      </FONT><FONT COLOR="#800080">completed</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>false</B></FONT><FONT COLOR="#000000">;
+    }
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (ev.getClickCount() == </FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">) {
+      Point p =ev.getPoint();
+      </FONT><FONT COLOR="#800080">points</FONT><FONT COLOR="#000000">.add(p);
+      g.fillOval(p.x-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, p.y-</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">);
+    }
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mouseReleased</I></FONT><FONT COLOR="#000000">(MouseEvent ev) {
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (ev.getClickCount() &GT; </FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">) {
+      </FONT><FONT COLOR="#800080">completed</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">;
+      repaint();
+    }
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mouseMoved</I></FONT><FONT COLOR="#000000">(MouseEvent </FONT><FONT COLOR="#808080">ev</FONT><FONT COLOR="#000000">) {
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mouseDragged</I></FONT><FONT COLOR="#000000">(MouseEvent </FONT><FONT COLOR="#808080">ev</FONT><FONT COLOR="#000000">) {
+  }
+}
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+BSpline.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

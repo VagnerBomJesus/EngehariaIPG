@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - extrudeShape.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+extrudeShape.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000000">
+
+  </FONT><FONT COLOR="#008000">// assume the Shape has a single continuous curve</FONT><FONT COLOR="#000000">
+  Geometry extrudeShape(Shape curve, </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> depth) {
+    PathIterator iter = curve.getPathIterator(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> AffineTransform());
+    Vector ptsList = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Vector();
+    </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">[] seg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">[</FONT><FONT COLOR="#0000ff">6</FONT><FONT COLOR="#000000">];
+    </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> x = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, y = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> x0 = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, y0 = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>while</B></FONT><FONT COLOR="#000000"> (!iter.isDone()) {
+      </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> segType = iter.currentSegment(seg);
+      </FONT><FONT COLOR="#000080"><B>switch</B></FONT><FONT COLOR="#000000"> (segType) {
+        </FONT><FONT COLOR="#000080"><B>case</B></FONT><FONT COLOR="#000000"> PathIterator.SEG_MOVETO:
+          x = x0 = seg[</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">];
+          y = y0 = seg[</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">];
+          ptsList.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Point3f(x,y,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+          </FONT><FONT COLOR="#000080"><B>break</B></FONT><FONT COLOR="#000000">;
+        </FONT><FONT COLOR="#000080"><B>case</B></FONT><FONT COLOR="#000000"> PathIterator.SEG_LINETO:
+          x = seg[</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">];
+          y = seg[</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">];
+          ptsList.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Point3f(x,y,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+          </FONT><FONT COLOR="#000080"><B>break</B></FONT><FONT COLOR="#000000">;
+        </FONT><FONT COLOR="#000080"><B>case</B></FONT><FONT COLOR="#000000"> PathIterator.SEG_QUADTO:
+          </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#0000ff">10</FONT><FONT COLOR="#000000">; i++) {
+            </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> t = (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)i/</FONT><FONT COLOR="#0000ff">10f</FONT><FONT COLOR="#000000">;
+            </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> xi = (</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*x + </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">*t*(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*seg[</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">] + t*t*seg[</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">];
+            </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> yi = (</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*y + </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">*t*(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*seg[</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">] + t*t*seg[</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">];
+            ptsList.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Point3f(xi,yi,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+          }
+          x = seg[</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">];
+          y = seg[</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">];
+          ptsList.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Point3f(x,y,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+          </FONT><FONT COLOR="#000080"><B>break</B></FONT><FONT COLOR="#000000">;
+        </FONT><FONT COLOR="#000080"><B>case</B></FONT><FONT COLOR="#000000"> PathIterator.SEG_CUBICTO:
+          </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#0000ff">20</FONT><FONT COLOR="#000000">; i++) {
+            </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> t = (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)i/</FONT><FONT COLOR="#0000ff">20f</FONT><FONT COLOR="#000000">;
+            </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> xi = (</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*x + </FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">*t*(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*seg[</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">] +
+            </FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">*t*t*(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*seg[</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">] + t*t*t*seg[</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">];
+            </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> yi = (</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*y + </FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">*t*(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*seg[</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">] +
+            </FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">*t*t*(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">-t)*seg[</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">] + t*t*t*seg[</FONT><FONT COLOR="#0000ff">5</FONT><FONT COLOR="#000000">];
+            ptsList.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Point3f(xi,yi,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+          }
+          x = seg[</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">];
+          y = seg[</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">];
+          ptsList.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Point3f(x,y,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+          </FONT><FONT COLOR="#000080"><B>break</B></FONT><FONT COLOR="#000000">;
+        </FONT><FONT COLOR="#000080"><B>case</B></FONT><FONT COLOR="#000000"> PathIterator.SEG_CLOSE:
+          x = x0;
+          y = y0;
+          ptsList.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Point3f(x,y,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+          </FONT><FONT COLOR="#000080"><B>break</B></FONT><FONT COLOR="#000000">;
+      }
+      iter.next();
+    }
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> n = ptsList.size();
+    IndexedQuadArray qa = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> IndexedQuadArray(</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">*n,
+    IndexedQuadArray.COORDINATES, </FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">*(n-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">));
+    Transform3D trans = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Transform3D();
+    trans.setTranslation(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Vector3f(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,depth));
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; n; i++) {
+      Point3f pt = (Point3f)ptsList.get(i);
+      qa.setCoordinate(</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">*i, pt);
+      trans.transform(pt);
+      qa.setCoordinate(</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">*i+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">, pt);
+    }
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> quadIndex = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; n-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">; i++) {
+      qa.setCoordinateIndex(quadIndex++, </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">*i);
+      qa.setCoordinateIndex(quadIndex++, </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">*i+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">);
+      qa.setCoordinateIndex(quadIndex++, </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">*(i+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">)+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">);
+      qa.setCoordinateIndex(quadIndex++, </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">*(i+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">));
+    }
+    GeometryInfo gi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> GeometryInfo(qa);
+    NormalGenerator ng = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> NormalGenerator();
+    ng.generateNormals(gi);
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> gi.getGeometryArray();
+  }
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+extrudeShape.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

@@ -1,0 +1,3 @@
+Então pra fazer se o Usuario estiver Registrado ele n deve aparecerpara introduzir o nome Sobrenome e o email 
+Sem editar e sem eliminar, 
+ordenado por data e os que não foram respondidos

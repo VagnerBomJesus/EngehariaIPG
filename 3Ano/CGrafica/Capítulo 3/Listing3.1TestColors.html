@@ -1,0 +1,135 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - TestColors.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+TestColors.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000000">
+</FONT><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter3;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">awt</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">event</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.swing.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.swing.event.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.geom.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> TestColors </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JApplet {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String </FONT><FONT COLOR="#808080">s</FONT><FONT COLOR="#000000">[]) {
+    JFrame frame = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JFrame();
+    frame.setTitle(</FONT><FONT COLOR="#0000ff">"Colors"</FONT><FONT COLOR="#000000">);
+    frame.setDefaultCloseOperation(<I>JFrame</I>.<I>EXIT_ON_CLOSE</I>);
+    JApplet applet = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TestColors();
+    applet.init();
+    frame.getContentPane().add(applet);
+    frame.pack();
+    frame.setVisible(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+  }
+  
+  ColorPanel </FONT><FONT COLOR="#800080">panel</FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    </FONT><FONT COLOR="#800080">panel</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> ColorPanel();
+    Container cp = getContentPane();
+    cp.setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BorderLayout());
+    cp.add(</FONT><FONT COLOR="#800080">panel</FONT><FONT COLOR="#000000">, <I>BorderLayout</I>.<I>CENTER</I>);
+    JPanel p = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JPanel();
+    cp.add(p,<I>BorderLayout</I>.<I>EAST</I>);
+    p.setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> GridLayout(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">30</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">10</FONT><FONT COLOR="#000000">));
+    JSlider slider = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JSlider(<I>JSlider</I>.<I>VERTICAL</I>,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">255</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">);
+    p.add(slider);
+    slider.addChangeListener(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> ChangeListener() {
+      </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>stateChanged</I></FONT><FONT COLOR="#000000">(ChangeEvent ev) {
+        </FONT><FONT COLOR="#800080"><B>panel</B></FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#800080"><B>red</B></FONT><FONT COLOR="#000000"> = ((JSlider)(ev.getSource())).getValue();
+        </FONT><FONT COLOR="#800080"><B>panel</B></FONT><FONT COLOR="#000000">.repaint();
+      }
+    });
+    slider = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JSlider(<I>JSlider</I>.<I>VERTICAL</I>,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">255</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">);
+    p.add(slider);
+    slider.addChangeListener(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> ChangeListener() {
+      </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>stateChanged</I></FONT><FONT COLOR="#000000">(ChangeEvent ev) {
+        </FONT><FONT COLOR="#800080"><B>panel</B></FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#800080"><B>green</B></FONT><FONT COLOR="#000000"> = ((JSlider)(ev.getSource())).getValue();
+        </FONT><FONT COLOR="#800080"><B>panel</B></FONT><FONT COLOR="#000000">.repaint();
+      }
+    });
+    slider = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JSlider(<I>JSlider</I>.<I>VERTICAL</I>,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">255</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">);
+    p.add(slider);
+    slider.addChangeListener(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> ChangeListener() {
+      </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>stateChanged</I></FONT><FONT COLOR="#000000">(ChangeEvent ev) {
+        </FONT><FONT COLOR="#800080"><B>panel</B></FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#800080"><B>blue</B></FONT><FONT COLOR="#000000"> = ((JSlider)(ev.getSource())).getValue();
+        </FONT><FONT COLOR="#800080"><B>panel</B></FONT><FONT COLOR="#000000">.repaint();
+      }
+    });    
+  }
+}
+
+</FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> ColorPanel </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JPanel{
+  </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#800080">red</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#800080">green</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#800080">blue</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">;
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> ColorPanel() {
+    setPreferredSize(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Dimension(</FONT><FONT COLOR="#0000ff">500</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">500</FONT><FONT COLOR="#000000">));
+    setBackground(<I>Color</I>.<I>white</I>);
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>paintComponent</I></FONT><FONT COLOR="#000000">(Graphics g) {
+    </FONT><FONT COLOR="#000080"><B>super</B></FONT><FONT COLOR="#000000">.paintComponent(g);
+    Graphics2D g2 = (Graphics2D)g;
+    Shape rc = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Ellipse2D.Double(</FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">113</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">);
+    Shape gc = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Ellipse2D.Double(</FONT><FONT COLOR="#0000ff">50</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">);
+    Shape bc = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Ellipse2D.Double(</FONT><FONT COLOR="#0000ff">150</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">);
+    Area ra = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Area(rc);
+    Area ga = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Area(gc);
+    Area ba = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Area(bc);
+    Area rga = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Area(rc);
+    rga.intersect(ga);
+    Area gba = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Area(gc);
+    gba.intersect(ba);
+    Area bra = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Area(bc);
+    bra.intersect(ra);
+    Area rgba = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Area(rga);
+    rgba.intersect(ba);
+    ra.subtract(rga);
+    ra.subtract(bra);
+    ga.subtract(rga);
+    ga.subtract(gba);
+    ba.subtract(bra);
+    ba.subtract(gba);
+    </FONT><FONT COLOR="#008000">// fill the color regions</FONT><FONT COLOR="#000000">
+    g2.setColor(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Color(</FONT><FONT COLOR="#800080">red</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    g2.fill(ra);
+    g2.setColor(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Color(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#800080">green</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    g2.fill(ga);
+    g2.setColor(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Color(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#800080">blue</FONT><FONT COLOR="#000000">));
+    g2.fill(ba);
+    g2.setColor(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Color(</FONT><FONT COLOR="#800080">red</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#800080">green</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    g2.fill(rga);
+    g2.setColor(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Color(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#800080">green</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#800080">blue</FONT><FONT COLOR="#000000">));
+    g2.fill(gba);
+    g2.setColor(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Color(</FONT><FONT COLOR="#800080">red</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#800080">blue</FONT><FONT COLOR="#000000">));
+    g2.fill(bra);
+    g2.setColor(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Color(</FONT><FONT COLOR="#800080">red</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#800080">green</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#800080">blue</FONT><FONT COLOR="#000000">));
+    g2.fill(rgba);
+    </FONT><FONT COLOR="#008000">// draw three circles</FONT><FONT COLOR="#000000">
+    g2.setColor(<I>Color</I>.<I>black</I>);
+    g2.draw(rc);
+    g2.draw(gc);
+    g2.draw(bc);
+  }
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+TestColors.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

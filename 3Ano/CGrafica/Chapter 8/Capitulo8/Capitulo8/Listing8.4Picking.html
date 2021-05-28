@@ -1,0 +1,169 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - Picking.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Picking.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter8;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">vecmath</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.event.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">media</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">universe</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">geometry</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">picking</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">chapter6</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.applet.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">applet</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">MainFrame</FONT><FONT COLOR="#000000">;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> Picking </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> Applet </FONT><FONT COLOR="#000080"><B>implements</B></FONT><FONT COLOR="#000000"> MouseListener{
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String[] </FONT><FONT COLOR="#808080">args</FONT><FONT COLOR="#000000">) {
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>MainFrame</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Picking(), </FONT><FONT COLOR="#0000ff">640</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">480</FONT><FONT COLOR="#000000">);
+  }
+
+  <I>PickCanvas</I> </FONT><FONT COLOR="#800080">pc</FONT><FONT COLOR="#000000">;
+  <I>Appearance</I> </FONT><FONT COLOR="#800080">lit</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Appearance</I>();
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    </FONT><FONT COLOR="#008000">// create canvas</FONT><FONT COLOR="#000000">
+    GraphicsConfiguration gc = <I>SimpleUniverse</I>.<I>getPreferredConfiguration</I>();
+    <I>Canvas3D</I> cv = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Canvas3D</I>(gc);
+    setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BorderLayout());
+    add(cv, <I>BorderLayout</I>.<I>CENTER</I>);
+    <I>cv</I>.<I>addMouseListener</I>(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    <I>BranchGroup</I> bg = createSceneGraph();
+    <I>bg</I>.<I>compile</I>();
+    </FONT><FONT COLOR="#800080">pc</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>PickCanvas</I>(cv, bg);
+    <I>pc</I>.<I>setMode</I>(<I>PickTool</I>.<I>GEOMETRY</I>);
+    <I>SimpleUniverse</I> su = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>SimpleUniverse</I>(cv);
+    <I>su</I>.<I>getViewingPlatform</I>().<I>setNominalViewingTransform</I>();
+    <I>su</I>.<I>addBranchGraph</I>(bg);
+  }
+
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I> createSceneGraph() {
+    <I>BranchGroup</I> root = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I>();
+    <I>TransformGroup</I> spin = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>();
+    <I>spin</I>.<I>setCapability</I>(<I>TransformGroup</I>.<I>ALLOW_TRANSFORM_WRITE</I>);
+    <I>root</I>.<I>addChild</I>(spin);
+    </FONT><FONT COLOR="#008000">//appearance</FONT><FONT COLOR="#000000">
+    <I>Appearance</I> wireframe = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Appearance</I>();
+    <I>wireframe</I>.<I>setPolygonAttributes</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>PolygonAttributes</I>(
+      <I>PolygonAttributes</I>.<I>POLYGON_LINE</I>, <I>PolygonAttributes</I>.<I>CULL_BACK</I>, </FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">));
+    <I>wireframe</I>.<I>setColoringAttributes</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>ColoringAttributes</I>(
+      </FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">, <I>ColoringAttributes</I>.<I>SHADE_FLAT</I>));
+    <I>lit</I>.<I>setMaterial</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Material</I>());
+    </FONT><FONT COLOR="#008000">// objects</FONT><FONT COLOR="#000000">
+    <I>Box</I> box = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Box</I>(</FONT><FONT COLOR="#0000ff">1.2f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.3f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.8f</FONT><FONT COLOR="#000000">, <I>Primitive</I>.<I>ENABLE_GEOMETRY_PICKING</I> |
+      <I>Primitive</I>.<I>ENABLE_APPEARANCE_MODIFY</I> |
+      <I>Primitive</I>.<I>GENERATE_NORMALS</I>, wireframe);
+    <I>Sphere</I> sphere = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Sphere</I>(</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">, <I>Primitive</I>.<I>ENABLE_GEOMETRY_PICKING</I> |
+      <I>Primitive</I>.<I>ENABLE_APPEARANCE_MODIFY</I> |
+      <I>Primitive</I>.<I>GENERATE_NORMALS</I>, wireframe);
+    <I>Cylinder</I> cylinder = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Cylinder</I>(</FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">,
+      <I>Primitive</I>.<I>ENABLE_GEOMETRY_PICKING</I> | <I>Primitive</I>.<I>ENABLE_APPEARANCE_MODIFY</I> |
+      <I>Primitive</I>.<I>GENERATE_NORMALS</I>, wireframe);
+    <I>Cone</I> cone = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Cone</I>(</FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">, <I>Primitive</I>.<I>ENABLE_GEOMETRY_PICKING</I> |
+      <I>Primitive</I>.<I>ENABLE_APPEARANCE_MODIFY</I> |
+      <I>Primitive</I>.<I>GENERATE_NORMALS</I>, wireframe);
+    <I>Transform3D</I> tr = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>tr</I>.<I>setScale</I>(</FONT><FONT COLOR="#0000ff">0.2</FONT><FONT COLOR="#000000">);
+    <I>TransformGroup</I> tg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(tr);
+    <I>spin</I>.<I>addChild</I>(tg);
+    <I>tg</I>.<I>addChild</I>(box);
+    <I>tr</I>.<I>setIdentity</I>();
+    <I>tr</I>.<I>setTranslation</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3f</I>(</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">1.5f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">));
+    <I>TransformGroup</I> tgSphere = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(tr);
+    <I>tg</I>.<I>addChild</I>(tgSphere);
+    <I>tgSphere</I>.<I>addChild</I>(sphere);
+    <I>tr</I>.<I>setTranslation</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3f</I>(-</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">,-</FONT><FONT COLOR="#0000ff">1.5f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">));
+    <I>TransformGroup</I> tgCylinder = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(tr);
+    <I>tg</I>.<I>addChild</I>(tgCylinder);
+    <I>tgCylinder</I>.<I>addChild</I>(cylinder);
+    <I>tr</I>.<I>setTranslation</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3f</I>(</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">,-</FONT><FONT COLOR="#0000ff">1.5f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">));
+    <I>TransformGroup</I> tgCone = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(tr);
+    <I>tg</I>.<I>addChild</I>(tgCone);
+    <I>tgCone</I>.<I>addChild</I>(cone);
+    <I>Shape3D</I> tetra = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Shape3D</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Tetrahedron</I>(), wireframe);
+    <I>PickTool</I>.<I>setCapabilities</I>(tetra, <I>PickTool</I>.<I>INTERSECT_TEST</I>);
+    <I>tetra</I>.<I>setCapability</I>(<I>Shape3D</I>.<I>ALLOW_APPEARANCE_WRITE</I>);
+    tr = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>tr</I>.<I>setScale</I>(</FONT><FONT COLOR="#0000ff">0.12</FONT><FONT COLOR="#000000">);
+    <I>tr</I>.<I>setTranslation</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3f</I>(</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">, -</FONT><FONT COLOR="#0000ff">0.4f</FONT><FONT COLOR="#000000">));
+    tg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(tr);
+    <I>spin</I>.<I>addChild</I>(tg);
+    <I>tg</I>.<I>addChild</I>(tetra);
+    <I>Shape3D</I> shape = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Dodecahedron</I>();
+    <I>shape</I>.<I>setAppearance</I>(wireframe);
+    <I>PickTool</I>.<I>setCapabilities</I>(shape, <I>PickTool</I>.<I>INTERSECT_TEST</I>);
+    <I>shape</I>.<I>setCapability</I>(<I>Shape3D</I>.<I>ALLOW_APPEARANCE_WRITE</I>);
+    tr = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>tr</I>.<I>setScale</I>(</FONT><FONT COLOR="#0000ff">0.12</FONT><FONT COLOR="#000000">);
+    <I>tr</I>.<I>setTranslation</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3f</I>(</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.4f</FONT><FONT COLOR="#000000">));
+    tg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(tr);
+    <I>spin</I>.<I>addChild</I>(tg);
+    <I>tg</I>.<I>addChild</I>(shape);
+    </FONT><FONT COLOR="#008000">// rotation</FONT><FONT COLOR="#000000">
+    <I>Alpha</I> alpha = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Alpha</I>(-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">4000</FONT><FONT COLOR="#000000">);
+    <I>RotationInterpolator</I> rotator = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>RotationInterpolator</I>(alpha, spin);
+    <I>BoundingSphere</I> bounds = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BoundingSphere</I>();
+    <I>rotator</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>spin</I>.<I>addChild</I>(rotator);
+    </FONT><FONT COLOR="#008000">//background and light</FONT><FONT COLOR="#000000">
+    <I>Background</I> background = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Background</I>(</FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">);
+    <I>background</I>.<I>setApplicationBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(background);
+    <I>AmbientLight</I> light = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>AmbientLight</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>red</I>));
+    <I>light</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(light);
+    <I>PointLight</I> ptlight = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>PointLight</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>green</I>), 
+      </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">3f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">3f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">3f</FONT><FONT COLOR="#000000">), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">));
+    <I>ptlight</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(ptlight);
+    <I>PointLight</I> ptlight2 = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>PointLight</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>orange</I>), 
+      </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(-</FONT><FONT COLOR="#0000ff">2f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">2f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">2f</FONT><FONT COLOR="#000000">), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">));
+    <I>ptlight2</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(ptlight2);
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> root;
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mouseClicked</I></FONT><FONT COLOR="#000000">(java.awt.event.MouseEvent mouseEvent) {
+    <I>pc</I>.<I>setShapeLocation</I>(mouseEvent);
+    <I>PickResult</I>[] results = <I>pc</I>.<I>pickAll</I>();
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; (results != </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">) && (i &LT; results.length); i++) {
+      <I>Node</I> node = <I>results</I>[<I>i</I>].<I>getObject</I>();
+      </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (node </FONT><FONT COLOR="#000080"><B>instanceof</B></FONT><FONT COLOR="#000000"> <I>Shape3D</I>) {
+        ((<I>Shape3D</I>)<I>node</I>).<I>setAppearance</I>(</FONT><FONT COLOR="#800080">lit</FONT><FONT COLOR="#000000">);
+        <I>System</I>.<I>out</I>.println(<I>node</I>.<I>toString</I>());
+      }
+    }
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mouseEntered</I></FONT><FONT COLOR="#000000">(java.awt.event.MouseEvent </FONT><FONT COLOR="#808080">mouseEvent</FONT><FONT COLOR="#000000">) {
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mouseExited</I></FONT><FONT COLOR="#000000">(java.awt.event.MouseEvent </FONT><FONT COLOR="#808080">mouseEvent</FONT><FONT COLOR="#000000">) {
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mousePressed</I></FONT><FONT COLOR="#000000">(java.awt.event.MouseEvent </FONT><FONT COLOR="#808080">mouseEvent</FONT><FONT COLOR="#000000">) {
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mouseReleased</I></FONT><FONT COLOR="#000000">(java.awt.event.MouseEvent </FONT><FONT COLOR="#808080">mouseEvent</FONT><FONT COLOR="#000000">) {
+  }
+}
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Picking.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

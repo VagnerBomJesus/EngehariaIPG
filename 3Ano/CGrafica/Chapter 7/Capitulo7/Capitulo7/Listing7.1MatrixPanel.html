@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - MatrixPanel.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+MatrixPanel.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter7;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">vecmath</FONT><FONT COLOR="#000000">.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> MatrixPanel </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> Panel {
+  TextField[] </FONT><FONT COLOR="#800080">fields</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TextField[</FONT><FONT COLOR="#0000ff">16</FONT><FONT COLOR="#000000">];
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> MatrixPanel() {
+    setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> GridLayout(</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">));
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#0000ff">16</FONT><FONT COLOR="#000000">; i++) {
+      </FONT><FONT COLOR="#800080">fields</FONT><FONT COLOR="#000000">[i] = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TextField(</FONT><FONT COLOR="#0000ff">5</FONT><FONT COLOR="#000000">);
+      </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (i/</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000"> == i%</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">)
+        </FONT><FONT COLOR="#800080">fields</FONT><FONT COLOR="#000000">[i].setText(</FONT><FONT COLOR="#0000ff">"1"</FONT><FONT COLOR="#000000">);
+      </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000">
+        </FONT><FONT COLOR="#800080">fields</FONT><FONT COLOR="#000000">[i].setText(</FONT><FONT COLOR="#0000ff">"0"</FONT><FONT COLOR="#000000">);
+      add(</FONT><FONT COLOR="#800080">fields</FONT><FONT COLOR="#000000">[i]);
+    }    
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> MatrixPanel(<I>Matrix4d</I> m) {
+    setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> GridLayout(</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">));
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#0000ff">16</FONT><FONT COLOR="#000000">; i++) {
+      </FONT><FONT COLOR="#800080">fields</FONT><FONT COLOR="#000000">[i] = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TextField(</FONT><FONT COLOR="#0000ff">5</FONT><FONT COLOR="#000000">);
+      </FONT><FONT COLOR="#800080">fields</FONT><FONT COLOR="#000000">[i].setText(</FONT><FONT COLOR="#0000ff">""</FONT><FONT COLOR="#000000"> + <I>m</I>.<I>getElement</I>(i/</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">, i%</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">));
+      add(</FONT><FONT COLOR="#800080">fields</FONT><FONT COLOR="#000000">[i]);
+    }
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> set(<I>Matrix4d</I> m) {
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#0000ff">16</FONT><FONT COLOR="#000000">; i++) {
+      </FONT><FONT COLOR="#800080">fields</FONT><FONT COLOR="#000000">[i].setText(</FONT><FONT COLOR="#0000ff">""</FONT><FONT COLOR="#000000"> + <I>m</I>.<I>getElement</I>(i/</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">, i%</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">));
+    }    
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> get(<I>Matrix4d</I> m) {
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#0000ff">16</FONT><FONT COLOR="#000000">; i++) {
+      <I>m</I>.<I>setElement</I>(i/</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">, i%</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">, <I>Double</I>.<I>parseDouble</I>(</FONT><FONT COLOR="#800080">fields</FONT><FONT COLOR="#000000">[i].getText()));
+    }    
+  }
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+MatrixPanel.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

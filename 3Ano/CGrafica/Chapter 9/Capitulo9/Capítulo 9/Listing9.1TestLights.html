@@ -1,0 +1,138 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - TestLights.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+TestLights.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter9;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">vecmath</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.event.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">media</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">universe</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">geometry</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.applet.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">applet</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">MainFrame</FONT><FONT COLOR="#000000">;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> TestLights </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> Applet </FONT><FONT COLOR="#000080"><B>implements</B></FONT><FONT COLOR="#000000"> ItemListener {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String[] </FONT><FONT COLOR="#808080">args</FONT><FONT COLOR="#000000">) {
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>MainFrame</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TestLights(), </FONT><FONT COLOR="#0000ff">640</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">480</FONT><FONT COLOR="#000000">);
+  }
+
+  <I>AmbientLight</I> </FONT><FONT COLOR="#800080">aLight</FONT><FONT COLOR="#000000">;
+  <I>DirectionalLight</I> </FONT><FONT COLOR="#800080">dLight</FONT><FONT COLOR="#000000">;
+  <I>PointLight</I> </FONT><FONT COLOR="#800080">pLight</FONT><FONT COLOR="#000000">;
+  <I>SpotLight</I> </FONT><FONT COLOR="#800080">sLight</FONT><FONT COLOR="#000000">;
+  <I>SpotLight</I> </FONT><FONT COLOR="#800080">sLight2</FONT><FONT COLOR="#000000">;
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    </FONT><FONT COLOR="#008000">// create canvas</FONT><FONT COLOR="#000000">
+    GraphicsConfiguration gc = <I>SimpleUniverse</I>.<I>getPreferredConfiguration</I>();
+    <I>Canvas3D</I> cv = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Canvas3D</I>(gc);
+    setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BorderLayout());
+    add(cv, <I>BorderLayout</I>.<I>CENTER</I>);
+
+    Panel menu = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Panel();
+    menu.setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> GridLayout(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">));
+    add(menu, <I>BorderLayout</I>.<I>SOUTH</I>);
+    Checkbox mi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Checkbox(</FONT><FONT COLOR="#0000ff">"Ambient"</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+    menu.add(mi);
+    mi.addItemListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    mi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Checkbox(</FONT><FONT COLOR="#0000ff">"Directional"</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+    menu.add(mi);
+    mi.addItemListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    mi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Checkbox(</FONT><FONT COLOR="#0000ff">"Point"</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+    menu.add(mi);
+    mi.addItemListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    mi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Checkbox(</FONT><FONT COLOR="#0000ff">"Spot"</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+    menu.add(mi);
+    mi.addItemListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    
+    <I>SimpleUniverse</I> su = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>SimpleUniverse</I>(cv, </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">);
+    <I>su</I>.<I>getViewingPlatform</I>().<I>setNominalViewingTransform</I>();
+    <I>BranchGroup</I> bg = createSceneGraph(<I>su</I>.<I>getViewingPlatform</I>().
+      <I>getMultiTransformGroup</I>().<I>getTransformGroup</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    <I>bg</I>.<I>compile</I>();
+    <I>su</I>.<I>addBranchGraph</I>(bg);
+  }
+  
+  <I>Appearance</I> </FONT><FONT COLOR="#800080">ap</FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I> createSceneGraph(<I>TransformGroup</I> vtg) {
+    <I>BranchGroup</I> root = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I>();
+    </FONT><FONT COLOR="#008000">//object</FONT><FONT COLOR="#000000">
+    </FONT><FONT COLOR="#800080">ap</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Appearance</I>();
+    <I>ap</I>.<I>setMaterial</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Material</I>());
+    <I>Sphere</I> shape = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Sphere</I>(</FONT><FONT COLOR="#0000ff">0.5f</FONT><FONT COLOR="#000000">, <I>Sphere</I>.<I>GENERATE_NORMALS</I>, </FONT><FONT COLOR="#0000ff">150</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#800080">ap</FONT><FONT COLOR="#000000">);
+    <I>root</I>.<I>addChild</I>(shape);
+    </FONT><FONT COLOR="#008000">//view rotator</FONT><FONT COLOR="#000000">
+    <I>Alpha</I> alpha = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Alpha</I>(-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">4000</FONT><FONT COLOR="#000000">);
+    <I>RotationInterpolator</I> rotator = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>RotationInterpolator</I>(alpha, vtg);
+    <I>BoundingSphere</I> bounds = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BoundingSphere</I>();
+    <I>bounds</I>.<I>setRadius</I>(</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">);
+    <I>rotator</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(rotator);
+    </FONT><FONT COLOR="#008000">// background and lights</FONT><FONT COLOR="#000000">
+    <I>Background</I> background = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Background</I>(</FONT><FONT COLOR="#0000ff">0.5f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.5f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.5f</FONT><FONT COLOR="#000000">);
+    <I>background</I>.<I>setApplicationBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(background);
+    </FONT><FONT COLOR="#800080">aLight</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>AmbientLight</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>red</I>));
+    <I>aLight</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>aLight</I>.<I>setCapability</I>(<I>PointLight</I>.<I>ALLOW_STATE_WRITE</I> | <I>PointLight</I>.<I>ALLOW_STATE_WRITE</I>);
+    <I>root</I>.<I>addChild</I>(</FONT><FONT COLOR="#800080">aLight</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#800080">dLight</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>DirectionalLight</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>green</I>), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3f</I>(</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">));
+    <I>dLight</I>.<I>setCapability</I>(<I>PointLight</I>.<I>ALLOW_STATE_WRITE</I> | <I>PointLight</I>.<I>ALLOW_STATE_WRITE</I>);
+    <I>dLight</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(</FONT><FONT COLOR="#800080">dLight</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#800080">pLight</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>PointLight</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>white</I>), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(-</FONT><FONT COLOR="#0000ff">0.7f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0.7f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">),
+      </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">));
+    <I>pLight</I>.<I>setCapability</I>(<I>PointLight</I>.<I>ALLOW_STATE_WRITE</I> | <I>PointLight</I>.<I>ALLOW_STATE_WRITE</I>);
+    <I>pLight</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(</FONT><FONT COLOR="#800080">pLight</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#800080">sLight</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>SpotLight</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>blue</I>), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">0.7f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0.7f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0.7f</FONT><FONT COLOR="#000000">),
+      </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3f</I>(-</FONT><FONT COLOR="#0000ff">0.7f</FONT><FONT COLOR="#000000">,-</FONT><FONT COLOR="#0000ff">0.7f</FONT><FONT COLOR="#000000">,-</FONT><FONT COLOR="#0000ff">0.7f</FONT><FONT COLOR="#000000">), (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)(<I>Math</I>.<I>PI</I>/</FONT><FONT COLOR="#0000ff">6.0</FONT><FONT COLOR="#000000">), </FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">);
+    <I>sLight</I>.<I>setCapability</I>(<I>PointLight</I>.<I>ALLOW_STATE_WRITE</I> | <I>PointLight</I>.<I>ALLOW_STATE_WRITE</I>);
+    <I>sLight</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(</FONT><FONT COLOR="#800080">sLight</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#800080">sLight2</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>SpotLight</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>orange</I>), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">0.7f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0.7f</FONT><FONT COLOR="#000000">,-</FONT><FONT COLOR="#0000ff">0.7f</FONT><FONT COLOR="#000000">),
+      </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3f</I>(-</FONT><FONT COLOR="#0000ff">0.7f</FONT><FONT COLOR="#000000">,-</FONT><FONT COLOR="#0000ff">0.7f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0.7f</FONT><FONT COLOR="#000000">), (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)(<I>Math</I>.<I>PI</I>/</FONT><FONT COLOR="#0000ff">12.0</FONT><FONT COLOR="#000000">), </FONT><FONT COLOR="#0000ff">128f</FONT><FONT COLOR="#000000">);
+    <I>sLight2</I>.<I>setCapability</I>(<I>PointLight</I>.<I>ALLOW_STATE_WRITE</I> | <I>PointLight</I>.<I>ALLOW_STATE_WRITE</I>);
+    <I>sLight2</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(</FONT><FONT COLOR="#800080">sLight2</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> root;
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>itemStateChanged</I></FONT><FONT COLOR="#000000">(ItemEvent itemEvent) {
+    Checkbox cmi = (Checkbox)itemEvent.getSource();
+    String label = cmi.getLabel();
+    </FONT><FONT COLOR="#000080"><B>boolean</B></FONT><FONT COLOR="#000000"> state = cmi.getState();
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000">(</FONT><FONT COLOR="#0000ff">"Ambient"</FONT><FONT COLOR="#000000">.equals(label)) {
+      <I>aLight</I>.<I>setEnable</I>(state);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Directional"</FONT><FONT COLOR="#000000">.equals(label)) {
+      <I>dLight</I>.<I>setEnable</I>(state);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Point"</FONT><FONT COLOR="#000000">.equals(label)) {
+      <I>pLight</I>.<I>setEnable</I>(state);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Spot"</FONT><FONT COLOR="#000000">.equals(label)) {
+      <I>sLight</I>.<I>setEnable</I>(state);
+      <I>sLight2</I>.<I>setEnable</I>(state);
+    }
+    cmi.setState(state);
+  }  
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+TestLights.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

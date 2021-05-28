@@ -1,0 +1,157 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - Cup.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Cup.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter9;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">vecmath</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">awt</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">geom</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.image.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">net</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">URL</FONT><FONT COLOR="#000000">;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">util</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">awt</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">event</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">media</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">universe</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">geometry</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">image</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.applet.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">applet</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">MainFrame</FONT><FONT COLOR="#000000">;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">behaviors</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">mouse</FONT><FONT COLOR="#000000">.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> Cup </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> Applet {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String[] </FONT><FONT COLOR="#808080">args</FONT><FONT COLOR="#000000">) {
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>MainFrame</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Cup(), </FONT><FONT COLOR="#0000ff">640</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">480</FONT><FONT COLOR="#000000">);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    </FONT><FONT COLOR="#008000">// create canvas</FONT><FONT COLOR="#000000">
+    GraphicsConfiguration gc = <I>SimpleUniverse</I>.<I>getPreferredConfiguration</I>();
+    <I>Canvas3D</I> cv = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Canvas3D</I>(gc);
+    setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BorderLayout());
+    add(cv, <I>BorderLayout</I>.<I>CENTER</I>);
+    <I>BranchGroup</I> bg = createSceneGraph();
+    <I>bg</I>.<I>compile</I>();
+    <I>SimpleUniverse</I> su = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>SimpleUniverse</I>(cv);
+    <I>su</I>.<I>getViewingPlatform</I>().<I>setNominalViewingTransform</I>();
+    <I>su</I>.<I>addBranchGraph</I>(bg);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I> createSceneGraph() {
+    <I>BranchGroup</I> root = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I>();
+    <I>TransformGroup</I> spin = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>();
+    <I>spin</I>.<I>setCapability</I>(<I>TransformGroup</I>.<I>ALLOW_TRANSFORM_WRITE</I>);
+    <I>spin</I>.<I>setCapability</I>(<I>TransformGroup</I>.<I>ALLOW_TRANSFORM_READ</I>);
+    <I>root</I>.<I>addChild</I>(spin);
+    </FONT><FONT COLOR="#008000">//object transform</FONT><FONT COLOR="#000000">
+    <I>Transform3D</I> tr = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>tr</I>.<I>setScale</I>(</FONT><FONT COLOR="#0000ff">0.3</FONT><FONT COLOR="#000000">);
+    <I>tr</I>.<I>setRotation</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>AxisAngle4d</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">, <I>Math</I>.<I>PI</I>/</FONT><FONT COLOR="#0000ff">12</FONT><FONT COLOR="#000000">));
+    <I>TransformGroup</I> tg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(tr);
+    <I>spin</I>.<I>addChild</I>(tg);
+    </FONT><FONT COLOR="#008000">//object</FONT><FONT COLOR="#000000">
+    <I>Geometry</I> geom = createGeometry();
+    <I>Appearance</I> ap = createTextureAppearance();
+    <I>PolygonAttributes</I> pa = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>PolygonAttributes</I>(<I>PolygonAttributes</I>.<I>POLYGON_FILL</I>,
+    <I>PolygonAttributes</I>.<I>CULL_NONE</I>,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+    <I>ap</I>.<I>setPolygonAttributes</I>(pa);
+    <I>Shape3D</I> shape = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Shape3D</I>(geom, ap);
+    <I>tg</I>.<I>addChild</I>(shape);    
+    </FONT><FONT COLOR="#008000">// rotation</FONT><FONT COLOR="#000000">
+    <I>BoundingSphere</I> bounds = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BoundingSphere</I>();
+    <I>Alpha</I> alpha = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Alpha</I>(-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">10000</FONT><FONT COLOR="#000000">);
+    <I>RotationInterpolator</I> rotator = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>RotationInterpolator</I>(alpha, spin);
+    <I>rotator</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>spin</I>.<I>addChild</I>(rotator);
+    </FONT><FONT COLOR="#008000">//background and lights</FONT><FONT COLOR="#000000">
+    <I>Background</I> background = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Background</I>(</FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">);
+    <I>background</I>.<I>setApplicationBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(background);
+    <I>AmbientLight</I> light = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>AmbientLight</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>lightGray</I>));
+    <I>light</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(light);
+    <I>PointLight</I> ptlight = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>PointLight</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>white</I>),
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">3f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">3f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">3f</FONT><FONT COLOR="#000000">), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">));
+    <I>ptlight</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(ptlight);
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> root;
+  }
+  
+  <I>Geometry</I> createGeometry() {
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> m = </FONT><FONT COLOR="#0000ff">120</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">n</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">;
+    <I>QuadArray</I> qa = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>QuadArray</I>(</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">*m,
+    <I>QuadArray</I>.<I>COORDINATES</I>|<I>QuadArray</I>.<I>NORMALS</I>|<I>QuadArray</I>.<I>TEXTURE_COORDINATE_2</I>);
+    </FONT><FONT COLOR="#008000">// generate the cylinder</FONT><FONT COLOR="#000000">
+    <I>Transform3D</I> trans = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>trans</I>.<I>rotY</I>(</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>PI</I>/m);
+    <I>Point3f</I> pt0 = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+    <I>Point3f</I> pt1 = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">,-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+    <I>Vector3f</I> normal = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3f</I>(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> j = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; j &LT; m; j++) {
+      <I>qa</I>.<I>setCoordinate</I>(j*</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">, pt0);
+      <I>qa</I>.<I>setCoordinate</I>(j*</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">, pt1);
+      <I>qa</I>.<I>setNormal</I>(j*</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">, normal);
+      <I>qa</I>.<I>setNormal</I>(j*</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">, normal);
+      <I>trans</I>.<I>transform</I>(pt0);
+      <I>trans</I>.<I>transform</I>(pt1);
+      <I>trans</I>.<I>transform</I>(normal);
+      <I>qa</I>.<I>setCoordinate</I>(j*</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">+</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">, pt1);
+      <I>qa</I>.<I>setCoordinate</I>(j*</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">+</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, pt0);
+      <I>qa</I>.<I>setNormal</I>(j*</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">+</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">, normal);
+      <I>qa</I>.<I>setNormal</I>(j*</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">+</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">, normal);
+      </FONT><FONT COLOR="#008000">// set texture coordinates</FONT><FONT COLOR="#000000">
+      <I>TexCoord2f</I> tex0 = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TexCoord2f</I>(j*</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">/m, </FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">);
+      <I>TexCoord2f</I> tex1 = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TexCoord2f</I>(j*</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">/m, </FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">);
+      <I>qa</I>.<I>setTextureCoordinate</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,j*</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">,tex0);
+      <I>qa</I>.<I>setTextureCoordinate</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,j*</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">,tex1);
+      tex0 = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TexCoord2f</I>((j+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">)*</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">/m, </FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">);
+      tex1 = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TexCoord2f</I>((j+</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">)*</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">/m, </FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">);
+      <I>qa</I>.<I>setTextureCoordinate</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,j*</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">+</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">,tex1);
+      <I>qa</I>.<I>setTextureCoordinate</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,j*</FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">+</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">,tex0);
+    }
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> qa;
+  }
+  
+  <I>Appearance</I> createTextureAppearance(){
+    <I>Appearance</I> ap = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Appearance</I>();
+    BufferedImage bi = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BufferedImage(</FONT><FONT COLOR="#0000ff">512</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">128</FONT><FONT COLOR="#000000">, <I>BufferedImage</I>.<I>TYPE_INT_ARGB</I>);
+    Graphics2D g2 = (Graphics2D)bi.getGraphics();
+    g2.setColor(<I>Color</I>.<I>white</I>);
+    g2.fillRect(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">512</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">128</FONT><FONT COLOR="#000000">);
+    g2.setFont(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Font(</FONT><FONT COLOR="#0000ff">"Serif"</FONT><FONT COLOR="#000000">, <I>Font</I>.<I>BOLD</I>, </FONT><FONT COLOR="#0000ff">48</FONT><FONT COLOR="#000000">));
+    g2.setColor(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Color(</FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    g2.drawString(</FONT><FONT COLOR="#0000ff">"Java 3D"</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">);
+    <I>ImageComponent2D</I> image = 
+      </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>ImageComponent2D</I>(<I>ImageComponent2D</I>.<I>FORMAT_RGBA</I>, bi);
+    <I>Texture2D</I> texture = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Texture2D</I>(<I>Texture</I>.<I>BASE_LEVEL</I>, <I>Texture</I>.<I>RGBA</I>,
+    <I>image</I>.<I>getWidth</I>(), <I>image</I>.<I>getHeight</I>());
+    <I>texture</I>.<I>setImage</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, image);
+    <I>texture</I>.<I>setMagFilter</I>(<I>Texture</I>.<I>BASE_LEVEL_LINEAR</I>);
+    <I>ap</I>.<I>setTexture</I>(texture);
+    </FONT><FONT COLOR="#008000">//combine texture and lighting</FONT><FONT COLOR="#000000">
+    <I>TextureAttributes</I> texatt = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TextureAttributes</I>();
+    <I>texatt</I>.<I>setTextureMode</I>(<I>TextureAttributes</I>.<I>COMBINE</I>);
+    <I>ap</I>.<I>setTextureAttributes</I>(texatt);
+    <I>ap</I>.<I>setMaterial</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Material</I>());
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> ap;
+  }
+}
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Cup.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

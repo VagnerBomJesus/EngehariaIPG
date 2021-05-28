@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - Composition.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Composition.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter3;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.swing.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.geom.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> Composition </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JApplet {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String </FONT><FONT COLOR="#808080">s</FONT><FONT COLOR="#000000">[]) {
+    JFrame frame = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JFrame();
+    frame.setTitle(</FONT><FONT COLOR="#0000ff">"Transformation Composition"</FONT><FONT COLOR="#000000">);
+    frame.setDefaultCloseOperation(<I>JFrame</I>.<I>EXIT_ON_CLOSE</I>);
+    JApplet applet = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Composition();
+    applet.init();
+    frame.getContentPane().add(applet);
+    frame.pack();
+    frame.setVisible(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    JPanel panel = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> CompositionPanel();
+    getContentPane().add(panel);
+  }
+}
+
+</FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> CompositionPanel </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JPanel {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> CompositionPanel() {
+    setPreferredSize(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Dimension(</FONT><FONT COLOR="#0000ff">640</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">480</FONT><FONT COLOR="#000000">));
+    </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">.setBackground(<I>Color</I>.<I>white</I>);
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>paintComponent</I></FONT><FONT COLOR="#000000">(Graphics g) {
+    </FONT><FONT COLOR="#000080"><B>super</B></FONT><FONT COLOR="#000000">.paintComponent(g);
+    Graphics2D g2 = (Graphics2D)g;
+    g2.translate(</FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">);
+    Shape e = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Ellipse2D.Double(</FONT><FONT COLOR="#0000ff">300</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">);
+    g2.setColor(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Color(</FONT><FONT COLOR="#0000ff">160</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">160</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">160</FONT><FONT COLOR="#000000">));
+    g2.fill(e);
+    AffineTransform transform = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> AffineTransform();
+    transform.translate(-</FONT><FONT COLOR="#0000ff">400</FONT><FONT COLOR="#000000">,-</FONT><FONT COLOR="#0000ff">250</FONT><FONT COLOR="#000000">);
+    e = transform.createTransformedShape(e);
+    g2.setColor(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Color(</FONT><FONT COLOR="#0000ff">220</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">220</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">220</FONT><FONT COLOR="#000000">));
+    g2.fill(e);
+    g2.setColor(<I>Color</I>.<I>black</I>);
+    g2.drawLine(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">150</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+    g2.drawLine(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">150</FONT><FONT COLOR="#000000">);
+    transform.setToRotation(<I>Math</I>.<I>PI</I> / </FONT><FONT COLOR="#0000ff">6.0</FONT><FONT COLOR="#000000">);
+    e = transform.createTransformedShape(e);
+    g2.setColor(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Color(</FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">));
+    g2.draw(e);
+    transform.setToTranslation(</FONT><FONT COLOR="#0000ff">400</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">250</FONT><FONT COLOR="#000000">);
+    e = transform.createTransformedShape(e);
+    g2.setColor(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Color(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    g2.draw(e);
+  }
+}
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Composition.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

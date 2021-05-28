@@ -1,0 +1,239 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - TestInterpolators.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+TestInterpolators.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000000">
+</FONT><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter11;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">vecmath</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.event.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">net</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">media</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">universe</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">geometry</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">image</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">behaviors</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">interpolators</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">chapter6</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">Dodecahedron</FONT><FONT COLOR="#000000">;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">chapter10</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">GullCG</FONT><FONT COLOR="#000000">;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.applet.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">applet</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">MainFrame</FONT><FONT COLOR="#000000">;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> TestInterpolators </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> Applet </FONT><FONT COLOR="#000080"><B>implements</B></FONT><FONT COLOR="#000000"> ActionListener {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String[] </FONT><FONT COLOR="#808080">args</FONT><FONT COLOR="#000000">) {
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>MainFrame</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TestInterpolators(), </FONT><FONT COLOR="#0000ff">800</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">600</FONT><FONT COLOR="#000000">);
+  }
+
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>ColorInterpolator</I> </FONT><FONT COLOR="#800080">color</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>TransparencyInterpolator</I> </FONT><FONT COLOR="#800080">transparency</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>SwitchValueInterpolator</I> </FONT><FONT COLOR="#800080">sw</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>RotationInterpolator</I> </FONT><FONT COLOR="#800080">rotator</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>PositionInterpolator</I> </FONT><FONT COLOR="#800080">translator</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>ScaleInterpolator</I> </FONT><FONT COLOR="#800080">zoom</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>RotPosPathInterpolator</I> </FONT><FONT COLOR="#800080">path</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>TCBSplinePathInterpolator</I> </FONT><FONT COLOR="#800080">spline</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>Interpolator</I> </FONT><FONT COLOR="#800080">current</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BorderLayout());
+    Panel panel = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Panel();
+    panel.setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> GridLayout(</FONT><FONT COLOR="#0000ff">8</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">));
+    add(panel, <I>BorderLayout</I>.<I>EAST</I>);
+    Button button;
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"Color"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    panel.add(button);
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"Transparency"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    panel.add(button);
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"SwitchValue"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    panel.add(button);
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"Rotation"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    panel.add(button);
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"Position"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    panel.add(button);
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"Scale"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    panel.add(button);
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"RotPosPath"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    panel.add(button);
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Button(</FONT><FONT COLOR="#0000ff">"RotPosScaleTCBSplinePath"</FONT><FONT COLOR="#000000">);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    panel.add(button);
+    
+    GraphicsConfiguration gc = <I>SimpleUniverse</I>.<I>getPreferredConfiguration</I>();
+    <I>Canvas3D</I> cv = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Canvas3D</I>(gc);
+    add(cv, <I>BorderLayout</I>.<I>CENTER</I>);
+    <I>BranchGroup</I> bg = createSceneGraph();
+    <I>bg</I>.<I>compile</I>();
+    <I>SimpleUniverse</I> su = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>SimpleUniverse</I>(cv);
+    <I>su</I>.<I>getViewingPlatform</I>().<I>setNominalViewingTransform</I>();
+    <I>su</I>.<I>addBranchGraph</I>(bg);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>private</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I> createSceneGraph() {
+    <I>BranchGroup</I> root = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I>();
+    <I>TransformGroup</I> tg = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>();
+    <I>tg</I>.<I>setCapability</I>(<I>TransformGroup</I>.<I>ALLOW_TRANSFORM_WRITE</I>);
+    <I>tg</I>.<I>setCapability</I>(<I>TransformGroup</I>.<I>ALLOW_TRANSFORM_READ</I>);
+    <I>root</I>.<I>addChild</I>(tg);
+    </FONT><FONT COLOR="#008000">// switch node</FONT><FONT COLOR="#000000">
+    <I>Switch</I> swNode = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Switch</I>();
+    <I>swNode</I>.<I>setCapability</I>(<I>Switch</I>.<I>ALLOW_SWITCH_WRITE</I>);
+    <I>tg</I>.<I>addChild</I>(swNode);
+    </FONT><FONT COLOR="#008000">// appearance</FONT><FONT COLOR="#000000">
+    <I>Appearance</I> ap = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Appearance</I>();
+    <I>Material</I> material = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Material</I>();
+    <I>material</I>.<I>setCapability</I>(<I>Material</I>.<I>ALLOW_COMPONENT_WRITE</I>);
+    <I>material</I>.<I>setColorTarget</I>(<I>Material</I>.<I>AMBIENT</I>);
+    <I>ap</I>.<I>setMaterial</I>(material);
+    <I>TransparencyAttributes</I> transAttr = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransparencyAttributes</I>(
+    <I>TransparencyAttributes</I>.<I>BLENDED</I>,</FONT><FONT COLOR="#0000ff">0.5f</FONT><FONT COLOR="#000000">);
+    <I>transAttr</I>.<I>setCapability</I>(<I>TransparencyAttributes</I>.<I>ALLOW_VALUE_WRITE</I>);
+    <I>ap</I>.<I>setTransparencyAttributes</I>(transAttr);
+    </FONT><FONT COLOR="#008000">// gull</FONT><FONT COLOR="#000000">
+    <I>Shape3D</I> shape = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Shape3D</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>GullCG</I>(), ap);
+    <I>Transform3D</I> trans = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>trans</I>.<I>setScale</I>(</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">);
+    <I>TransformGroup</I> tgScale = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(trans);
+    <I>swNode</I>.<I>addChild</I>(tgScale);
+    <I>tgScale</I>.<I>addChild</I>(shape);
+    </FONT><FONT COLOR="#008000">// dodecahedron</FONT><FONT COLOR="#000000">
+    <I>Dodecahedron</I> dodec = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Dodecahedron</I>();
+    <I>dodec</I>.<I>setAppearance</I>(ap);
+    <I>trans</I>.<I>setScale</I>(</FONT><FONT COLOR="#0000ff">0.1</FONT><FONT COLOR="#000000">);
+    tgScale = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>(trans);
+    <I>swNode</I>.<I>addChild</I>(tgScale);
+    <I>tgScale</I>.<I>addChild</I>(dodec);
+    </FONT><FONT COLOR="#008000">// interpolators    </FONT><FONT COLOR="#000000">
+    <I>BoundingSphere</I> bounds = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BoundingSphere</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">),</FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">);
+    <I>Alpha</I> alpha = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Alpha</I>(-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">6000</FONT><FONT COLOR="#000000">);
+    <I>alpha</I>.<I>setMode</I>(<I>Alpha</I>.<I>INCREASING_ENABLE</I> | <I>Alpha</I>.<I>DECREASING_ENABLE</I>);
+    <I>alpha</I>.<I>setDecreasingAlphaDuration</I>(</FONT><FONT COLOR="#0000ff">6000</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#008000">// color</FONT><FONT COLOR="#000000">
+    </FONT><FONT COLOR="#800080">color</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>ColorInterpolator</I>(alpha, material, </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">), 
+      </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">));
+    <I>color</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>color</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+    <I>root</I>.<I>addChild</I>(</FONT><FONT COLOR="#800080">color</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#008000">// transparency</FONT><FONT COLOR="#000000">
+    </FONT><FONT COLOR="#800080">transparency</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransparencyInterpolator</I>(alpha, transAttr);
+    <I>transparency</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>transparency</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>false</B></FONT><FONT COLOR="#000000">);
+    <I>root</I>.<I>addChild</I>(</FONT><FONT COLOR="#800080">transparency</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#008000">// switch</FONT><FONT COLOR="#000000">
+    </FONT><FONT COLOR="#800080">sw</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>SwitchValueInterpolator</I>(alpha, swNode);
+    <I>sw</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>transparency</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>false</B></FONT><FONT COLOR="#000000">);
+    <I>root</I>.<I>addChild</I>(</FONT><FONT COLOR="#800080">sw</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#008000">// rotation</FONT><FONT COLOR="#000000">
+    </FONT><FONT COLOR="#800080">rotator</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>RotationInterpolator</I>(alpha, tg);
+    <I>rotator</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>rotator</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>false</B></FONT><FONT COLOR="#000000">);
+    <I>root</I>.<I>addChild</I>(</FONT><FONT COLOR="#800080">rotator</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#008000">// translation</FONT><FONT COLOR="#000000">
+    </FONT><FONT COLOR="#800080">translator</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>PositionInterpolator</I>(alpha, tg);
+    <I>translator</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>translator</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>false</B></FONT><FONT COLOR="#000000">);
+    <I>root</I>.<I>addChild</I>(</FONT><FONT COLOR="#800080">translator</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#008000">// zoom</FONT><FONT COLOR="#000000">
+    </FONT><FONT COLOR="#800080">zoom</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>ScaleInterpolator</I>(alpha, tg);
+    <I>zoom</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>zoom</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>false</B></FONT><FONT COLOR="#000000">);
+    <I>root</I>.<I>addChild</I>(</FONT><FONT COLOR="#800080">zoom</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#008000">// path</FONT><FONT COLOR="#000000">
+    <I>Transform3D</I> axis = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">[] knots = {</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0.25f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0.5f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0.75f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">};
+    <I>Quat4f</I>[] rots = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Quat4f</I>[</FONT><FONT COLOR="#0000ff">5</FONT><FONT COLOR="#000000">];
+    <I>Point3f</I>[] ps = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>[</FONT><FONT COLOR="#0000ff">5</FONT><FONT COLOR="#000000">];
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#0000ff">5</FONT><FONT COLOR="#000000">; i++) {
+      rots[i] = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Quat4f</I>((</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)<I>Math</I>.<I>cos</I>(</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>PI</I>*i),</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,
+        (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)<I>Math</I>.<I>sin</I>(</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>PI</I>*i));
+      ps[i] = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">0.25f</FONT><FONT COLOR="#000000">*(i-</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">), (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)<I>Math</I>.<I>sin</I>(</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>PI</I>*i), </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+    }
+    </FONT><FONT COLOR="#800080">path</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>RotPosPathInterpolator</I>(alpha, tg, axis, knots, rots, ps);
+    <I>path</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>path</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>false</B></FONT><FONT COLOR="#000000">);
+    <I>root</I>.<I>addChild</I>(</FONT><FONT COLOR="#800080">path</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#008000">// spline</FONT><FONT COLOR="#000000">
+    <I>TCBKeyFrame</I>[] frames = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TCBKeyFrame</I>[</FONT><FONT COLOR="#0000ff">5</FONT><FONT COLOR="#000000">];
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#0000ff">5</FONT><FONT COLOR="#000000">; i++) {
+      frames[i] = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TCBKeyFrame</I>(</FONT><FONT COLOR="#0000ff">0.25f</FONT><FONT COLOR="#000000">*i, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,
+      </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">0.25f</FONT><FONT COLOR="#000000">*(i-</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">),(</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)<I>Math</I>.<I>sin</I>(</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>PI</I>*i), </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">),
+      </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Quat4f</I>((</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)<I>Math</I>.<I>cos</I>(</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>PI</I>*i),</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,(</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">)<I>Math</I>.<I>sin</I>(</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>PI</I>*i)),
+      </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">),</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+    }
+    </FONT><FONT COLOR="#800080">spline</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>RotPosScaleTCBSplinePathInterpolator</I>(alpha, tg, axis, frames);
+    <I>spline</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>spline</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+    <I>root</I>.<I>addChild</I>(</FONT><FONT COLOR="#800080">spline</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#800080">current</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#800080">spline</FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#008000">//light</FONT><FONT COLOR="#000000">
+    <I>AmbientLight</I> light = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>AmbientLight</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>blue</I>));
+    <I>light</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(light);
+    <I>PointLight</I> ptlight = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>PointLight</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Color3f</I>(<I>Color</I>.<I>white</I>), 
+      </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">2f</FONT><FONT COLOR="#000000">), </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3f</I>(</FONT><FONT COLOR="#0000ff">1f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0.3f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">));
+    <I>ptlight</I>.<I>setInfluencingBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(ptlight);
+    </FONT><FONT COLOR="#008000">//background</FONT><FONT COLOR="#000000">
+    <I>Background</I> background = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Background</I>(</FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">);
+    <I>background</I>.<I>setApplicationBounds</I>(bounds);
+    <I>root</I>.<I>addChild</I>(background);
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> root;
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>actionPerformed</I></FONT><FONT COLOR="#000000">(ActionEvent e) {
+    String cmd = e.getActionCommand();
+    </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Rotation"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      <I>current</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>false</B></FONT><FONT COLOR="#000000">);
+      </FONT><FONT COLOR="#800080">current</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#800080">rotator</FONT><FONT COLOR="#000000">;
+      <I>current</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Position"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      <I>current</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>false</B></FONT><FONT COLOR="#000000">);
+      </FONT><FONT COLOR="#800080">current</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#800080">translator</FONT><FONT COLOR="#000000">;
+      <I>current</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Scale"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      <I>current</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>false</B></FONT><FONT COLOR="#000000">);
+      </FONT><FONT COLOR="#800080">current</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#800080">zoom</FONT><FONT COLOR="#000000">;
+      <I>current</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"RotPosPath"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      <I>current</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>false</B></FONT><FONT COLOR="#000000">);
+      </FONT><FONT COLOR="#800080">current</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#800080">path</FONT><FONT COLOR="#000000">;
+      <I>current</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"RotPosScaleTCBSplinePath"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      <I>current</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>false</B></FONT><FONT COLOR="#000000">);
+      </FONT><FONT COLOR="#800080">current</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#800080">spline</FONT><FONT COLOR="#000000">;
+      <I>current</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Color"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      <I>color</I>.<I>setEnable</I>(!<I>color</I>.<I>getEnable</I>());
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"Transparency"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      <I>transparency</I>.<I>setEnable</I>(!<I>transparency</I>.<I>getEnable</I>());
+    } </FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#0000ff">"SwitchValue"</FONT><FONT COLOR="#000000">.equals(cmd)) {
+      <I>sw</I>.<I>setEnable</I>(!<I>sw</I>.<I>getEnable</I>());
+    }
+  }
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+TestInterpolators.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

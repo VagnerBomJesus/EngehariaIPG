@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - Compositing.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Compositing.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter3;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.event.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.image.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.swing.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">awt</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">font</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.geom.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.io.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.net.URL;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.imageio.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> Compositing </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JApplet {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String </FONT><FONT COLOR="#808080">s</FONT><FONT COLOR="#000000">[]) {
+    JFrame frame = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JFrame();
+    frame.setTitle(</FONT><FONT COLOR="#0000ff">"Compositing Rules"</FONT><FONT COLOR="#000000">);
+    frame.setDefaultCloseOperation(<I>JFrame</I>.<I>EXIT_ON_CLOSE</I>);
+    JApplet applet = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Compositing();
+    applet.init();
+    frame.getContentPane().add(applet);
+    frame.pack();
+    frame.setVisible(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    JPanel panel = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> CompositPanel();
+    getContentPane().add(panel);
+  }
+}
+
+</FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> CompositPanel </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JPanel </FONT><FONT COLOR="#000080"><B>implements</B></FONT><FONT COLOR="#000000"> MouseListener {
+  BufferedImage </FONT><FONT COLOR="#800080">image</FONT><FONT COLOR="#000000">;
+  </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">[] </FONT><FONT COLOR="#800080">rules</FONT><FONT COLOR="#000000"> = {<I>AlphaComposite</I>.<I>CLEAR</I>, <I>AlphaComposite</I>.<I>SRC_OVER</I>,
+    <I>AlphaComposite</I>.<I>DST_OVER</I>, <I>AlphaComposite</I>.<I>SRC_IN</I>,
+    <I>AlphaComposite</I>.<I>DST_IN</I>, <I>AlphaComposite</I>.<I>SRC_OUT</I>,
+    <I>AlphaComposite</I>.<I>DST_OUT</I>, <I>AlphaComposite</I>.<I>SRC</I>,
+    <I>AlphaComposite</I>.<I>DST</I>, <I>AlphaComposite</I>.<I>SRC_ATOP</I>,
+    <I>AlphaComposite</I>.<I>DST_ATOP</I>, <I>AlphaComposite</I>.<I>XOR</I>};
+  </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#800080">ruleIndex</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> CompositPanel() {
+    setPreferredSize(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Dimension(</FONT><FONT COLOR="#0000ff">500</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">400</FONT><FONT COLOR="#000000">));
+    setBackground(<I>Color</I>.<I>white</I>);
+    URL url = getClass().getClassLoader().getResource(</FONT><FONT COLOR="#0000ff">"images/earth.jpg"</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>try</B></FONT><FONT COLOR="#000000"> {
+      </FONT><FONT COLOR="#800080">image</FONT><FONT COLOR="#000000"> = <I>ImageIO</I>.<I>read</I>(url);
+    } </FONT><FONT COLOR="#000080"><B>catch</B></FONT><FONT COLOR="#000000"> (IOException ex) {
+      ex.printStackTrace();
+    }
+    addMouseListener(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>paintComponent</I></FONT><FONT COLOR="#000000">(Graphics g) {
+    </FONT><FONT COLOR="#000080"><B>super</B></FONT><FONT COLOR="#000000">.paintComponent(g);
+    Graphics2D g2 = (Graphics2D)g;
+    g2.drawImage(</FONT><FONT COLOR="#800080">image</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    AlphaComposite ac = <I>AlphaComposite</I>.<I>getInstance</I>(</FONT><FONT COLOR="#800080">rules</FONT><FONT COLOR="#000000">[</FONT><FONT COLOR="#800080">ruleIndex</FONT><FONT COLOR="#000000">], </FONT><FONT COLOR="#0000ff">0.4f</FONT><FONT COLOR="#000000">);
+    g2.setComposite(ac);
+    Shape ellipse = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Ellipse2D.Double(</FONT><FONT COLOR="#0000ff">50</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">50</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">120</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">120</FONT><FONT COLOR="#000000">);
+    g2.setColor(<I>Color</I>.<I>red</I>);
+    g2.fill(ellipse);
+    g2.setColor(<I>Color</I>.<I>orange</I>);
+    Font font = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Font(</FONT><FONT COLOR="#0000ff">"Serif"</FONT><FONT COLOR="#000000">, <I>Font</I>.<I>BOLD</I>, </FONT><FONT COLOR="#0000ff">144</FONT><FONT COLOR="#000000">);
+    g2.setFont(font);
+    g2.drawString(</FONT><FONT COLOR="#0000ff">"Java"</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">90</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">240</FONT><FONT COLOR="#000000">);
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mouseClicked</I></FONT><FONT COLOR="#000000">(MouseEvent </FONT><FONT COLOR="#808080">e</FONT><FONT COLOR="#000000">) {
+    </FONT><FONT COLOR="#800080">ruleIndex</FONT><FONT COLOR="#000000">++;
+    </FONT><FONT COLOR="#800080">ruleIndex</FONT><FONT COLOR="#000000"> %= </FONT><FONT COLOR="#0000ff">12</FONT><FONT COLOR="#000000">;
+    repaint();
+  }
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mousePressed</I></FONT><FONT COLOR="#000000">(MouseEvent </FONT><FONT COLOR="#808080">e</FONT><FONT COLOR="#000000">) {
+  }
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mouseReleased</I></FONT><FONT COLOR="#000000">(MouseEvent </FONT><FONT COLOR="#808080">e</FONT><FONT COLOR="#000000">) {
+  }
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mouseEntered</I></FONT><FONT COLOR="#000000">(MouseEvent </FONT><FONT COLOR="#808080">e</FONT><FONT COLOR="#000000">) {
+  }
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>mouseExited</I></FONT><FONT COLOR="#000000">(MouseEvent </FONT><FONT COLOR="#808080">e</FONT><FONT COLOR="#000000">) {
+  }
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Compositing.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

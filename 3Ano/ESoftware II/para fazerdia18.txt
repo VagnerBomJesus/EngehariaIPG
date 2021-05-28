@@ -1,0 +1,5 @@
+User stores-->Como gestor de eventos desejo enserir novos eventos e as restricoes para a mesmoas
+
+Caso de teste-->colocar testar com a lotação acima do maximo, garantir qu o evento que eu vou adicionar ja existe
+
+estados-->

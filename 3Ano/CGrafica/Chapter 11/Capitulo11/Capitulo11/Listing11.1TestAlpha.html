@@ -1,0 +1,159 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - TestAlpha.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+TestAlpha.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000000">
+</FONT><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter11;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.event.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.swing.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">media</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> TestAlpha </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JApplet {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String </FONT><FONT COLOR="#808080">s</FONT><FONT COLOR="#000000">[]) {
+    JFrame frame = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JFrame();
+    frame.setTitle(</FONT><FONT COLOR="#0000ff">"Alpha"</FONT><FONT COLOR="#000000">);
+    frame.setDefaultCloseOperation(<I>JFrame</I>.<I>EXIT_ON_CLOSE</I>);
+    JApplet applet = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TestAlpha();
+    applet.init();
+    frame.getContentPane().add(applet);
+    frame.pack();
+    frame.setVisible(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+  }
+
+  <I>Alpha</I> </FONT><FONT COLOR="#800080">alpha</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Alpha</I>();
+  Plot </FONT><FONT COLOR="#800080">plot</FONT><FONT COLOR="#000000">;
+  JTextField </FONT><FONT COLOR="#800080">tfLoopCount</FONT><FONT COLOR="#000000">;
+  JTextField </FONT><FONT COLOR="#800080">tfTriggerTime</FONT><FONT COLOR="#000000">;
+  JTextField </FONT><FONT COLOR="#800080">tfAlphaAtZeroDuration</FONT><FONT COLOR="#000000">;
+  JTextField </FONT><FONT COLOR="#800080">tfAlphaAtOneDuration</FONT><FONT COLOR="#000000">;
+  JTextField </FONT><FONT COLOR="#800080">tfIncreasingAlphaDuration</FONT><FONT COLOR="#000000">;
+  JTextField </FONT><FONT COLOR="#800080">tfDecreasingAlphaDuration</FONT><FONT COLOR="#000000">;
+  JTextField </FONT><FONT COLOR="#800080">tfIncreasingAlphaRampDuration</FONT><FONT COLOR="#000000">;
+  JTextField </FONT><FONT COLOR="#800080">tfDecreasingAlphaRampDuration</FONT><FONT COLOR="#000000">;
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    Container cp = </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">.getContentPane();
+    cp.setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BorderLayout());
+    </FONT><FONT COLOR="#800080">plot</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Plot();
+    cp.add(</FONT><FONT COLOR="#800080">plot</FONT><FONT COLOR="#000000">, <I>BorderLayout</I>.<I>CENTER</I>);
+    JPanel p = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JPanel();
+    p.setBorder(<I>BorderFactory</I>.<I>createTitledBorder</I>(</FONT><FONT COLOR="#0000ff">"Alpha parameters"</FONT><FONT COLOR="#000000">));
+    cp.add(p, <I>BorderLayout</I>.<I>SOUTH</I>);
+    p.setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> GridLayout(</FONT><FONT COLOR="#0000ff">5</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">4</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">10</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">5</FONT><FONT COLOR="#000000">));
+    p.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JLabel(</FONT><FONT COLOR="#0000ff">"loopCount"</FONT><FONT COLOR="#000000">));
+    </FONT><FONT COLOR="#800080">tfLoopCount</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JTextField(</FONT><FONT COLOR="#0000ff">"-1"</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#800080">tfLoopCount</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JLabel(</FONT><FONT COLOR="#0000ff">"triggerTime"</FONT><FONT COLOR="#000000">));
+    </FONT><FONT COLOR="#800080">tfTriggerTime</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JTextField(</FONT><FONT COLOR="#0000ff">"0"</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#800080">tfTriggerTime</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JLabel(</FONT><FONT COLOR="#0000ff">"alphaAtZeroDuration"</FONT><FONT COLOR="#000000">));
+    </FONT><FONT COLOR="#800080">tfAlphaAtZeroDuration</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JTextField(</FONT><FONT COLOR="#0000ff">"0"</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#800080">tfAlphaAtZeroDuration</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JLabel(</FONT><FONT COLOR="#0000ff">"alphaAtOneDuration"</FONT><FONT COLOR="#000000">));
+    </FONT><FONT COLOR="#800080">tfAlphaAtOneDuration</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JTextField(</FONT><FONT COLOR="#0000ff">"0"</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#800080">tfAlphaAtOneDuration</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JLabel(</FONT><FONT COLOR="#0000ff">"increasingAlphaDuration"</FONT><FONT COLOR="#000000">));
+    </FONT><FONT COLOR="#800080">tfIncreasingAlphaDuration</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JTextField(</FONT><FONT COLOR="#0000ff">"1000"</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#800080">tfIncreasingAlphaDuration</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JLabel(</FONT><FONT COLOR="#0000ff">"decreasingAlphaDuration"</FONT><FONT COLOR="#000000">));
+    </FONT><FONT COLOR="#800080">tfDecreasingAlphaDuration</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JTextField(</FONT><FONT COLOR="#0000ff">"0"</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#800080">tfDecreasingAlphaDuration</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JLabel(</FONT><FONT COLOR="#0000ff">"increasingAlphaRampDuration"</FONT><FONT COLOR="#000000">));
+    </FONT><FONT COLOR="#800080">tfIncreasingAlphaRampDuration</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JTextField(</FONT><FONT COLOR="#0000ff">"0"</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#800080">tfIncreasingAlphaRampDuration</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JLabel(</FONT><FONT COLOR="#0000ff">"decreasingAlphaRampDuration"</FONT><FONT COLOR="#000000">));
+    </FONT><FONT COLOR="#800080">tfDecreasingAlphaRampDuration</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JTextField(</FONT><FONT COLOR="#0000ff">"0"</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#800080">tfDecreasingAlphaRampDuration</FONT><FONT COLOR="#000000">);
+    p.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JPanel());
+    JButton button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JButton(</FONT><FONT COLOR="#0000ff">"Plot"</FONT><FONT COLOR="#000000">);
+    p.add(button);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> ActionListener() {
+      </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>actionPerformed</I></FONT><FONT COLOR="#000000">(ActionEvent </FONT><FONT COLOR="#808080">ev</FONT><FONT COLOR="#000000">) {
+        setAlpha();
+        repaint();
+      }
+    });
+    p.add(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JPanel());
+    button = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JButton(</FONT><FONT COLOR="#0000ff">"Reset"</FONT><FONT COLOR="#000000">);
+    p.add(button);
+    button.addActionListener(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> ActionListener() {
+      </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>actionPerformed</I></FONT><FONT COLOR="#000000">(ActionEvent </FONT><FONT COLOR="#808080">ev</FONT><FONT COLOR="#000000">) {
+        </FONT><FONT COLOR="#800080"><B>tfLoopCount</B></FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">"-1"</FONT><FONT COLOR="#000000">);
+        </FONT><FONT COLOR="#800080"><B>tfTriggerTime</B></FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">"0"</FONT><FONT COLOR="#000000">);
+        </FONT><FONT COLOR="#800080"><B>tfAlphaAtZeroDuration</B></FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">"0"</FONT><FONT COLOR="#000000">);
+        </FONT><FONT COLOR="#800080"><B>tfAlphaAtOneDuration</B></FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">"0"</FONT><FONT COLOR="#000000">);
+        </FONT><FONT COLOR="#800080"><B>tfIncreasingAlphaDuration</B></FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">"1000"</FONT><FONT COLOR="#000000">);
+        </FONT><FONT COLOR="#800080"><B>tfDecreasingAlphaDuration</B></FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">"0"</FONT><FONT COLOR="#000000">);
+        </FONT><FONT COLOR="#800080"><B>tfIncreasingAlphaRampDuration</B></FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">"0"</FONT><FONT COLOR="#000000">);
+        </FONT><FONT COLOR="#800080"><B>tfDecreasingAlphaRampDuration</B></FONT><FONT COLOR="#000000">.setText(</FONT><FONT COLOR="#0000ff">"0"</FONT><FONT COLOR="#000000">);
+        setAlpha();
+        repaint();
+      }
+    });
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> setAlpha() {
+    <I>alpha</I>.<I>setMode</I>(<I>Alpha</I>.<I>INCREASING_ENABLE</I> | <I>Alpha</I>.<I>DECREASING_ENABLE</I>);
+    </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> n = <I>Integer</I>.<I>parseInt</I>(</FONT><FONT COLOR="#800080">tfLoopCount</FONT><FONT COLOR="#000000">.getText());
+    <I>alpha</I>.<I>setLoopCount</I>(n);
+    n = <I>Integer</I>.<I>parseInt</I>(</FONT><FONT COLOR="#800080">tfTriggerTime</FONT><FONT COLOR="#000000">.getText());
+    <I>alpha</I>.<I>setTriggerTime</I>(n);
+    n = <I>Integer</I>.<I>parseInt</I>(</FONT><FONT COLOR="#800080">tfAlphaAtZeroDuration</FONT><FONT COLOR="#000000">.getText());
+    <I>alpha</I>.<I>setAlphaAtZeroDuration</I>(n);
+    n = <I>Integer</I>.<I>parseInt</I>(</FONT><FONT COLOR="#800080">tfAlphaAtOneDuration</FONT><FONT COLOR="#000000">.getText());
+    <I>alpha</I>.<I>setAlphaAtOneDuration</I>(n);
+    n = <I>Integer</I>.<I>parseInt</I>(</FONT><FONT COLOR="#800080">tfIncreasingAlphaDuration</FONT><FONT COLOR="#000000">.getText());
+    <I>alpha</I>.<I>setIncreasingAlphaDuration</I>(n);
+    n = <I>Integer</I>.<I>parseInt</I>(</FONT><FONT COLOR="#800080">tfDecreasingAlphaDuration</FONT><FONT COLOR="#000000">.getText());
+    <I>alpha</I>.<I>setDecreasingAlphaDuration</I>(n);
+    n = <I>Integer</I>.<I>parseInt</I>(</FONT><FONT COLOR="#800080">tfIncreasingAlphaRampDuration</FONT><FONT COLOR="#000000">.getText());
+    <I>alpha</I>.<I>setIncreasingAlphaRampDuration</I>(n);
+    n = <I>Integer</I>.<I>parseInt</I>(</FONT><FONT COLOR="#800080">tfDecreasingAlphaRampDuration</FONT><FONT COLOR="#000000">.getText());
+    <I>alpha</I>.<I>setDecreasingAlphaRampDuration</I>(n);
+  }
+
+  </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> Plot </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JPanel {
+    </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> Plot() {
+      </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">.setBackground(<I>Color</I>.<I>white</I>);
+      </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">.setBorder(<I>BorderFactory</I>.<I>createLoweredBevelBorder</I>());
+      </FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">.setPreferredSize(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Dimension(</FONT><FONT COLOR="#0000ff">800</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">200</FONT><FONT COLOR="#000000">));
+    }
+    
+    </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>paintComponent</I></FONT><FONT COLOR="#000000">(Graphics g) {
+      </FONT><FONT COLOR="#000080"><B>super</B></FONT><FONT COLOR="#000000">.paintComponent(g);
+      </FONT><FONT COLOR="#000080"><B>long</B></FONT><FONT COLOR="#000000"> start = <I>alpha</I>.<I>getStartTime</I>();
+      </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> x1 = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+      </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> y1 = </FONT><FONT COLOR="#0000ff">150</FONT><FONT COLOR="#000000">;
+      </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> x2 = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+      </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> y2 = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+      </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#0000ff">1000</FONT><FONT COLOR="#000000">; i++) {
+        x2 = i;
+        y2 = </FONT><FONT COLOR="#0000ff">150</FONT><FONT COLOR="#000000">-(</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)(</FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">*<I>alpha</I>.<I>value</I>(start+i*</FONT><FONT COLOR="#0000ff">10</FONT><FONT COLOR="#000000">));
+        g.drawLine(x1, y1,x2, y2);
+        x1 = x2;
+        y1 = y2;
+      }
+    }
+  }
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+TestAlpha.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

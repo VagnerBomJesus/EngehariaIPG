@@ -1,0 +1,4 @@
+Aula:{
+	Virtualização: AZure, Google Cloud, Farebase
+	
+}

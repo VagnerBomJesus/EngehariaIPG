@@ -1,0 +1,133 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - WinCircle.c</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+WinCircle.c</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#008000">#include &LT;windows.h&GT;</FONT><FONT COLOR="#000000">
+</FONT><FONT COLOR="#008000">#include &LT;string.h&GT;</FONT><FONT COLOR="#000000">
+
+LRESULT CALLBACK
+MainWndProc (HWND hwnd, UINT nMsg, WPARAM wParam, LPARAM lParam) {
+	
+	HDC hdc;             </FONT><FONT COLOR="#008000">/* Device context used for drawing */</FONT><FONT COLOR="#000000">
+	PAINTSTRUCT ps;      </FONT><FONT COLOR="#008000">/* Paint structure used during drawing */</FONT><FONT COLOR="#000000">
+	RECT rc;             </FONT><FONT COLOR="#008000">/* Client area rectangle */</FONT><FONT COLOR="#000000">
+	</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">	cx;				 </FONT><FONT COLOR="#008000">/* Center x-coordinate */</FONT><FONT COLOR="#000000">
+	</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> cy;              </FONT><FONT COLOR="#008000">/* Center y-coordinate */</FONT><FONT COLOR="#000000">
+	</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> r;               </FONT><FONT COLOR="#008000">/* Radius of circle */</FONT><FONT COLOR="#000000">
+	
+	</FONT><FONT COLOR="#008000">/* Message processing.*/</FONT><FONT COLOR="#000000">
+	</FONT><FONT COLOR="#000080"><B>switch</B></FONT><FONT COLOR="#000000"> (nMsg) {
+		
+	</FONT><FONT COLOR="#000080"><B>case</B></FONT><FONT COLOR="#000000"> WM_DESTROY:
+		</FONT><FONT COLOR="#008000">/* The window is being destroyed, close the application */</FONT><FONT COLOR="#000000">
+		PostQuitMessage (</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+		</FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+		</FONT><FONT COLOR="#000080"><B>break</B></FONT><FONT COLOR="#000000">;
+		
+	</FONT><FONT COLOR="#000080"><B>case</B></FONT><FONT COLOR="#000000"> WM_PAINT:
+		</FONT><FONT COLOR="#008000">/* The window needs to be redrawn. */</FONT><FONT COLOR="#000000">
+		hdc = BeginPaint (hwnd, &ps);
+		GetClientRect (hwnd, &rc);
+		
+		</FONT><FONT COLOR="#008000">/* Calculater center and radius */</FONT><FONT COLOR="#000000">
+		cx = (rc.left + rc.right)/</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">;
+		cy = (rc.top + rc.bottom)/</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">;
+		</FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (rc.bottom - rc.top &LT; rc.right - rc.left)
+			r = (rc.bottom - rc.top) / </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000"> - </FONT><FONT COLOR="#0000ff">20</FONT><FONT COLOR="#000000">;
+		</FONT><FONT COLOR="#000080"><B>else</B></FONT><FONT COLOR="#000000">
+			r = (rc.right - rc.left) / </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000"> - </FONT><FONT COLOR="#0000ff">20</FONT><FONT COLOR="#000000">;
+		
+		Ellipse(hdc, cx-r, cy-r, cx+r, cy+r);
+		
+		EndPaint (hwnd, &ps);
+		</FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">;
+		</FONT><FONT COLOR="#000080"><B>break</B></FONT><FONT COLOR="#000000">;
+		
+	}
+	
+	</FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> DefWindowProc (hwnd, nMsg, wParam, lParam);
+}
+
+
+</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> WINAPI
+WinMain (HINSTANCE hInst, HINSTANCE hPrev, LPSTR lpCmd, </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> nShow) {
+	HWND hwndMain;						</FONT><FONT COLOR="#008000">/* Main window handle */</FONT><FONT COLOR="#000000">
+	MSG msg;							</FONT><FONT COLOR="#008000">/* Win32 message structure */</FONT><FONT COLOR="#000000">
+	WNDCLASSEX wndclass;				</FONT><FONT COLOR="#008000">/* Window class structure */</FONT><FONT COLOR="#000000">
+	</FONT><FONT COLOR="#000080"><B>char</B></FONT><FONT COLOR="#000000">* szMainWndClass = </FONT><FONT COLOR="#0000ff">"WinCircle"</FONT><FONT COLOR="#000000">;	</FONT><FONT COLOR="#008000">/* The window class name */</FONT><FONT COLOR="#000000">
+	
+	</FONT><FONT COLOR="#008000">/* Create a window class */</FONT><FONT COLOR="#000000">	
+	</FONT><FONT COLOR="#008000">/* Initialize the entire structure to zero */</FONT><FONT COLOR="#000000">
+	memset (&wndclass, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#000080"><B>sizeof</B></FONT><FONT COLOR="#000000">(WNDCLASSEX));
+	
+	</FONT><FONT COLOR="#008000">/* The class Name */</FONT><FONT COLOR="#000000">
+	wndclass.lpszClassName = szMainWndClass;
+	
+	</FONT><FONT COLOR="#008000">/* The size of the structure. */</FONT><FONT COLOR="#000000">
+	wndclass.cbSize = </FONT><FONT COLOR="#000080"><B>sizeof</B></FONT><FONT COLOR="#000000">(WNDCLASSEX);
+	
+	</FONT><FONT COLOR="#008000">/* All windows of this class redraw when resized. */</FONT><FONT COLOR="#000000">
+	wndclass.style = CS_HREDRAW | CS_VREDRAW;
+	
+	</FONT><FONT COLOR="#008000">/* All windows of this class use the MainWndProc window function. */</FONT><FONT COLOR="#000000">
+	wndclass.lpfnWndProc = MainWndProc;
+	
+	</FONT><FONT COLOR="#008000">/* This class is used with the current program instance. */</FONT><FONT COLOR="#000000">
+	wndclass.hInstance = hInst;
+	
+	</FONT><FONT COLOR="#008000">/* Use standard application icon and arrow cursor */</FONT><FONT COLOR="#000000">
+	wndclass.hIcon = LoadIcon (NULL, IDI_APPLICATION);
+	wndclass.hIconSm = LoadIcon (NULL, IDI_APPLICATION);
+	wndclass.hCursor = LoadCursor (NULL, IDC_ARROW);
+	
+	</FONT><FONT COLOR="#008000">/* Color the background white */</FONT><FONT COLOR="#000000">
+	wndclass.hbrBackground = (HBRUSH) GetStockObject (WHITE_BRUSH);
+	
+	</FONT><FONT COLOR="#008000">/* Register the window class */</FONT><FONT COLOR="#000000">
+	RegisterClassEx (&wndclass);
+	
+	</FONT><FONT COLOR="#008000">/* Create a window using the window class */</FONT><FONT COLOR="#000000">
+	hwndMain = CreateWindow (
+		szMainWndClass,             </FONT><FONT COLOR="#008000">/* Class name */</FONT><FONT COLOR="#000000">
+		</FONT><FONT COLOR="#0000ff">"Circle"</FONT><FONT COLOR="#000000">,                   </FONT><FONT COLOR="#008000">/* Caption */</FONT><FONT COLOR="#000000">
+		WS_OVERLAPPEDWINDOW,        </FONT><FONT COLOR="#008000">/* Style */</FONT><FONT COLOR="#000000">
+		CW_USEDEFAULT,              </FONT><FONT COLOR="#008000">/* Initial x (use default) */</FONT><FONT COLOR="#000000">
+		CW_USEDEFAULT,              </FONT><FONT COLOR="#008000">/* Initial y (use default) */</FONT><FONT COLOR="#000000">
+		CW_USEDEFAULT,              </FONT><FONT COLOR="#008000">/* Initial x size (use default) */</FONT><FONT COLOR="#000000">
+		CW_USEDEFAULT,              </FONT><FONT COLOR="#008000">/* Initial y size (use default) */</FONT><FONT COLOR="#000000">
+		NULL,                       </FONT><FONT COLOR="#008000">/* No parent window */</FONT><FONT COLOR="#000000">
+		NULL,                       </FONT><FONT COLOR="#008000">/* No menu */</FONT><FONT COLOR="#000000">
+		hInst,                      </FONT><FONT COLOR="#008000">/* This program instance */</FONT><FONT COLOR="#000000">
+		NULL                        </FONT><FONT COLOR="#008000">/* Creation parameters */</FONT><FONT COLOR="#000000">
+		);
+	
+    </FONT><FONT COLOR="#008000">/* Display the window */</FONT><FONT COLOR="#000000">
+	ShowWindow (hwndMain, nShow);
+	UpdateWindow (hwndMain);
+	
+	</FONT><FONT COLOR="#008000">/* The message loop */</FONT><FONT COLOR="#000000">
+	</FONT><FONT COLOR="#000080"><B>while</B></FONT><FONT COLOR="#000000"> (GetMessage (&msg, NULL, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">)) {
+		TranslateMessage (&msg);
+		DispatchMessage (&msg);
+	}
+	</FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> msg.wParam;
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+WinCircle.c</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

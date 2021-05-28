@@ -1,0 +1,139 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - TestLOD.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+TestLOD.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000000">
+</FONT><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter11;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.geom.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">awt</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">event</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.image.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.imageio.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">geometry</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">behaviors</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">vp</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">universe</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">media</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">vecmath</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.io.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.net.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">image</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.applet.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">applet</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">MainFrame</FONT><FONT COLOR="#000000">;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> TestLOD </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> Applet {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String[] </FONT><FONT COLOR="#808080">args</FONT><FONT COLOR="#000000">) {
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>MainFrame</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> TestLOD(), </FONT><FONT COLOR="#0000ff">480</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">480</FONT><FONT COLOR="#000000">);
+  }
+
+  BufferedImage[] </FONT><FONT COLOR="#800080">images</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BufferedImage[</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">];
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    </FONT><FONT COLOR="#008000">// create canvas</FONT><FONT COLOR="#000000">
+    GraphicsConfiguration gc = <I>SimpleUniverse</I>.<I>getPreferredConfiguration</I>();
+    <I>Canvas3D</I> cv = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Canvas3D</I>(gc);
+    setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BorderLayout());
+    add(cv, <I>BorderLayout</I>.<I>CENTER</I>);
+    <I>BranchGroup</I> bg = createSceneGraph();
+    <I>bg</I>.<I>compile</I>();
+    <I>SimpleUniverse</I> su = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>SimpleUniverse</I>(cv);
+    <I>ViewingPlatform</I> viewingPlatform = <I>su</I>.<I>getViewingPlatform</I>();
+    <I>viewingPlatform</I>.<I>setNominalViewingTransform</I>();
+    </FONT><FONT COLOR="#008000">// orbit behavior to zoom and rotate the view</FONT><FONT COLOR="#000000">
+    <I>OrbitBehavior</I> orbit = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>OrbitBehavior</I>(cv,
+      <I>OrbitBehavior</I>.<I>REVERSE_ZOOM</I> |
+      <I>OrbitBehavior</I>.<I>REVERSE_ROTATE</I> |
+      <I>OrbitBehavior</I>.<I>DISABLE_TRANSLATE</I>);
+    <I>BoundingSphere</I> bounds =
+      </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BoundingSphere</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>(</FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">), </FONT><FONT COLOR="#0000ff">100.0</FONT><FONT COLOR="#000000">);
+    <I>orbit</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>viewingPlatform</I>.<I>setViewPlatformBehavior</I>(orbit);
+    <I>su</I>.<I>addBranchGraph</I>(bg);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I> createSceneGraph() {
+    <I>BranchGroup</I> objRoot = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I>();    
+    <I>TransformGroup</I> objTrans = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>();
+    <I>objTrans</I>.<I>setCapability</I>(<I>TransformGroup</I>.<I>ALLOW_TRANSFORM_WRITE</I>);
+    <I>objTrans</I>.<I>setCapability</I>(<I>TransformGroup</I>.<I>ALLOW_TRANSFORM_READ</I>);
+    <I>objRoot</I>.<I>addChild</I>(objTrans); 
+    </FONT><FONT COLOR="#008000">// a switch to hold the different levels</FONT><FONT COLOR="#000000">
+    <I>Switch</I> sw = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Switch</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+    <I>sw</I>.<I>setCapability</I>(<I>javax</I>.<I>media</I>.<I>j3d</I>.<I>Switch</I>.<I>ALLOW_SWITCH_READ</I>);
+    <I>sw</I>.<I>setCapability</I>(<I>javax</I>.<I>media</I>.<I>j3d</I>.<I>Switch</I>.<I>ALLOW_SWITCH_WRITE</I>);
+    <I>objTrans</I>.<I>addChild</I>(sw);
+    </FONT><FONT COLOR="#008000">// 4 levels of globes</FONT><FONT COLOR="#000000">
+    loadImages();
+    <I>Appearance</I> ap = createAppearance(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+    <I>sw</I>.<I>addChild</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Sphere</I>(</FONT><FONT COLOR="#0000ff">0.4f</FONT><FONT COLOR="#000000">, <I>Primitive</I>.<I>GENERATE_TEXTURE_COORDS</I>, </FONT><FONT COLOR="#0000ff">40</FONT><FONT COLOR="#000000">, ap));
+    ap = createAppearance(</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">);
+    <I>sw</I>.<I>addChild</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Sphere</I>(</FONT><FONT COLOR="#0000ff">0.4f</FONT><FONT COLOR="#000000">, <I>Primitive</I>.<I>GENERATE_TEXTURE_COORDS</I>, </FONT><FONT COLOR="#0000ff">20</FONT><FONT COLOR="#000000">, ap));
+    ap = createAppearance(</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">);
+    <I>sw</I>.<I>addChild</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Sphere</I>(</FONT><FONT COLOR="#0000ff">0.4f</FONT><FONT COLOR="#000000">, <I>Primitive</I>.<I>GENERATE_TEXTURE_COORDS</I>, </FONT><FONT COLOR="#0000ff">10</FONT><FONT COLOR="#000000">, ap));
+    ap = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Appearance</I>();
+    <I>ap</I>.<I>setColoringAttributes</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>ColoringAttributes</I>(</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0f</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0.5f</FONT><FONT COLOR="#000000">,<I>ColoringAttributes</I>.<I>FASTEST</I>));
+    <I>sw</I>.<I>addChild</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Sphere</I>(</FONT><FONT COLOR="#0000ff">0.4f</FONT><FONT COLOR="#000000">, <I>Sphere</I>.<I>GENERATE_NORMALS</I>, </FONT><FONT COLOR="#0000ff">5</FONT><FONT COLOR="#000000">, ap));
+    </FONT><FONT COLOR="#008000">// the DistanceLOD behavior</FONT><FONT COLOR="#000000">
+    </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">[] distances = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">[</FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">];
+    distances[</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">] = </FONT><FONT COLOR="#0000ff">5.0f</FONT><FONT COLOR="#000000">;
+    distances[</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">] = </FONT><FONT COLOR="#0000ff">10.0f</FONT><FONT COLOR="#000000">;
+    distances[</FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">] = </FONT><FONT COLOR="#0000ff">25.0f</FONT><FONT COLOR="#000000">;
+    <I>DistanceLOD</I> lod = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>DistanceLOD</I>(distances);
+    <I>lod</I>.<I>addSwitch</I>(sw);
+    <I>BoundingSphere</I> bounds =
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BoundingSphere</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>(</FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">), </FONT><FONT COLOR="#0000ff">10.0</FONT><FONT COLOR="#000000">);
+    <I>lod</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>objTrans</I>.<I>addChild</I>(lod);
+    </FONT><FONT COLOR="#008000">//background</FONT><FONT COLOR="#000000">
+    <I>Background</I> background = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Background</I>(</FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0f</FONT><FONT COLOR="#000000">);
+    <I>background</I>.<I>setApplicationBounds</I>(bounds);
+    <I>objRoot</I>.<I>addChild</I>(background);
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> objRoot;
+  }
+    
+  </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> loadImages() {
+    URL filename =
+    getClass().getClassLoader().getResource(</FONT><FONT COLOR="#0000ff">"images/earth.jpg"</FONT><FONT COLOR="#000000">);
+    </FONT><FONT COLOR="#000080"><B>try</B></FONT><FONT COLOR="#000000"> {
+      </FONT><FONT COLOR="#800080">images</FONT><FONT COLOR="#000000">[</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">] = <I>ImageIO</I>.<I>read</I>(filename);
+      AffineTransform xform = <I>AffineTransform</I>.<I>getScaleInstance</I>(</FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.5</FONT><FONT COLOR="#000000">);
+      AffineTransformOp scaleOp = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> AffineTransformOp(xform, </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">);
+      </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#0000ff">3</FONT><FONT COLOR="#000000">; i++) {
+          </FONT><FONT COLOR="#800080">images</FONT><FONT COLOR="#000000">[i] = scaleOp.filter(</FONT><FONT COLOR="#800080">images</FONT><FONT COLOR="#000000">[i-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">], </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">);
+      }
+    } </FONT><FONT COLOR="#000080"><B>catch</B></FONT><FONT COLOR="#000000"> (IOException ex) {
+        ex.printStackTrace();
+    }
+  }
+  
+  <I>Appearance</I> createAppearance(</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i){
+    <I>Appearance</I> appear = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Appearance</I>();
+      <I>ImageComponent2D</I> image = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>ImageComponent2D</I>(<I>ImageComponent2D</I>.<I>FORMAT_RGB</I>, </FONT><FONT COLOR="#800080">images</FONT><FONT COLOR="#000000">[i]);
+      <I>Texture2D</I> texture = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Texture2D</I>(<I>Texture</I>.<I>BASE_LEVEL</I>, <I>Texture</I>.<I>RGBA</I>,
+      <I>image</I>.<I>getWidth</I>(), <I>image</I>.<I>getHeight</I>());
+      <I>texture</I>.<I>setImage</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, image);
+      <I>texture</I>.<I>setEnable</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+      <I>texture</I>.<I>setMagFilter</I>(<I>Texture</I>.<I>BASE_LEVEL_LINEAR</I>);
+      <I>texture</I>.<I>setMinFilter</I>(<I>Texture</I>.<I>BASE_LEVEL_LINEAR</I>);
+      <I>appear</I>.<I>setTexture</I>(texture);
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> appear;
+  }
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+TestLOD.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - OpenGLCircle.c</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+OpenGLCircle.c</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#008000">#include &LT;GL/glut.h&GT;</FONT><FONT COLOR="#000000">
+</FONT><FONT COLOR="#008000">#include &LT;math.h&GT;</FONT><FONT COLOR="#000000">
+
+</FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> display(</FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000">) {
+	</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i;
+	</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> n = </FONT><FONT COLOR="#0000ff">80</FONT><FONT COLOR="#000000">;
+	</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> a = </FONT><FONT COLOR="#0000ff">2</FONT><FONT COLOR="#000000">*</FONT><FONT COLOR="#0000ff">3.1415926535</FONT><FONT COLOR="#000000">/n;
+	</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> x;
+	</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000"> y;
+
+	glClear(GL_COLOR_BUFFER_BIT);
+	glColor3f(</FONT><FONT COLOR="#0000ff">1.0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+
+	glBegin(GL_LINE_LOOP);
+	</FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; n; i++) {
+		x = cos(i*a);
+		y = sin(i*a);
+		glVertex2f(x, y);
+	}
+	glEnd();
+	glFlush();
+}
+
+
+</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> main(</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> argc, </FONT><FONT COLOR="#000080"><B>char</B></FONT><FONT COLOR="#000000">** argv) {
+	glutInit(&argc, argv);
+	glutCreateWindow(</FONT><FONT COLOR="#0000ff">"Circle"</FONT><FONT COLOR="#000000">);
+	glutDisplayFunc(display);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(-</FONT><FONT COLOR="#0000ff">1.2</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.2</FONT><FONT COLOR="#000000">, -</FONT><FONT COLOR="#0000ff">1.2</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.2</FONT><FONT COLOR="#000000">);
+	glClearColor(</FONT><FONT COLOR="#0000ff">1.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">1.0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">);
+	glutMainLoop();
+}
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+OpenGLCircle.c</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

@@ -1,0 +1,111 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - HeadTracking.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+HeadTracking.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000000">
+</FONT><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter8;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">awt</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">event</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">geometry</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">ColorCube</FONT><FONT COLOR="#000000">;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">universe</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">media</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">javax</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">vecmath</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.net.URL;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.image.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.imageio.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.applet.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">com</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">sun</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">j3d</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">utils</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">applet</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">MainFrame</FONT><FONT COLOR="#000000">;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> HeadTracking </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> Applet {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String[] </FONT><FONT COLOR="#808080">args</FONT><FONT COLOR="#000000">) {
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>MainFrame</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> HeadTracking(), </FONT><FONT COLOR="#0000ff">500</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">500</FONT><FONT COLOR="#000000">);
+  }
+
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    </FONT><FONT COLOR="#008000">// create canvas</FONT><FONT COLOR="#000000">
+    GraphicsConfiguration gc = <I>SimpleUniverse</I>.<I>getPreferredConfiguration</I>();
+    <I>Canvas3D</I> cv = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Canvas3D</I>(gc);
+    setLayout(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> BorderLayout());
+    add(cv, <I>BorderLayout</I>.<I>CENTER</I>);  
+    <I>BranchGroup</I> scene = createSceneGraph();
+    <I>SimpleUniverse</I> su = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>SimpleUniverse</I>(cv);
+    </FONT><FONT COLOR="#008000">// add avatar</FONT><FONT COLOR="#000000">
+    <I>LineAxes</I> axes = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>LineAxes</I>(</FONT><FONT COLOR="#0000ff">0.2f</FONT><FONT COLOR="#000000">);
+    <I>Shape3D</I> shape = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Shape3D</I>(axes);
+    <I>ViewerAvatar</I> va = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>ViewerAvatar</I>();
+    <I>va</I>.<I>addChild</I>(shape);
+    <I>su</I>.<I>getViewer</I>().<I>setAvatar</I>(va);
+    </FONT><FONT COLOR="#008000">// install the VirtualInputDevice</FONT><FONT COLOR="#000000">
+    String[] args = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> String[</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">];
+    <I>InputDevice</I> device = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>VirtualInputDevice</I>( args );
+    <I>device</I>.<I>initialize</I>();
+    <I>PhysicalEnvironment</I> pe = <I>su</I>.<I>getViewer</I>().<I>getPhysicalEnvironment</I>();
+    <I>pe</I>.<I>addInputDevice</I>(device);
+    <I>pe</I>.<I>setSensor</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, <I>device</I>.<I>getSensor</I>(</FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">));
+    </FONT><FONT COLOR="#008000">// set up head tracking</FONT><FONT COLOR="#000000">
+    <I>su</I>.<I>getViewingPlatform</I>().<I>setNominalViewingTransform</I>();
+    <I>pe</I>.<I>setCoexistenceCenterInPworldPolicy</I>(<I>View</I>.<I>NOMINAL_HEAD</I>);
+    <I>View</I> view = <I>su</I>.<I>getViewer</I>().<I>getView</I>();
+    <I>view</I>.<I>setUserHeadToVworldEnable</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+    <I>view</I>.<I>setCoexistenceCenteringEnable</I>(</FONT><FONT COLOR="#000080"><B>false</B></FONT><FONT COLOR="#000000">);
+    <I>Screen3D</I> screen = <I>cv</I>.<I>getScreen3D</I>();
+    <I>Transform3D</I> tr = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>tr</I>.<I>setTranslation</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Vector3d</I>(</FONT><FONT COLOR="#0000ff">0.1</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.1</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">));
+    <I>screen</I>.<I>setTrackerBaseToImagePlate</I>(tr);
+    <I>view</I>.<I>setTrackingEnable</I>(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+    <I>su</I>.<I>addBranchGraph</I>(scene);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I> createSceneGraph() {
+    <I>BranchGroup</I> objRoot = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BranchGroup</I>();
+    <I>TransformGroup</I> objTrans = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>TransformGroup</I>();
+    <I>objTrans</I>.<I>setCapability</I>(<I>TransformGroup</I>.<I>ALLOW_TRANSFORM_WRITE</I>);
+    <I>objRoot</I>.<I>addChild</I>(objTrans);
+    <I>objTrans</I>.<I>addChild</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>ColorCube</I>(</FONT><FONT COLOR="#0000ff">0.2</FONT><FONT COLOR="#000000">));
+    <I>Transform3D</I> yAxis = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Transform3D</I>();
+    <I>Alpha</I> rotationAlpha = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Alpha</I>(-</FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">, <I>Alpha</I>.<I>INCREASING_ENABLE</I>,
+    </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,
+    </FONT><FONT COLOR="#0000ff">4000</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">,
+    </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">);
+    <I>RotationInterpolator</I> rotator =
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>RotationInterpolator</I>(rotationAlpha, objTrans, yAxis,
+    </FONT><FONT COLOR="#0000ff">0.0f</FONT><FONT COLOR="#000000">, (</FONT><FONT COLOR="#000080"><B>float</B></FONT><FONT COLOR="#000000">) <I>Math</I>.<I>PI</I>*</FONT><FONT COLOR="#0000ff">2.0f</FONT><FONT COLOR="#000000">);
+    <I>BoundingSphere</I> bounds =
+    </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>BoundingSphere</I>(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Point3d</I>(</FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">,</FONT><FONT COLOR="#0000ff">0.0</FONT><FONT COLOR="#000000">), </FONT><FONT COLOR="#0000ff">100.0</FONT><FONT COLOR="#000000">);
+    <I>rotator</I>.<I>setSchedulingBounds</I>(bounds);
+    <I>objTrans</I>.<I>addChild</I>(rotator);
+    </FONT><FONT COLOR="#008000">//background</FONT><FONT COLOR="#000000">
+    URL url = getClass().getClassLoader().getResource(</FONT><FONT COLOR="#0000ff">"images/bg.jpg"</FONT><FONT COLOR="#000000">);
+    BufferedImage bi = </FONT><FONT COLOR="#000080"><B>null</B></FONT><FONT COLOR="#000000">;
+    </FONT><FONT COLOR="#000080"><B>try</B></FONT><FONT COLOR="#000000"> {
+      bi = <I>ImageIO</I>.<I>read</I>(url);
+    } </FONT><FONT COLOR="#000080"><B>catch</B></FONT><FONT COLOR="#000000"> (Exception ex) {
+      ex.printStackTrace();
+    }
+    <I>ImageComponent2D</I> image = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>ImageComponent2D</I>(<I>ImageComponent2D</I>.<I>FORMAT_RGB</I>, bi);
+    <I>Background</I> background = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> <I>Background</I>(image);
+    <I>background</I>.<I>setApplicationBounds</I>(bounds);
+    <I>objRoot</I>.<I>addChild</I>(background);
+    </FONT><FONT COLOR="#000080"><B>return</B></FONT><FONT COLOR="#000000"> objRoot;
+  }
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+HeadTracking.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>

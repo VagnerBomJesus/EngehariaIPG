@@ -1,0 +1,93 @@
+<HTML>
+<HEAD>
+<TITLE>JBuilder - Rain.java</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="KEYWORDS" CONTENT="BorlandHtml">
+</HEAD>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Rain.java</FONT>
+</center><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT>
+<PRE><FONT COLOR="#000000">
+</FONT><FONT COLOR="#000080"><B>package</B></FONT><FONT COLOR="#000000"> chapter4;
+
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> java.awt.geom.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">awt</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">event</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#808080">java</FONT><FONT COLOR="#000000">.</FONT><FONT COLOR="#808080">util</FONT><FONT COLOR="#000000">.*;
+</FONT><FONT COLOR="#000080"><B>import</B></FONT><FONT COLOR="#000000"> javax.swing.*;
+
+</FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> Rain </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JApplet {
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>static</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> <I>main</I>(String </FONT><FONT COLOR="#808080">s</FONT><FONT COLOR="#000000">[]) {
+    JFrame frame = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> JFrame();
+    frame.setTitle(</FONT><FONT COLOR="#0000ff">"Rain"</FONT><FONT COLOR="#000000">);
+    frame.setDefaultCloseOperation(<I>JFrame</I>.<I>EXIT_ON_CLOSE</I>);
+    JApplet applet = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Rain();
+    applet.init();
+    frame.getContentPane().add(applet);
+    frame.pack();
+    frame.setVisible(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">);
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>init</I></FONT><FONT COLOR="#000000">() {
+    JPanel panel = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> RainPanel();
+    getContentPane().add(panel);
+  }
+}
+
+</FONT><FONT COLOR="#000080"><B>class</B></FONT><FONT COLOR="#000000"> RainPanel </FONT><FONT COLOR="#000080"><B>extends</B></FONT><FONT COLOR="#000000"> JPanel </FONT><FONT COLOR="#000080"><B>implements</B></FONT><FONT COLOR="#000000"> Runnable{
+  Point2D.Double[] </FONT><FONT COLOR="#800080">pts</FONT><FONT COLOR="#000000"> = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Point2D.Double[</FONT><FONT COLOR="#0000ff">1200</FONT><FONT COLOR="#000000">];
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> RainPanel() {
+    setPreferredSize(</FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Dimension(</FONT><FONT COLOR="#0000ff">640</FONT><FONT COLOR="#000000">, </FONT><FONT COLOR="#0000ff">480</FONT><FONT COLOR="#000000">));
+    setBackground(<I>Color</I>.<I>gray</I>);
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#800080">pts</FONT><FONT COLOR="#000000">.length; i++) {
+      </FONT><FONT COLOR="#800080">pts</FONT><FONT COLOR="#000000">[i] = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Point2D.Double(<I>Math</I>.<I>random</I>(), <I>Math</I>.<I>random</I>());
+    }
+    Thread thread = </FONT><FONT COLOR="#000080"><B>new</B></FONT><FONT COLOR="#000000"> Thread(</FONT><FONT COLOR="#000080"><B>this</B></FONT><FONT COLOR="#000000">);
+    thread.start();
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>paintComponent</I></FONT><FONT COLOR="#000000">(Graphics g) {
+    </FONT><FONT COLOR="#000080"><B>super</B></FONT><FONT COLOR="#000000">.paintComponent(g);
+    g.setColor(<I>Color</I>.<I>white</I>);
+    </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#800080">pts</FONT><FONT COLOR="#000000">.length; i++) {
+      </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> x = (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)(</FONT><FONT COLOR="#0000ff">640</FONT><FONT COLOR="#000000">*</FONT><FONT COLOR="#800080">pts</FONT><FONT COLOR="#000000">[i].x);
+      </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> y = (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)(</FONT><FONT COLOR="#0000ff">480</FONT><FONT COLOR="#000000">*</FONT><FONT COLOR="#800080">pts</FONT><FONT COLOR="#000000">[i].y);
+      </FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> h = (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000">)(</FONT><FONT COLOR="#0000ff">25</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>random</I>());
+      g.drawLine(x, y, x, y+h);
+    }
+  }
+  
+  </FONT><FONT COLOR="#000080"><B>public</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#000080"><B>void</B></FONT><FONT COLOR="#000000"> </FONT><FONT COLOR="#008080"><I>run</I></FONT><FONT COLOR="#000000">() {
+    </FONT><FONT COLOR="#000080"><B>while</B></FONT><FONT COLOR="#000000">(</FONT><FONT COLOR="#000080"><B>true</B></FONT><FONT COLOR="#000000">) {
+      </FONT><FONT COLOR="#000080"><B>for</B></FONT><FONT COLOR="#000000"> (</FONT><FONT COLOR="#000080"><B>int</B></FONT><FONT COLOR="#000000"> i = </FONT><FONT COLOR="#0000ff">0</FONT><FONT COLOR="#000000">; i &LT; </FONT><FONT COLOR="#800080">pts</FONT><FONT COLOR="#000000">.length; i++) {
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> x = </FONT><FONT COLOR="#800080">pts</FONT><FONT COLOR="#000000">[i].getX();
+        </FONT><FONT COLOR="#000080"><B>double</B></FONT><FONT COLOR="#000000"> y = </FONT><FONT COLOR="#800080">pts</FONT><FONT COLOR="#000000">[i].getY();
+        y += </FONT><FONT COLOR="#0000ff">0.1</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>random</I>();
+        </FONT><FONT COLOR="#000080"><B>if</B></FONT><FONT COLOR="#000000"> (y &GT; </FONT><FONT COLOR="#0000ff">1</FONT><FONT COLOR="#000000">) {
+          y = </FONT><FONT COLOR="#0000ff">0.3</FONT><FONT COLOR="#000000">*<I>Math</I>.<I>random</I>();
+          x = <I>Math</I>.<I>random</I>();
+        }
+        </FONT><FONT COLOR="#800080">pts</FONT><FONT COLOR="#000000">[i].setLocation(x, y);
+      }
+      repaint();
+      </FONT><FONT COLOR="#000080"><B>try</B></FONT><FONT COLOR="#000000"> {
+        <I>Thread</I>.<I>sleep</I>(</FONT><FONT COLOR="#0000ff">100</FONT><FONT COLOR="#000000">);
+      } </FONT><FONT COLOR="#000080"><B>catch</B></FONT><FONT COLOR="#000000"> (InterruptedException </FONT><FONT COLOR="#808080">ex</FONT><FONT COLOR="#000000">) {}
+    }
+  }  
+}
+
+</FONT>
+</PRE>
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">
+Rain.java</FONT
+></CENTER><FONT SIZE=-2>
+<FONT FACE="Arial,Helvetica" COLOR="#000000">Created with <a href="http://www.borland.com">JBuilder</a></FONT></FONT></TD></TR></TABLE></FONT></BODY></HTML>
