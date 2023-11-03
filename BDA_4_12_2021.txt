@@ -1,0 +1,54 @@
+/*************/
+Notas de Base de dados 04/12/2021
+
+aceder ao web server apartir 
+
+su 
+
+yum install telnet -y
+
+telnet bd.ipg.pt 80
+
+GET / HTTP/1.0
+Host: bd.ipg.pt
+
+-- para desligar 
+su 
+shut down -h now
+/********/
+openssl s_client -connect www.ipma.pt:443
+
+GET /pt/index.html HTTP/1.0
+Host: www.ipma.pt
+
+/************/
+criação de nova conection sys_bda 192.168.18.81 default(SYSBDA)
+
+select * from v$session;
+
+select * from v$session where username like 'SYS';
+
+select * from cat;
+
+SET SERVEROUTPUT ON;
+DECLARE
+	v_request_handle UTL_HTTP.REQ;
+	v_response_handle UTL_HTTP.RESP;
+	lv_response_line VARCHAR2 (32767);
+BEGIN
+v_request_handle := UTL_HTTP.BEGIN_REQUEST('http://bd.ipg.pt', 'GET');
+UTL_HTTP.SET_HEADER(v_request_handle, 'User-Agent', 'Mozilla/4.0');
+v_response_handle := UTL_HTTP.GET_RESPONSE(v_request_handle);
+LOOP
+UTL_HTTP.READ_TEXT(v_response_handle, lv_response_line, 32766);
+DBMS_OUTPUT.PUT_LINE(lv_response_line);
+END LOOP;
+EXCEPTION
+WHEN UTL_HTTP.END_OF_BODY THEN
+UTL_HTTP.END_RESPONSE(v_response_handle);
+END;
+/
+
+/***********/
+Para cer a base de dados 
+aceder criar as tabelas do webserver

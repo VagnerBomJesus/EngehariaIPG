@@ -1,0 +1,8 @@
+leis do relatórios
+
+1- Espaçamento 1.5 entre linhas
+2- Texto justificado
+3- Cor do Capitulos preta
+4- usar https://languagetool.org/pt/ e o https://www.duplichecker.com/ para as frazes
+5- Espaçamento entre paragrafos 
+6- Não deixar linhas vazias 

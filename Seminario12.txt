@@ -1,0 +1,61 @@
+PROPOSTA
+
+Sistema de Compra e pagamento com NFC
+
+RESUMO DO TRABALHO A DESENVOLVER
+
+O projecto proposto consiste no desenvolvimento de uma aplicação para smartphone multiplataforma 
+para plataforma Android, iOS, que posibilita a compra e pagamentos com NFC projectado para dois lados sendo do usuário e do comerciante, 
+ou seja, possibilita abarcar tanto o comprador e o vendedor.
+
+OBJETIVOS PREVISTOS
+
+- Aplicação para smartfones Android e iOS com sistema NFC
+- Aplicação com interface simples e intuitiva para poder ser utilizada por utilizadores comuns
+- Aplicação com capacidade de fazer registor de usuarios(login, logout)
+- Aplicação com capacidade ler e registar as código de barras dos produtos
+- Aplicação com capacidade de fazer pagamento por rede de curto alcanse NFC
+- Aplicação com capacidade de guardar e eviar a copia do recibo por email
+
+
+
+METODOLOGIA A UTILIZAR
+
+- Analise de sistemas e modelagem baseada na linguagem UML e netodologia Agel nomeadamente o Scrum
+
+- Desenvolvimento da aplicação: A aplicação deve ser desenvolvida em Flutter(IDE Android Studio ou VScode) ou React Native (IDE VScode)
+
+- Teste da aplicação: O sistema será testado e validado em um  cenário de ambiente de teste real com utilizadores experientes e não experientes, 
+                      Recolha de dados através de inqueritos sobre a usabilidade, funcionalidade e a eficiência da aplicação nas duas plataformas Android e iOS
+
+- Todo o estudo efetcuado e os passos para desenvolvimento do projecto serão documentados num relatório.
+
+
+TRABALHO A DESENVOLVER
+
+- Tarefa 1 - Estudo sobre  redes de cursto alcance NFC, e leitores de barCode dos produtos
+
+- Tarefa 2 - Estudo de metodos e sistemas de pagamentos com NFC já existentes no mercado, e sistemas de leitores de barCode dos produtos
+
+- Tarefa 3 - Análise d Sistema, desenvolvimento do modelo do sistema
+
+- Tarefa 4 - Escolha e estudo de um framework para o desenvolvimento da palicação (Flutter, React Native)
+
+- Tarefa 6 - Desenvolvimento e Implementação e Finalizzação da aplicação para os dois sistemas Android e iOS
+
+- Tarefa 7 - Testes e validações do Sistema
+
+- Tarefa 8 - Documentação do projeto num relatório
+
+
+REFERÊNCIAS BIBLIOGRÁFICAS
+
+- Todo sobre NFC Por Javier Richarte
+
+- Análise De Sistemas V. 9 Por Flavia Reisswitz
+
+-  Ferramenta para a criação de código de barras a serviço da segurança pública
+
+- ReactNative: https://reactnative.dev/
+
+- Flutter: https://flutter.dev/
